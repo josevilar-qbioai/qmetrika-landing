@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Variantes sinónimas patogénicas — QMetrika Labs Blog</title>
+<meta name="description" content="Primer predictor CNN con señal termodinámica pura para variantes sinónimas. AUC 0.683. Marco conceptual Λ = S ⊗ Φ.">
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0B0E14;--surface:#12151C;--card:#171B24;--border:#252A36;--border-light:#2F3545;--text:#E2E4EA;--muted:#8B90A0;--soft:#5C6175;--teal:#4FC5C0;--teal-dim:rgba(79,197,192,.07);--teal-glow:rgba(79,197,192,.15);--gold:#E3B15A;--gold-dim:rgba(227,177,90,.07);--plum:#B07AB0;--plum-dim:rgba(176,122,176,.07);--white:#fff;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:"Inter",system-ui,sans-serif;font-size:16px;line-height:1.65;color:var(--text);background:var(--ink);-webkit-font-smoothing:antialiased;}
+.wrap{max-width:720px;margin:0 auto;padding:0 28px;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(11,14,20,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:16px 0;}
+nav .inner{max-width:720px;margin:0 auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;}
+.logo{text-decoration:none;display:flex;align-items:center;gap:10px;}
+.logo-mark{width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,var(--teal),#3AA8A3);display:flex;align-items:center;justify-content:center;}
+.logo-mark span{font-family:"Fraunces",serif;font-weight:900;font-size:14px;color:var(--ink);}
+.logo-name{font-weight:800;font-size:1.05rem;color:var(--white);letter-spacing:-.01em;}
+nav .links{display:flex;gap:24px;align-items:center;}
+nav .links a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;transition:color .2s;}
+nav .links a:hover{color:var(--white);}
+.post-header{padding:120px 0 40px;border-bottom:1px solid var(--border);}
+.back{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--teal);text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-bottom:20px;font-weight:500;}
+.back:hover{text-decoration:underline;}
+.post-date{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--soft);letter-spacing:.06em;text-transform:uppercase;font-weight:500;margin-bottom:12px;}
+.post-header h1{font-weight:900;font-size:clamp(1.8rem,4vw,2.6rem);color:var(--white);line-height:1.12;margin-bottom:16px;letter-spacing:-.02em;}
+.post-header h1 em{font-family:"Fraunces",serif;font-style:italic;color:var(--plum);}
+.post-header .excerpt{color:var(--muted);font-size:1.08rem;line-height:1.7;max-width:58ch;}
+.post-tags{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;}
+.tag{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:20px;font-weight:600;}
+.tag.t{background:var(--teal-dim);color:var(--teal);border:1px solid rgba(79,197,192,.15);}
+.tag.g{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(227,177,90,.15);}
+.tag.p{background:var(--plum-dim);color:var(--plum);border:1px solid rgba(176,122,176,.15);}
+.post-body{padding:48px 0 64px;}
+.post-body h2{font-weight:800;font-size:1.5rem;color:var(--white);margin:48px 0 16px;letter-spacing:-.01em;}
+.post-body h2:first-child{margin-top:0;}
+.post-body p{color:var(--muted);font-size:15.5px;line-height:1.8;margin-bottom:18px;max-width:65ch;}
+.post-body p b{color:var(--text);font-weight:600;}
+.post-body p em{color:var(--plum);font-style:italic;}
+.pullquote{font-family:"Fraunces",serif;font-size:1.4rem;font-style:italic;color:var(--white);line-height:1.4;border-left:3px solid var(--plum);padding:4px 0 4px 24px;margin:36px 0;max-width:55ch;}
+.pullquote b{color:var(--teal);font-weight:700;font-style:normal;}
+.formula{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:28px 32px;text-align:center;margin:32px 0;}
+.formula .f{font-family:"Fraunces",serif;font-size:2rem;font-style:italic;color:var(--white);letter-spacing:.02em;}
+.formula .f .sym{color:var(--plum);}
+.formula .f .op{color:var(--gold);margin:0 4px;}
+.formula .desc{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted);margin-top:12px;line-height:1.7;}
+.mechanism-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:28px 0;}
+@media(max-width:600px){.mechanism-grid{grid-template-columns:1fr;}}
+.mcard{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;}
+.mcard h4{font-weight:700;font-size:.95rem;color:var(--white);margin-bottom:6px;}
+.mcard p{font-size:13px;color:var(--muted);line-height:1.6;margin:0;}
+.stat-row{display:flex;gap:24px;flex-wrap:wrap;margin:28px 0;padding:24px;background:var(--card);border:1px solid var(--border);border-radius:10px;}
+.stat{text-align:center;flex:1;min-width:100px;}
+.stat .v{font-family:"Fraunces",serif;font-weight:900;font-size:1.8rem;line-height:1;}
+.stat .v.teal{color:var(--teal);}
+.stat .v.plum{color:var(--plum);}
+.stat .v.gold{color:var(--gold);}
+.stat .l{font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:4px;}
+.trilogy{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:28px;margin:32px 0;}
+.trilogy h3{font-weight:800;font-size:1.1rem;color:var(--white);margin-bottom:16px;}
+.trilogy-item{display:flex;gap:14px;margin-bottom:14px;align-items:flex-start;}
+.trilogy-item:last-child{margin-bottom:0;}
+.trilogy-num{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;color:var(--ink);background:var(--plum);width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.trilogy-item p{font-size:14px;color:var(--muted);margin:0;line-height:1.6;}
+.trilogy-item p b{color:var(--text);}
+.cta-box{background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:28px;text-align:center;margin:40px 0;}
+.cta-box p{color:var(--muted);font-size:14px;margin-bottom:16px;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;transition:all .25s;}
+.btn-teal{background:var(--teal);color:var(--ink);}
+.btn-teal:hover{background:#5fd6d1;box-shadow:0 0 24px var(--teal-glow);}
+.btn-ghost{background:transparent;color:var(--text);border:1.5px solid var(--border-light);margin-left:10px;}
+.btn-ghost:hover{border-color:var(--teal);color:var(--teal);}
+footer{padding:28px 0 48px;border-top:1px solid var(--border);}
+footer p{color:var(--soft);font-family:"IBM Plex Mono",monospace;font-size:11px;}
+footer a{color:var(--teal);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="inner">
+    <a href="../" class="logo"><div class="logo-mark"><span>Q</span></div><span class="logo-name">QMetrika Labs</span></a>
+    <div class="links"><a href="../">Home</a><a href="./">Blog</a><a href="../#contacto">Contacto</a></div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <div class="post-header">
+    <a href="./" class="back">&larr; Blog</a>
+    <div class="post-date">Mayo 2026</div>
+    <h1>Variantes sinónimas patogénicas: la señal que <em>REVEL no ve</em></h1>
+    <p class="excerpt">Las variantes sinónimas no cambian la proteína, pero sí alteran el perfil termodinámico del mRNA. Primer predictor CNN con señal termodinámica pura: AUC 0.683. Marco conceptual Λ = S ⊗ Φ. Paper 1 de una trilogía.</p>
+    <div class="post-tags">
+      <span class="tag p">bio-ia</span>
+      <span class="tag t">paper</span>
+      <span class="tag g">trilogía · paper 1</span>
+    </div>
+  </div>
+
+  <div class="post-body">
+
+    <h2>El punto ciego de la genómica</h2>
+
+    <p>Una variante sinónima es una mutación en el ADN que <b>no cambia</b> el aminoácido codificado. El codón cambia, pero la proteína resultante es idéntica. Durante décadas, las variantes sinónimas se consideraron "silenciosas" — sin efecto funcional.</p>
+
+    <p>Sabemos que eso es falso. Variantes sinónimas causan fibrosis quística, cáncer, y decenas de enfermedades. Pero los predictores más potentes de la genómica — <b>REVEL</b>, <b>AlphaMissense</b>, <b>CADD</b> — son fundamentalmente ciegos a ellas. Operan a nivel de proteína: si la proteína no cambia, no tienen señal que medir.</p>
+
+    <p>Aquí es donde las dos líneas de investigación de QMetrika convergen.</p>
+
+    <div class="pullquote">Si la proteína no cambia pero el paciente enferma, la patología está en el <b>mRNA</b>, no en la proteína. Y el mRNA tiene física propia que una mutación sinónima puede alterar.</div>
+
+    <h2>El marco: Λ = S ⊗ Φ</h2>
+
+    <div class="formula">
+      <div class="f"><span class="sym">Λ</span> <span class="op">=</span> S <span class="op">⊗</span> <span class="sym">Φ</span></div>
+      <div class="desc">
+        Λ — viabilidad biológica del transcrito<br>
+        S — código genético (secuencia proteica) · identidad semántica<br>
+        Φ — restricciones biofísicas (factor de forma termodinámico del mRNA)<br>
+        ⊗ — dependencia sistémica entre ambos ejes
+      </div>
+    </div>
+
+    <p>Cada transcrito de mRNA tiene dos capas de información. <b>S</b> es el mensaje digital: la secuencia de aminoácidos que codifica. <b>Φ</b> es el canal analógico: la termodinámica del mRNA que determina cómo de eficientemente se traduce ese mensaje — estabilidad local, velocidad de traducción, plegamiento cotraduccional.</p>
+
+    <p>En una variante missense, ambos ejes cambian: ΔS ≠ 0, ΔΦ ≠ 0. En una variante sinónima, el argumento es elegante: <b>ΔS = 0, ΔΦ ≠ 0</b>. La proteína no cambia, pero el factor de forma del mRNA sí. Si eso causa enfermedad, la patología es puramente termodinámica.</p>
+
+    <p>Este marco se presenta en el Paper 1 como un framework conceptual cualitativo — no como álgebra formal. La formalización matemática de ⊗ como operación sobre grafo termodinámico viene en el Paper 2.</p>
+
+    <h2>Mecanismos patogénicos</h2>
+
+    <p>¿Cómo puede una variante que no cambia la proteína causar enfermedad? Cuatro mecanismos que el perfil ΔG puede capturar:</p>
+
+    <div class="mechanism-grid">
+      <div class="mcard">
+        <h4>Desestabilización del mRNA</h4>
+        <p>Alteración del apilamiento local que reduce la estabilidad termodinámica → degradación acelerada del mRNA → menos proteína producida.</p>
+      </div>
+      <div class="mcard">
+        <h4>Splicing aberrante</h4>
+        <p>Cambio de estructura secundaria local que altera sitios de splicing o disrumpe enhancers/silencers exónicos (ESE/ESS).</p>
+      </div>
+      <div class="mcard">
+        <h4>Velocidad de traducción</h4>
+        <p>Codones raros o cambios de apilamiento que ralentizan al ribosoma → misplegamiento cotraduccional de la proteína.</p>
+      </div>
+      <div class="mcard">
+        <h4>Regulación en cis</h4>
+        <p>Disrupción de elementos regulatorios que dependen de la secuencia de nucleótidos, no de la secuencia proteica.</p>
+      </div>
+    </div>
+
+    <h2>Resultados</h2>
+
+    <div class="stat-row">
+      <div class="stat"><div class="v plum">0.683</div><div class="l">AUC dedicada</div></div>
+      <div class="stat"><div class="v teal">0.625</div><div class="l">AUC LOGO</div></div>
+      <div class="stat"><div class="v gold">2.60×</div><div class="l">Enriquecimiento G>A</div></div>
+    </div>
+
+    <p><b>CNN dedicada:</b> AUC 0.683 usando solo señal termodinámica del mRNA (canales ΔG). Sin información evolutiva, sin conservación, sin estructura 3D. Pura física del nucleótido.</p>
+
+    <p><b>LOGO (Leave-One-Gene-Out):</b> AUC 0.625 — la señal generaliza entre genes, no es un artefacto de un gen particular.</p>
+
+    <p><b>Hallazgo mecanístico — enriquecimiento G>A:</b> Las variantes sinónimas patogénicas están enriquecidas 2.60× en transiciones G>A. Esto tiene una explicación termodinámica directa: G>A reduce el apilamiento (la guanina apila más fuerte que la adenina), y este efecto es capturado por el perfil ΔG.</p>
+
+    <p><b>Efecto del largo del CDS:</b> Genes con CDS más largo tienen señal termodinámica más fuerte. Esto es consistente con el modelo: mRNAs más largos tienen más oportunidades para que una perturbación local se propague.</p>
+
+    <h2>Lo que esto implica</h2>
+
+    <p>Un AUC de 0.683 no compite con los mejores predictores de missense (que llegan a 0.99). Pero no tiene que hacerlo. La pregunta no es "¿es mejor que AlphaMissense?" sino <b>"¿existe señal termodinámica en variantes sinónimas?"</b> Y la respuesta es sí.</p>
+
+    <p>Esto abre un nicho que ningún predictor publicado cubre. REVEL, AlphaMissense, CADD — todos son ciegos a variantes sinónimas porque operan a nivel de proteína. EnergyFingerprint opera a nivel de nucleótido. El canal biofísico ya funciona para sinónimas sin modificación.</p>
+
+    <div class="pullquote">No estamos compitiendo con AlphaMissense en su terreno. Estamos abriendo un terreno nuevo donde <b>nadie puede operar</b> — porque nadie más mira la física del mRNA.</div>
+
+    <h2>La trilogía</h2>
+
+    <p>Este paper es el primero de tres que despliegan progresivamente el marco Λ = S ⊗ Φ:</p>
+
+    <div class="trilogy">
+      <h3>Tres papers, una pregunta escalonada</h3>
+      <div class="trilogy-item">
+        <div class="trilogy-num">1</div>
+        <p><b>"La señal existe"</b> (este paper) — CNN dedicada demuestra que la señal termodinámica discrimina sinónimas patogénicas de benignas. Marco Λ = S ⊗ Φ presentado como framework conceptual cualitativo.</p>
+      </div>
+      <div class="trilogy-item">
+        <div class="trilogy-num">2</div>
+        <p><b>"La señal tiene estructura matemática"</b> (horizonte 2027) — Formaliza ⊗ como operación sobre grafo termodinámico. DT-GNN (Dual-Thermodynamic Graph Neural Network) + Markov blankets definen regiones funcionales del mRNA.</p>
+      </div>
+      <div class="trilogy-item">
+        <div class="trilogy-num">3</div>
+        <p><b>"La física predicha ocurre en la célula"</b> (horizonte 2027-2028) — Validación experimental directa. DMS-MaPseq mide accesibilidad in vivo. Reporter assays miden expresión. ¿ΔΦ predicho = cambio estructural real?</p>
+      </div>
+    </div>
+
+    <h2>Convergencia L1 × L2</h2>
+
+    <p>Este trabajo es la convergencia natural de las dos líneas de investigación de QMetrika. <b>L1</b> (EnergyFingerprint) proporciona la CNN y el gradiente de transferibilidad. <b>L2</b> (mRNA Design) demuestra que el perfil ΔG es una dimensión útil y ortogonal.</p>
+
+    <p>Juntas predicen exactamente este resultado: si ΔG es informativo para missense y ortogonal a MFE, debería ser informativo también para sinónimas — donde es la <b>única</b> señal disponible, porque la proteína no cambia.</p>
+
+    <p>La extensión natural es el canal evolutivo. ESM-1v opera a nivel de proteína — para sinónimas no aplica directamente. Pero un masked marginal a nivel de DNA (no de proteína) podría capturar presión evolutiva sobre la secuencia de nucleótidos. Eso es materia del Paper 2.</p>
+
+    <div class="cta-box">
+      <p>Preprint con CNN dedicada, análisis LOGO, hallazgos mecanísticos y marco Λ = S ⊗ Φ.</p>
+      <a href="https://doi.org/10.5281/zenodo.20275792" target="_blank" class="btn btn-teal">Zenodo · DOI 10.5281/zenodo.20275792</a>
+      <a href="https://github.com/josevilar-qbioai/synonymous-thermodynamic-classification" target="_blank" class="btn btn-ghost">GitHub</a>
+    </div>
+
+  </div>
+
+  <footer>
+    <p><a href="./">&larr; Volver al blog</a> · <a href="../">QMetrika Labs</a> · 2026</p>
+  </footer>
+
+</div>
+</body>
+</html>
