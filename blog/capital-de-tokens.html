@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capital de Tokens — QMetrika Labs Blog</title>
+<meta name="description" content="Un modelo de empresa donde el token gobernado y capturado se acumula como conocimiento propio y defendible.">
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#0B0E14;--surface:#12151C;--card:#171B24;
+  --border:#252A36;--border-light:#2F3545;
+  --text:#E2E4EA;--muted:#8B90A0;--soft:#5C6175;
+  --teal:#4FC5C0;--teal-dim:rgba(79,197,192,.07);--teal-glow:rgba(79,197,192,.15);
+  --gold:#E3B15A;--gold-dim:rgba(227,177,90,.07);
+  --plum:#B07AB0;--plum-dim:rgba(176,122,176,.07);
+  --white:#fff;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:"Inter",system-ui,sans-serif;font-size:16px;line-height:1.65;color:var(--text);background:var(--ink);-webkit-font-smoothing:antialiased;}
+.wrap{max-width:720px;margin:0 auto;padding:0 28px;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(11,14,20,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:16px 0;}
+nav .inner{max-width:720px;margin:0 auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;}
+.logo{text-decoration:none;display:flex;align-items:center;gap:10px;}
+.logo-mark{width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,var(--teal),#3AA8A3);display:flex;align-items:center;justify-content:center;}
+.logo-mark span{font-family:"Fraunces",serif;font-weight:900;font-size:14px;color:var(--ink);}
+.logo-name{font-weight:800;font-size:1.05rem;color:var(--white);letter-spacing:-.01em;}
+nav .links{display:flex;gap:24px;align-items:center;}
+nav .links a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;transition:color .2s;}
+nav .links a:hover{color:var(--white);}
+
+/* ARTICLE */
+.post-header{padding:120px 0 40px;border-bottom:1px solid var(--border);}
+.back{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--teal);text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-bottom:20px;font-weight:500;}
+.back:hover{text-decoration:underline;}
+.post-date{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--soft);letter-spacing:.06em;text-transform:uppercase;font-weight:500;margin-bottom:12px;}
+.post-header h1{font-weight:900;font-size:clamp(1.8rem,4vw,2.6rem);color:var(--white);line-height:1.12;margin-bottom:16px;letter-spacing:-.02em;}
+.post-header h1 em{font-family:"Fraunces",serif;font-style:italic;color:var(--teal);}
+.post-header .excerpt{color:var(--muted);font-size:1.08rem;line-height:1.7;max-width:58ch;}
+.post-tags{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;}
+.tag{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:20px;font-weight:600;}
+.tag.t{background:var(--teal-dim);color:var(--teal);border:1px solid rgba(79,197,192,.15);}
+.tag.g{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(227,177,90,.15);}
+
+.post-body{padding:48px 0 64px;}
+.post-body h2{font-weight:800;font-size:1.5rem;color:var(--white);margin:48px 0 16px;letter-spacing:-.01em;}
+.post-body h2:first-child{margin-top:0;}
+.post-body p{color:var(--muted);font-size:15.5px;line-height:1.8;margin-bottom:18px;max-width:65ch;}
+.post-body p b{color:var(--text);font-weight:600;}
+.post-body p em{color:var(--teal);font-style:italic;}
+
+.pullquote{font-family:"Fraunces",serif;font-size:1.4rem;font-style:italic;color:var(--white);line-height:1.4;border-left:3px solid var(--gold);padding:4px 0 4px 24px;margin:36px 0;max-width:55ch;}
+.pullquote b{color:var(--teal);font-weight:700;font-style:normal;}
+
+.principle-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:32px 0;}
+@media(max-width:600px){.principle-grid{grid-template-columns:1fr;}}
+.pcard{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;}
+.pcard .pid{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--teal);font-weight:600;letter-spacing:.08em;}
+.pcard h4{font-weight:700;font-size:.95rem;color:var(--white);margin:4px 0 6px;}
+.pcard p{font-size:13px;color:var(--muted);line-height:1.6;margin:0;}
+
+.cta-box{background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:28px;text-align:center;margin:40px 0;}
+.cta-box p{color:var(--muted);font-size:14px;margin-bottom:16px;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;transition:all .25s;}
+.btn-teal{background:var(--teal);color:var(--ink);}
+.btn-teal:hover{background:#5fd6d1;box-shadow:0 0 24px var(--teal-glow);}
+.btn-ghost{background:transparent;color:var(--text);border:1.5px solid var(--border-light);}
+.btn-ghost:hover{border-color:var(--teal);color:var(--teal);}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;margin:28px 0;border:1px solid var(--border);border-radius:10px;}
+table{border-collapse:collapse;width:100%;min-width:500px;font-size:13.5px;}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--border);}
+thead th{background:var(--card);color:var(--white);font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;}
+tbody td{color:var(--muted);}
+tbody td b{color:var(--text);}
+tbody tr:last-child td{border-bottom:none;}
+
+/* FOOTER */
+footer{padding:28px 0 48px;border-top:1px solid var(--border);}
+footer p{color:var(--soft);font-family:"IBM Plex Mono",monospace;font-size:11px;}
+footer a{color:var(--teal);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="inner">
+    <a href="../" class="logo">
+      <div class="logo-mark"><span>Q</span></div>
+      <span class="logo-name">QMetrika Labs</span>
+    </a>
+    <div class="links">
+      <a href="../">Home</a>
+      <a href="./">Blog</a>
+      <a href="../#contacto">Contacto</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <div class="post-header">
+    <a href="./" class="back">&larr; Blog</a>
+    <div class="post-date">Julio 2026</div>
+    <h1>Capital de <em>Tokens</em>: la energía que se transforma en conocimiento</h1>
+    <p class="excerpt">Un modelo de empresa donde la unidad de capital no es la hora de trabajo ni el activo físico, sino el token: el cómputo de inferencia que, gobernado y capturado, se acumula como conocimiento propio, defendible y compuesto.</p>
+    <div class="post-tags">
+      <span class="tag g">filosofía</span>
+      <span class="tag t">capital de tokens</span>
+    </div>
+  </div>
+
+  <div class="post-body">
+
+    <h2>La tesis en una frase</h2>
+
+    <p>Durante dos siglos, una empresa se capitalizó sobre dos cosas: <b>trabajo</b> (horas de personas) y <b>activos físicos</b> (máquinas, edificios, inventario). El balance medía lo tangible; la cuenta de resultados medía cuánto trabajo hacía falta para producir un ingreso.</p>
+
+    <p>La IA generativa rompe ese marco por la base: el trabajo cognitivo — redactar, clasificar, razonar, decidir — se produce ahora en tokens, a un coste que tiende a cero y con una oferta prácticamente infinita. Si cualquiera puede alquilar el mismo modelo fundacional y generar los mismos tokens, el token en bruto no es capital: es <em>commodity</em>.</p>
+
+    <p>El capital aparece cuando el token deja de ser efímero y se convierte en algo que se <b>acumula</b>: una decisión humana capturada, un dato de evaluación, un modelo afinado que hace mañana gratis lo que hoy costó caro.</p>
+
+    <div class="pullquote">Un token gastado y olvidado es <b>gasto</b>. Un token gastado, gobernado y capturado es <b>capital</b>. La diferencia no está en el modelo — está en la arquitectura de la empresa.</div>
+
+    <h2>No todos los tokens son iguales</h2>
+
+    <p>El primer error contable de la empresa-IA es tratar todos los tokens como el mismo insumo. Hay dos clases, con economías opuestas — y la salud de la empresa se mide por la proporción entre ellas.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Dimensión</th><th>Token fundacional (alquilado)</th><th>Token local (propio)</th></tr></thead>
+        <tbody>
+          <tr><td>Coste marginal</td><td>Alto, por millón de tokens</td><td><b>&#8776; 0</b> tras amortizar hardware</td></tr>
+          <tr><td>Naturaleza</td><td>OPEX — se consume y desaparece</td><td>CAPEX — rinde a perpetuidad</td></tr>
+          <tr><td>Propiedad</td><td>No lo posees; dependes de un proveedor</td><td>Tuyo; sin red, sin cuota, sin fuga</td></tr>
+          <tr><td>Dato sensible</td><td>Sale de tus fronteras (GDPR, IP)</td><td>Nunca abandona tu infraestructura</td></tr>
+          <tr><td>Uso óptimo</td><td>Razonamiento difícil, arranque</td><td>Rutina, alto volumen, tareas destiladas</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>La métrica maestra no es "gastar poco en IA". Es la <b>ratio de trabajo local frente a fundacional</b>. Cuanto más se desplaza hacia lo local, mayor autonomía, menor coste y mayor conocimiento propio acumulado.</p>
+
+    <h2>Tres formas de capital durable</h2>
+
+    <p>Si el token en bruto es commodity, ¿dónde se acumula el capital? En tres depósitos que se llenan como subproducto del trabajo diario — pero solo si la empresa está construida para <b>capturarlos</b>.</p>
+
+    <p><b>1. Juicio humano capturado.</b> Cada vez que un humano aprueba o deniega una acción de un agente en la puerta de gobernanza, produce un label: una decisión etiquetada sobre qué era correcto. Ese juicio es el dato más caro de la IA — y aquí se genera gratis, como residuo del trabajo.</p>
+
+    <p><b>2. Auditoría verificable.</b> No solo compliance: es el dataset de evaluaciones que ningún competidor puede alquilar. Cadena de hash verificable que captura cada decisión, cada acción, cada resultado.</p>
+
+    <p><b>3. Modelos afinados.</b> El destilado del trabajo fundacional convertido en capacidad local: un modelo propio que, una vez entrenado, rinde tokens casi gratis para siempre en tareas ya dominadas.</p>
+
+    <h2>La cuña vertical</h2>
+
+    <p>Empieza estrecho y profundo. Un agente excelente en clasificación de variantes de un puñado de genes vale más que uno mediocre que intenta toda la genómica. La profundidad es lo que hace que el token local especializado supere al token fundacional genérico — y solo entonces se ensancha la cuña.</p>
+
+    <p>En QMetrika, esa vertical es la <b>termodinámica del RNA</b>. El motor ΔG nearest-neighbor (patente P202630522) alimenta tres sublíneas de investigación, tres preprints con DOI permanente, y un optimizador dual que supera vacunas comerciales. Pero el modelo de Capital de Tokens es general — es la misma ecuación en cualquier dominio donde la profundidad construya moat.</p>
+
+    <div class="pullquote">En la ciencia de QMetrika, se perfila la energía libre (ΔG) de una molécula de RNA para extraer conocimiento biológico. En la empresa, se gasta energía computacional (tokens) para extraer conocimiento organizativo. Es la misma ecuación en dos capas.</div>
+
+    <h2>Ocho principios operativos</h2>
+
+    <p>No son aspiraciones — son decisiones de arquitectura que, o se toman al construir, o ya no se toman.</p>
+
+    <div class="principle-grid">
+      <div class="pcard"><span class="pid">P1</span><h4>El token es capital, no gasto</h4><p>Cada gasto fundacional debe dejar un depósito: label, eval, modelo. Si se consume sin capturar nada, era coste puro.</p></div>
+      <div class="pcard"><span class="pid">P2</span><h4>Mide en local vs fundacional</h4><p>La ratio de trabajo local frente a alquilado es la métrica de salud. Más local = más margen, más autonomía.</p></div>
+      <div class="pcard"><span class="pid">P3</span><h4>El control vive en la herramienta</h4><p>La decisión es código determinista en la puerta, no criterio del LLM. Fail-closed por diseño.</p></div>
+      <div class="pcard"><span class="pid">P4</span><h4>Captura el juicio humano</h4><p>Cada aprobación queda registrada, etiquetada y reutilizable. El label es un residuo del trabajo.</p></div>
+      <div class="pcard"><span class="pid">P5</span><h4>Auditoría desde el día uno</h4><p>Cadena verificable. No solo GDPR: es el dataset de evals que ningún genérico puede alquilar.</p></div>
+      <div class="pcard"><span class="pid">P6</span><h4>Estrecho y profundo</h4><p>La cuña vertical es donde el capital compone. Ensancha solo cuando la profundidad ya rinde.</p></div>
+      <div class="pcard"><span class="pid">P7</span><h4>El moat son los datos</h4><p>Los modelos caducan; el juicio capturado y los evals, no. Un modelo mejor solo hace rendir más tu capital.</p></div>
+      <div class="pcard"><span class="pid">P8</span><h4>Diseña antes de gastar</h4><p>El Canvas antes que el código. La ambigüedad se paga en tokens quemados.</p></div>
+    </div>
+
+    <div class="cta-box">
+      <p>Documento de tesis completo con diagramas, tablas y el stack QMetrika detallado.</p>
+      <a href="../CAPITAL_DE_TOKENS_QMETRIKA.html" target="_blank" class="btn btn-teal">Leer versión completa</a>
+    </div>
+
+  </div>
+
+  <footer>
+    <p><a href="./">&larr; Volver al blog</a> · <a href="../">QMetrika Labs</a> · 2026</p>
+  </footer>
+
+</div>
+</body>
+</html>
