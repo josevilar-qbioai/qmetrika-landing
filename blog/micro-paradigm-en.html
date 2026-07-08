@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Micro Paradigm: One Founder and an Orchestra of Agents — QMetrika Labs Blog</title>
+<meta name="description" content="A researcher with local models, specialized agents and selective access to foundational models can launch deep-tech projects that once required a full team.">
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#0B0E14;--surface:#12151C;--card:#171B24;
+  --border:#252A36;--border-light:#2F3545;
+  --text:#E2E4EA;--muted:#8B90A0;--soft:#5C6175;
+  --teal:#4FC5C0;--teal-dim:rgba(79,197,192,.07);--teal-glow:rgba(79,197,192,.15);
+  --gold:#E3B15A;--gold-dim:rgba(227,177,90,.07);
+  --plum:#B07AB0;--plum-dim:rgba(176,122,176,.07);
+  --white:#fff;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:"Inter",system-ui,sans-serif;font-size:16px;line-height:1.65;color:var(--text);background:var(--ink);-webkit-font-smoothing:antialiased;}
+.wrap{max-width:720px;margin:0 auto;padding:0 28px;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(11,14,20,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:16px 0;}
+nav .inner{max-width:720px;margin:0 auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;}
+.logo{text-decoration:none;display:flex;align-items:center;gap:10px;}
+.logo-mark{width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,var(--teal),#3AA8A3);display:flex;align-items:center;justify-content:center;}
+.logo-mark span{font-family:"Fraunces",serif;font-weight:900;font-size:14px;color:var(--ink);}
+.logo-name{font-weight:800;font-size:1.05rem;color:var(--white);letter-spacing:-.01em;}
+nav .links{display:flex;gap:24px;align-items:center;}
+nav .links a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;transition:color .2s;}
+nav .links a:hover{color:var(--white);}
+.lang-switch{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;letter-spacing:.08em;color:var(--soft);text-decoration:none;border:1px solid var(--border);border-radius:4px;padding:2px 7px;transition:all .2s;}
+.lang-switch:hover{color:var(--teal);border-color:var(--teal);}
+
+/* ARTICLE */
+.post-header{padding:120px 0 40px;border-bottom:1px solid var(--border);}
+.back{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--teal);text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-bottom:20px;font-weight:500;}
+.back:hover{text-decoration:underline;}
+.post-date{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--soft);letter-spacing:.06em;text-transform:uppercase;font-weight:500;margin-bottom:12px;}
+.post-header h1{font-weight:900;font-size:clamp(1.8rem,4vw,2.6rem);color:var(--white);line-height:1.12;margin-bottom:16px;letter-spacing:-.02em;}
+.post-header h1 em{font-family:"Fraunces",serif;font-style:italic;color:var(--teal);}
+.post-header .excerpt{color:var(--muted);font-size:1.08rem;line-height:1.7;}
+.post-tags{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;}
+.tag{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:20px;font-weight:600;}
+.tag.t{background:var(--teal-dim);color:var(--teal);border:1px solid rgba(79,197,192,.15);}
+.tag.g{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(227,177,90,.15);}
+.tag.p{background:var(--plum-dim);color:var(--plum);border:1px solid rgba(176,122,176,.15);}
+
+.post-body{padding:48px 0 64px;}
+.post-body h2{font-weight:800;font-size:1.5rem;color:var(--white);margin:48px 0 16px;letter-spacing:-.01em;}
+.post-body h2:first-child{margin-top:0;}
+.post-body p{color:var(--muted);font-size:15.5px;line-height:1.8;margin-bottom:18px;}
+.post-body p b{color:var(--text);font-weight:600;}
+.post-body p em{color:var(--teal);font-style:italic;}
+
+.pullquote{font-family:"Fraunces",serif;font-size:1.4rem;font-style:italic;color:var(--white);line-height:1.4;border-left:3px solid var(--gold);padding:4px 0 4px 24px;margin:36px 0;}
+.pullquote b{color:var(--teal);font-weight:700;font-style:normal;}
+
+.agent-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:32px 0;}
+@media(max-width:600px){.agent-grid{grid-template-columns:1fr;}}
+.acard{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;}
+.acard .role{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--teal);font-weight:600;letter-spacing:.08em;}
+.acard h4{font-weight:700;font-size:.95rem;color:var(--white);margin:4px 0 6px;}
+.acard p{font-size:13px;color:var(--muted);line-height:1.6;margin:0;}
+
+.cta-box{background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:28px;text-align:center;margin:40px 0;}
+.cta-box p{color:var(--muted);font-size:14px;margin-bottom:16px;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;transition:all .25s;}
+.btn-teal{background:var(--teal);color:var(--ink);}
+.btn-teal:hover{background:#5fd6d1;box-shadow:0 0 24px var(--teal-glow);}
+
+/* FOOTER */
+footer{padding:28px 0 48px;border-top:1px solid var(--border);}
+footer p{color:var(--soft);font-family:"IBM Plex Mono",monospace;font-size:11px;}
+footer a{color:var(--teal);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="inner">
+    <a href="../en.html" class="logo">
+      <div class="logo-mark"><span>Q</span></div>
+      <span class="logo-name">QMetrika Labs</span>
+    </a>
+    <div class="links">
+      <a href="../en.html">Home</a>
+      <a href="en.html">Blog</a>
+      <a href="../en.html#contact">Contact</a>
+      <a href="micro-paradigma.html" class="lang-switch">ES</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <div class="post-header">
+    <a href="en.html" class="back">&larr; Blog</a>
+    <div class="post-date">July 2026</div>
+    <h1>The <em>micro</em> paradigm: one founder and an orchestra of agents</h1>
+    <p class="excerpt">Reflections on how a researcher with local models, specialized agents and selective access to foundational models can launch deep-tech projects that once required a full team. QMetrika as a real case.</p>
+    <div class="post-tags">
+      <span class="tag g">reflection</span>
+      <span class="tag t">capital q</span>
+      <span class="tag p">agents</span>
+    </div>
+  </div>
+
+  <div class="post-body">
+
+    <h2>The moment the equation changes</h2>
+
+    <p>A couple of years ago, the idea of launching a biocomputation research project without a lab, without a five-person team, and without funding was, at best, extravagant. Deep-tech has always had a high barrier to entry: specialized knowledge, data, computational infrastructure, time from qualified people. All of that multiplied by the natural slowness of science.</p>
+
+    <p>Something has changed. Not gradually, but with the abruptness of a phase transition. Foundational language models don't just generate text — they reason about technical domains, write functional code, review literature, draft manuscripts, structure arguments, catch errors. And local models, smaller but specialized, handle repetitive tasks at zero cost once deployed.</p>
+
+    <p>The combination of both, orchestrated with judgment, turns a single person into something that didn't exist before: a <b>researcher with the operational capacity of a team</b>.</p>
+
+    <h2>It's not automation — it's orchestration</h2>
+
+    <p>The image that best describes this model is not a programmer automating tasks. It's a <b>conductor leading an orchestra</b>. Each agent is a specialized instrument: one downloads and filters ClinVar data, another computes thermodynamic profiles, another trains the CNN, another verifies results against the literature, another drafts the manuscript. The founder doesn't play every instrument — the founder decides what gets played, in what order, and when something sounds off.</p>
+
+    <p>The difference from classical automation is that these agents aren't deterministic scripts. They can interpret ambiguous instructions, detect inconsistencies, propose alternatives. The founder keeps the <b>vision</b> and the <b>decision</b>, but execution is distributed across agents that can operate in parallel.</p>
+
+    <div class="pullquote">The founder doesn't replace the team. The founder <b>redefines what it means to operate</b> a research project: less manual execution, more judgment and direction.</div>
+
+    <h2>The strategic mix: local + foundational</h2>
+
+    <p>A common mistake is treating AI models as a monolithic category. In practice, there are two classes with opposing economics, and the decision of when to use each one is the central strategic decision of this paradigm.</p>
+
+    <p><b>Foundational models</b> (Claude, GPT, Gemini): Complex reasoning, adversarial review, scientific writing, clinical interpretation. High cost per token, but irreplaceable when the task demands sophisticated judgment. At QMetrika, the <em>clinical verifier</em> — the agent that cross-references predictions against CADD, REVEL, UniProt and ACMG guidelines — needs this level of reasoning.</p>
+
+    <p><b>Local models and own compute</b> (PyTorch, ESM-1v, ESMC-6B, RNAfold): Deterministic or high-volume tasks where a foundational model would be wasteful. The thermodynamic engine (<em>energy.py</em>) computes ΔG profiles without any LLM. The CNN trains on a local GPU. ESM-1v scoring runs locally. Marginal cost: zero.</p>
+
+    <p>The ratio of local tokens to foundational tokens is the project's health metric. The more it shifts toward local, the greater the autonomy, the lower the cost, and the more proprietary knowledge compounds. But without selective access to the foundational model, certain tasks — those requiring high-level reasoning — simply don't get done.</p>
+
+    <h2>The orchestra in practice: QMetrika's pipeline</h2>
+
+    <p>At QMetrika, this model is not an abstraction. The variant classification pipeline (L1) works like this:</p>
+
+    <div class="agent-grid">
+      <div class="acard"><span class="role">Agent 1</span><h4>Data curator</h4><p>Downloads ClinVar, filters ambiguous categories, validates labels. Mechanical task, high volume. Lightweight model.</p></div>
+      <div class="acard"><span class="role">Agent 2</span><h4>Biophysical engine</h4><p>Nearest-neighbor ΔG profile + ESM-1v scoring + 11-channel tensor. Local compute, PyTorch, cost $0.</p></div>
+      <div class="acard"><span class="role">Agent 3</span><h4>CNN predictor</h4><p>Training and forward pass of EnergySignalCNN. GradCAM for explainability. Local GPU.</p></div>
+      <div class="acard"><span class="role">Agent 4</span><h4>Clinical verifier</h4><p>Cross-references predictions against public databases, applies ACMG criteria. Requires complex reasoning — foundational model.</p></div>
+    </div>
+
+    <p>Between the predictor and the verifier there is an <b>approval gate</b>: the pipeline halts until the founder — in this case, the principal investigator — reviews the prediction before cross-validation proceeds. The system is <em>fail-closed</em>: without explicit approval, nothing advances. The AI proposes, the human decides.</p>
+
+    <p>The result of operating this way: three preprints with permanent DOIs, a registered patent (OEPM), an mRNA optimizer that outperforms commercial vaccines, and a theoretical framework (Λ = S ⊗ Φ) unfolding across a trilogy of papers planned through 2028. All from a desk with a GPU, an internet connection, and an API account.</p>
+
+    <h2>What doesn't change</h2>
+
+    <p>The part AI doesn't replace is the most important one: the <b>right question</b>. No agent decides that the thermodynamic profile of mRNA is a useful dimension for classifying genetic variants. No agent chooses the patent angle, defines the paper trilogy, or detects that the zero-shot transferability gradient reveals something deep about protein grammar.</p>
+
+    <p>Scientific intuition, strategic vision, and the judgment of what's worth investigating remain human. What changes is that this intuition no longer needs to wait for a team, a grant, and a laboratory to become publishable, defensible results.</p>
+
+    <div class="pullquote">A researcher with the right question and a well-conducted orchestra of agents can produce results that once required a full research group. <b>The barrier is no longer the team — it's the question.</b></div>
+
+    <h2>Who this model is for</h2>
+
+    <p>It's not for everyone. It works when three conditions are met: the founder has <b>domain knowledge</b> (without it, there's no right question); the project has a significant computational component (AI amplifies the computational, not the experimental); and the founder is willing to invest time in <b>designing the orchestration</b> before executing.</p>
+
+    <p>But when those conditions hold, the result is something that had no name until recently: a viable <b>deep-tech micro-project</b>, with a single founder, that competes on output quality with established groups. Not because AI is magic — but because the combination of human judgment, specialized local models, and selective access to foundational reasoning is, for the first time, sufficient.</p>
+
+    <h2>Where the micro paradigm needs to stop being micro</h2>
+
+    <p>Everything above is real and working. Three published preprints, a registered patent, an optimizer that outperforms commercial vaccines — all from a desk. But it would be dishonest to close here without saying what comes next.</p>
+
+    <p>This model is extraordinarily effective at <b>validating a hypothesis, building a prototype, and generating publishable evidence</b>. The exploration and proof-of-concept phase compresses from years to months. Up to that point, a founder with an orchestra of agents is enough.</p>
+
+    <p>But science doesn't end at the preprint. Experimental validation — synthesizing mRNA constructs, measuring expression in cell cultures, running DMS-MaPseq assays — requires a <b>physical laboratory</b>. International patent extension requires <b>capital</b>. Scaling from a prototype to a certified clinical tool requires <b>regulation, infrastructure, and people</b>.</p>
+
+    <p>The micro paradigm proves that the barrier to entry in deep-tech has dropped dramatically. But the barrier to <b>scaling</b> remains where it was. What changes is the position from which one negotiates: it's no longer an idea on a napkin — it's a project with results, with DOIs, with protected IP, and with a proven operating system.</p>
+
+    <p>The natural next step for QMetrika is <b>collaboration with universities</b> for experimental validation, <b>cooperation with capital firms</b> for the PCT extension and product development, and <b>partnerships with diagnostic labs and pharma</b> for clinical pilots. The micro-project has proved the science works. Now it needs the ecosystem to grow.</p>
+
+    <div class="cta-box">
+      <p>The operating model behind this paradigm.</p>
+      <a href="capital-q-en.html" class="btn btn-teal">Read Capital Q</a>
+    </div>
+
+  </div>
+
+  <footer>
+    <p><a href="en.html">&larr; Back to blog</a> · <a href="../en.html">QMetrika Labs</a> · 2026</p>
+  </footer>
+
+</div>
+</body>
+</html>
