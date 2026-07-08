@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capital Q: los tokens, la energía que se transforma en conocimiento · QMetrika Labs</title>
+<meta name="description" content="Un paradigma de empresa donde la unidad de capital es el token: el cómputo de inferencia que, gobernado y capturado, se acumula como conocimiento propio, defendible y compuesto.">
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0B0E14;--surface:#12151C;--card:#171B24;
+  --border:#252A36;--border-light:#2F3545;
+  --text:#E2E4EA;--muted:#8B90A0;--soft:#5C6175;
+  --teal:#4FC5C0;--teal-dim:rgba(79,197,192,.07);--teal-glow:rgba(79,197,192,.15);--teal-deep:#3AA8A3;
+  --gold:#E3B15A;--gold-dim:rgba(227,177,90,.07);--gold-glow:rgba(227,177,90,.15);
+  --plum:#B07AB0;--plum-dim:rgba(176,122,176,.07);
+  --rust:#E07A5F;--rust-dim:rgba(224,122,95,.07);
+  --green:#81B29A;--green-dim:rgba(129,178,154,.07);
+  --white:#fff;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:"Inter",system-ui,sans-serif;font-size:16px;line-height:1.65;color:var(--text);background:var(--ink);-webkit-font-smoothing:antialiased;}
+.wrap{max-width:960px;margin:0 auto;padding:0 28px;position:relative;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(11,14,20,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:14px 0;}
+nav .inner{max-width:1140px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;}
+.logo{text-decoration:none;display:flex;align-items:center;gap:10px;flex-shrink:0;white-space:nowrap;}
+.logo-mark{width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,var(--teal),var(--teal-deep));display:flex;align-items:center;justify-content:center;}
+.logo-mark span{font-family:"Fraunces",serif;font-weight:900;font-size:14px;color:var(--ink);}
+.logo-name{font-weight:800;font-size:1.05rem;color:var(--white);letter-spacing:-.01em;}
+nav .links{display:flex;gap:6px;align-items:center;flex-wrap:nowrap;}
+nav .links a{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.04em;text-decoration:none;color:var(--muted);padding:5px 12px;border:1px solid transparent;border-radius:4px;transition:all .2s;white-space:nowrap;}
+nav .sep{width:1px;height:18px;background:var(--border);flex-shrink:0;margin:0 4px;}
+nav .links a:hover{color:var(--white);border-color:var(--border-light);}
+nav .links a.active{color:var(--teal);border-color:var(--teal);background:var(--teal-dim);}
+.lang-switch{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;letter-spacing:.08em;color:var(--soft)!important;text-decoration:none;border:1px solid var(--border)!important;border-radius:4px;padding:2px 7px!important;transition:all .2s;}
+.lang-switch:hover{color:var(--teal)!important;border-color:var(--teal)!important;}
+
+/* HERO */
+.hero{padding:100px 0 48px;border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-40%;right:-20%;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(79,197,192,.06),transparent 70%);pointer-events:none;}
+.hero::after{content:'';position:absolute;bottom:-30%;left:-10%;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(227,177,90,.04),transparent 70%);pointer-events:none;}
+.kicker{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:16px;font-weight:600;}
+.hero h1{font-family:"Fraunces",serif;font-weight:900;font-size:clamp(2.4rem,6vw,4.4rem);line-height:1.04;color:var(--white);margin-bottom:20px;letter-spacing:-.02em;}
+.hero h1 em{font-style:italic;color:var(--gold);}
+.hero h1 .plum{color:var(--plum);}
+.lede{font-size:clamp(1rem,2vw,1.2rem);color:var(--muted);font-weight:300;line-height:1.7;margin-bottom:24px;}
+.lede b{color:var(--text);font-weight:600;}
+.lede i{color:var(--teal);font-style:italic;}
+.byline{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--soft);display:flex;flex-wrap:wrap;gap:6px 16px;}
+.byline b{color:var(--muted);font-weight:600;}
+
+/* SECTIONS */
+section{padding:64px 0 16px;}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px;}
+.sec-num{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--gold);font-weight:600;letter-spacing:.1em;padding-top:3px;}
+h2{font-family:"Fraunces",serif;font-weight:700;font-size:clamp(1.6rem,3.5vw,2.3rem);color:var(--white);margin:0;letter-spacing:-.01em;line-height:1.12;}
+h3.sub{font-family:"Fraunces",serif;font-weight:600;font-size:1.35rem;color:var(--white);margin:44px 0 12px;line-height:1.2;}
+.sec-sub{color:var(--muted);font-weight:300;margin:6px 0 28px;font-size:15.5px;line-height:1.75;}
+.sec-sub b{color:var(--text);font-weight:600;}
+p.body{color:var(--muted);font-size:15.5px;line-height:1.8;margin-bottom:18px;}
+p.body b{color:var(--text);font-weight:600;}
+p.body em{color:var(--teal);font-style:italic;}
+
+/* PULL QUOTE */
+.pull{font-family:"Fraunces",serif;font-weight:400;font-style:italic;font-size:clamp(1.2rem,2.5vw,1.7rem);line-height:1.35;color:var(--white);border-left:3px solid var(--gold);padding:6px 0 6px 24px;margin:36px 0;}
+.pull b{font-weight:700;font-style:normal;color:var(--teal);}
+
+/* BADGES */
+.badge{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:20px;font-weight:600;display:inline-block;vertical-align:middle;}
+.badge.teal{background:var(--teal-dim);color:var(--teal);border:1px solid rgba(79,197,192,.2);}
+.badge.gold{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(227,177,90,.2);}
+.badge.plum{background:var(--plum-dim);color:var(--plum);border:1px solid rgba(176,122,176,.2);}
+
+/* CARDS */
+.stack{display:grid;gap:16px;}
+.stack-2{grid-template-columns:1fr 1fr;gap:16px;}
+.stack-3{grid-template-columns:repeat(3,1fr);gap:14px;}
+@media(max-width:860px){.stack-2,.stack-3{grid-template-columns:1fr;}}
+.card{background:var(--card);border:1px solid var(--border);border-left:4px solid var(--teal);border-radius:8px;padding:22px 24px;}
+.card.c2{border-left-color:var(--gold);}
+.card.c3{border-left-color:var(--plum);}
+.card.c-rust{border-left-color:var(--rust);}
+.card.c-green{border-left-color:var(--green);}
+.card .tag{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);font-weight:600;}
+.card.c2 .tag{color:var(--gold);}
+.card.c3 .tag{color:var(--plum);}
+.card.c-rust .tag{color:var(--rust);}
+.card.c-green .tag{color:var(--green);}
+.card h3{font-family:"Fraunces",serif;font-weight:600;font-size:1.2rem;color:var(--white);margin:5px 0 8px;line-height:1.18;}
+.card p{margin:0 0 8px;font-size:14px;color:var(--muted);line-height:1.7;}
+.card p:last-child{margin-bottom:0;}
+.card p b{color:var(--text);font-weight:600;}
+
+/* TABLES */
+.table-scroll{overflow-x:auto;margin:24px 0;border:1px solid var(--border);border-radius:10px;}
+table{border-collapse:collapse;width:100%;min-width:580px;font-size:13.5px;}
+th,td{text-align:left;padding:12px 14px;vertical-align:top;border-bottom:1px solid var(--border);}
+thead th{background:var(--card);color:var(--white);font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;}
+tbody th{font-weight:600;color:var(--teal);width:170px;}
+tbody td{color:var(--muted);}
+tbody td b{color:var(--text);}
+tbody tr:last-child td,tbody tr:last-child th{border-bottom:none;}
+.mono{font-family:"IBM Plex Mono",monospace;font-size:12.5px;}
+
+/* DIAGRAMS */
+.diagram-frame{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px;margin:20px 0;}
+.diagram-frame svg{width:100%;height:auto;display:block;}
+.legend{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:16px;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--soft);}
+.legend span{display:inline-flex;align-items:center;gap:7px;}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
+
+/* CALLOUT */
+.callout{background:var(--teal-dim);border:1px solid rgba(79,197,192,.2);border-left:4px solid var(--teal);border-radius:8px;padding:18px 22px;margin:26px 0;}
+.callout .lab{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);font-weight:600;display:block;margin-bottom:6px;}
+.callout p{margin:0;font-size:14.5px;color:var(--muted);line-height:1.75;}
+.callout p b{color:var(--text);}
+.callout.gold{background:var(--gold-dim);border-color:rgba(227,177,90,.2);border-left-color:var(--gold);}
+.callout.gold .lab{color:var(--gold);}
+.callout.plum{background:var(--plum-dim);border-color:rgba(176,122,176,.2);border-left-color:var(--plum);}
+.callout.plum .lab{color:var(--plum);}
+
+/* DARK PANEL */
+.panel{background:var(--surface);border:1px solid var(--border-light);border-radius:10px;padding:28px 30px;margin:22px 0;}
+.panel .lab{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:600;display:block;margin-bottom:10px;}
+.panel h3{font-family:"Fraunces",serif;font-weight:600;font-size:1.4rem;color:var(--white);margin:0 0 10px;line-height:1.16;}
+.panel p{margin:0 0 12px;font-size:15px;line-height:1.7;color:var(--muted);}
+.panel p b{color:var(--white);}
+.panel p em{color:var(--gold);font-style:italic;}
+.panel .metric-row{display:flex;flex-wrap:wrap;gap:20px;margin:18px 0 4px;}
+.panel .met{text-align:center;flex:1;min-width:100px;}
+.panel .met .val{font-family:"Fraunces",serif;font-weight:900;font-size:2rem;color:var(--teal);line-height:1;}
+.panel .met .lab2{font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--soft);letter-spacing:.06em;text-transform:uppercase;margin-top:6px;}
+
+/* NUMBERED STEPS */
+.steps{counter-reset:step;list-style:none;padding:0;margin:22px 0 6px;display:grid;gap:12px;}
+.steps li{position:relative;padding:16px 20px 16px 62px;background:var(--card);border:1px solid var(--border);border-radius:8px;font-size:14.5px;color:var(--muted);line-height:1.7;}
+.steps li b{color:var(--text);font-weight:600;}
+.steps li em{color:var(--teal);font-style:italic;}
+.steps li::before{counter-increment:step;content:counter(step);position:absolute;left:15px;top:14px;width:32px;height:32px;border-radius:50%;background:var(--gold);color:var(--ink);font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:15px;display:flex;align-items:center;justify-content:center;}
+
+/* PRINCIPLES */
+.principles{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:8px;}
+@media(max-width:760px){.principles{grid-template-columns:1fr;}}
+.principle{background:var(--card);border:1px solid var(--border);border-top:3px solid var(--teal);border-radius:8px;padding:20px 22px;}
+.principle .pid{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--teal);font-weight:600;letter-spacing:.1em;}
+.principle h4{font-family:"Fraunces",serif;font-weight:600;font-size:1.08rem;color:var(--white);margin:4px 0 6px;line-height:1.2;}
+.principle p{font-size:13.5px;color:var(--muted);margin:0;line-height:1.65;}
+.principle p b{color:var(--text);}
+
+/* SYNTHESIS */
+.synthesis{background:linear-gradient(135deg,rgba(79,197,192,.06),rgba(227,177,90,.04));border:1px solid var(--border-light);border-radius:12px;padding:36px 32px;margin:32px 0;text-align:center;}
+.synthesis h2{margin-bottom:16px;}
+.synthesis p{color:var(--muted);font-size:16px;line-height:1.8;max-width:680px;margin:0 auto 14px;}
+.synthesis p b{color:var(--white);}
+.synthesis p em{color:var(--teal);font-style:italic;}
+
+/* FOOTER */
+footer{margin-top:48px;padding:28px 0 56px;border-top:1px solid var(--border);font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--soft);line-height:2;}
+footer a{color:var(--teal);text-decoration:none;}
+footer a:hover{text-decoration:underline;}
+
+@media print{
+  nav{display:none;}
+  .hero{padding-top:40px;}
+  body{background:#fff;color:#1a1a1a;}
+  .card,.panel,.callout,.principle,.diagram-frame,.synthesis{break-inside:avoid;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="inner">
+    <a href="./" class="logo"><div class="logo-mark"><span>Q</span></div><span class="logo-name">QMetrika Labs</span></a>
+    <div class="links">
+      <a href="#thesis">Tesis</a>
+      <a href="#two-classes">Tokens</a>
+      <a href="#durable-capital">Capital</a>
+      <a href="#balance">Balance</a>
+      <a href="#flywheel">Espiral</a>
+      <a href="#wedge">Cuña</a>
+      <a href="#stack">Stack</a>
+      <a href="#principles">Principios</a>
+      <span class="sep"></span>
+      <a href="TOKEN_CAPITAL_QMETRIKA.html" class="lang-switch">EN</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="wrap">
+<header class="hero">
+  <p class="kicker">QMetrika Labs · Paradigma de empresa · Documento de tesis</p>
+  <h1>Capital <em>Q</em>:<br>los tokens, la energía que se transforma<br>en <span class="plum">conocimiento</span></h1>
+  <p class="lede">Un modelo de empresa donde la unidad de capital no es la hora de trabajo ni el activo físico, sino el <b>token</b>: el cómputo de inferencia que, gobernado y capturado, se acumula como conocimiento propio, defendible y compuesto. Aplicado a una vertical profunda — <b>bioinformática e IA</b> — donde la especialización convierte el gasto de hoy en el <i>moat</i> de mañana.</p>
+  <div class="byline">
+    <span><b>Jose Antonio Vilar Sánchez</b></span>
+    <span>· ORCID 0009-0008-1057-4223</span>
+    <span>· QMetrika Labs · 2026</span>
+  </div>
+</header>
+
+<!-- 01 THESIS -->
+<section id="thesis">
+  <div class="sec-head"><span class="sec-num">01</span><h2>La tesis en una frase</h2></div>
+  <p class="sec-sub">El coste marginal de producir un texto, un análisis o una decisión ha caído a casi cero. Cuando el trabajo cognitivo se vuelve barato y abundante, el activo escaso ya no es el trabajo en sí — pasa a ser <b>lo que ese trabajo deja detrás</b>.</p>
+
+  <p class="body">Durante dos siglos, una empresa construía capital sobre dos cosas: <b>trabajo</b> (persona-horas) y <b>activos físicos</b> (máquinas, edificios, inventario). El balance medía lo tangible; la cuenta de resultados medía cuánto trabajo se necesitaba para producir ingresos. La IA generativa rompe ese marco en su base: el trabajo cognitivo — escribir, clasificar, razonar, decidir — se produce ahora en tokens, a un coste que tiende a cero y con una oferta prácticamente infinita.</p>
+
+  <p class="body">Esto obliga a preguntarse dónde reside el valor. Si cualquiera puede alquilar el mismo modelo fundacional y generar los mismos tokens, el token en bruto no es capital: es una <em>commodity</em>. El capital aparece cuando el token deja de ser efímero — una respuesta que se consume y se olvida — y se convierte en algo que <b>se acumula</b>: una decisión humana capturada, un dato de evaluación, un modelo afinado que mañana hace gratis lo que hoy costaba caro.</p>
+
+  <div class="pull">Un token gastado y olvidado es <b>gasto</b>. Un token gastado, gobernado y capturado es <b>capital</b>. La diferencia entre ambos no está en el modelo — está en la arquitectura de la empresa.</div>
+
+  <p class="body">Este documento describe esa arquitectura. Su lema fundacional — heredado de QMetrika — es literal, no metafórico: <em>energía que se transforma en conocimiento</em>. En la ciencia de QMetrika, la <b>energía libre</b> (ΔG) de una molécula de RNA se perfila para extraer conocimiento biológico. En la empresa, la <b>energía computacional</b> (tokens) se gasta para extraer conocimiento organizacional. Es la misma ecuación en dos capas — y esa coincidencia no es un juego de palabras, es el eje de todo el modelo.</p>
+</section>
+
+<!-- 02 TWO CLASSES -->
+<section id="two-classes">
+  <div class="sec-head"><span class="sec-num">02</span><h2>No todos los tokens son iguales</h2></div>
+  <p class="sec-sub">El primer error contable de la empresa-IA es tratar todos los tokens como el mismo insumo. Hay dos clases, con economías opuestas — y la salud de la empresa se mide por el ratio entre ellas.</p>
+
+  <div class="stack-2">
+    <article class="card c2">
+      <span class="tag">Class A · alquilado</span>
+      <h3>Token fundacional</h3>
+      <p>De un modelo frontera de terceros (Opus, GPT-4o, Gemini). <b>Potente pero caro</b>, y no es tuyo: lo alquilas por llamada. OPEX puro — cada uso desaparece del balance en el momento en que se consume.</p>
+      <p>Su papel correcto: hacer el <b>trabajo duro de arranque</b>, el razonamiento que aún no has aprendido a destilar. Necesario, pero es coste, no activo.</p>
+    </article>
+    <article class="card">
+      <span class="tag">Class B · propio</span>
+      <h3>Token local</h3>
+      <p>De un modelo ejecutándose en <b>tu propio hardware</b> (Ollama/MLX, una NPU/iGPU, un nodo Linux) — a coste marginal ≈ cero una vez amortizado. Es la contrapartida CAPEX: inversión inicial que produce tokens casi gratis para siempre.</p>
+      <p>Su papel: absorber todo el <b>trabajo rutinario y especializado</b> que ya sabes hacer. Cada tarea que migra de Class A a Class B es margen liberado.</p>
+    </article>
+  </div>
+
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>Dimensión</th><th>Token fundacional (alquilado)</th><th>Token local (propio)</th></tr></thead>
+      <tbody>
+        <tr><th>Coste marginal</th><td>Alto · por millón de tokens, en €</td><td><b>≈ 0</b> tras amortizar hardware</td></tr>
+        <tr><th>Naturaleza contable</th><td>OPEX — se consume y desaparece</td><td>CAPEX amortizado — rinde a perpetuidad</td></tr>
+        <tr><th>Propiedad</th><td>No es tuyo; dependes de un proveedor</td><td>Tuyo; funciona offline, sin cuota, sin fuga de datos</td></tr>
+        <tr><th>Uso óptimo</th><td>Razonamiento difícil, arranque, casos nuevos</td><td>Rutina, alto volumen, tareas ya destiladas</td></tr>
+        <tr><th>Autonomía</th><td>Sujeto a límites de tasa, precios y políticas del proveedor</td><td><b>Total</b> — más local, más soberanía</td></tr>
+        <tr><th>Datos sensibles</th><td>Salen de tu perímetro (RGPD, PI)</td><td>Nunca salen de tu infraestructura</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout gold">
+    <span class="lab">La métrica maestra</span>
+    <p>La empresa Capital Q no optimiza para "gastar menos en IA." Optimiza un solo ratio: <b>proporción de trabajo servido por tokens locales frente a tokens fundacionales</b>. Cuanto más se desplaza hacia local, mayor la autonomía, menor el coste y — esto es lo clave — más conocimiento propio acumulado. El objetivo no es apagar los tokens caros: es <b>convertir su producción en capacidad local</b> antes de que el gasto se evapore.</p>
+  </div>
+
+  <p class="body">Esta distinción ya está operativa en el <b>Agent Board</b> de QMetrika. Su límite de trabajo en curso (WIP) no se mide en número de agentes, sino <b>en coste</b>, y multidimensionalmente: <span class="mono">{ agentes, € total, € en modelos fundacionales }</span>. Un agente ejecutando un modelo local entra casi sin restricción; uno usando Opus consume del presupuesto fundacional y, cuando se agota, cae a un carril dedicado — <b>⚡ No budget</b> — donde puedes ver <em>por qué</em> fue limitado. El coste no es una nota al pie: es la física del sistema.</p>
+</section>
+
+<!-- 03 DURABLE CAPITAL -->
+<section id="durable-capital">
+  <div class="sec-head"><span class="sec-num">03</span><h2>Las tres formas de capital duradero</h2></div>
+  <p class="sec-sub">Si el token en bruto es una <em>commodity</em>, ¿dónde se acumula el capital? En tres depósitos que se llenan como subproducto del trabajo diario — pero solo si la empresa está construida para <b>capturarlos</b>. Sin captura, el mismo trabajo genera cero capital.</p>
+
+  <div class="stack-3">
+    <article class="card">
+      <span class="tag">Depósito 1</span>
+      <h3>Juicio humano capturado</h3>
+      <p>Cada vez que un humano aprueba o deniega la acción de un agente en el gate de gobernanza, produce una <b>etiqueta</b>: una decisión etiquetada sobre qué era correcto. Ese juicio es el insumo más caro de la IA — y aquí se genera gratis, como residuo del trabajo.</p>
+      <p><b>→</b> Preferencias para <em>fine-tuning</em>. Reglas para endurecer. Intuición experta, convertida en datos.</p>
+    </article>
+    <article class="card c2">
+      <span class="tag">Depósito 2</span>
+      <h3>Auditoría verificable</h3>
+      <p>Cada llamada a herramienta y cada decisión se registra en un <b>libro de registro encadenado por hash</b>: inmutable, verificable, imposible de alterar sin romper la cadena. No es solo cumplimiento normativo — es un dataset limpio y trazable de todo lo que la organización ha hecho.</p>
+      <p><b>→</b> Base para <em>evaluaciones</em>, reproducibilidad, defensa regulatoria y confianza demostrable.</p>
+    </article>
+    <article class="card c3">
+      <span class="tag">Depósito 3</span>
+      <h3>Modelos afinados + ciclos</h3>
+      <p>Con juicio y auditoría acumulados, se afinan modelos <b>locales</b> que internalizan el trabajo especializado. Cada ciclo desplaza carga de Class A a Class B. El conocimiento deja de vivir en un proveedor externo y se mueve a <b>pesos que son tuyos</b>.</p>
+      <p><b>→</b> Capacidad propietaria, componible, que reduce coste y aumenta autonomía simultáneamente.</p>
+    </article>
+  </div>
+
+  <div class="pull">El <b>foso competitivo</b> no son los pesos del modelo — esos caducan cada seis meses. El foso es el <b>juicio capturado y los datos de evaluación</b> que solo tu operación produce, y que ningún competidor puede alquilar.</div>
+
+  <p class="body">Esta es la inversión conceptual que define el paradigma. En la vieja economía de la IA, el activo era el modelo. En Capital Q, el modelo es reemplazable y el activo es <b>el sustrato que lo entrena y lo evalúa</b>: el registro acumulado de decisiones humanas correctas en tu dominio específico. Un mejor modelo fundacional solo hace que tu capital rinda <em>más</em>, porque parte de mejor materia prima. Nunca te descapitaliza.</p>
+</section>
+
+<!-- 04 BALANCE SHEET -->
+<section id="balance">
+  <div class="sec-head"><span class="sec-num">04</span><h2>El balance de la empresa-Q</h2></div>
+  <p class="sec-sub">Si esto es capital, necesita un libro de registro. En QMetrika, ese libro no es una hoja de cálculo separada — es el <b>mismo tablero operativo</b> leído a través de una lente diferente. Un sistema, dos vistas: el Agent Board gobierna la acción; el Capital Board lee esa misma acción como capital que se acumula.</p>
+
+  <div class="stack-2">
+    <div class="panel">
+      <span class="lab">Vista operativa · Agent Board</span>
+      <h3>La cuenta de resultados</h3>
+      <p>Kanban en vivo: cada agente es una tarjeta que avanza por columnas. Ves <b>qué toca cada uno</b>, su modelo, sus tokens y su coste en tiempo real. Las acciones con efectos secundarios no se ejecutan solas: aterrizan en <em>Needs Input</em> y esperan aprobación humana con un token de operador.</p>
+      <p>La decisión sobre qué está permitido es <b>código</b> — política determinista allow/ask/deny — no juicio del modelo. El control vive en la herramienta, no en el prompt.</p>
+    </div>
+    <div class="panel">
+      <span class="lab">Vista de acumulación · Capital Board</span>
+      <h3>El balance</h3>
+      <p>El mismo sustrato — auditoría, libro de costes, aprobaciones — leído como <b>capital que se acumula</b>. Coste por proveedor (fundacional vs local). Decisiones por resultado del gate. Uso de tokens local vs fundacional. Y en la parte superior, <b>capital capturado por semana</b>: etiquetas de juicio humano + entradas de auditoría para evaluaciones.</p>
+      <p>Donde la vista operativa pregunta <em>"¿qué está pasando ahora?"</em>, la vista de acumulación pregunta <em>"¿cuánto foso he construido esta semana?"</em>.</p>
+    </div>
+  </div>
+
+  <div class="diagram-frame">
+    <svg viewBox="0 0 920 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Un sustrato, dos lentes: de la acción gobernada al capital acumulado">
+      <!-- substrate -->
+      <rect x="330" y="120" width="260" height="60" rx="8" fill="#171B24" stroke="#252A36" stroke-width="1.5"/>
+      <text x="460" y="146" text-anchor="middle" fill="#E3B15A" font-family="IBM Plex Mono,monospace" font-size="11" font-weight="600" letter-spacing="1">SUSTRATO ÚNICO</text>
+      <text x="460" y="165" text-anchor="middle" fill="#8B90A0" font-family="IBM Plex Mono,monospace" font-size="10">auditoría · libro de costes · aprobaciones</text>
+      <!-- left lens -->
+      <rect x="40" y="40" width="230" height="90" rx="8" fill="none" stroke="#E3B15A" stroke-width="1.5"/>
+      <text x="155" y="66" text-anchor="middle" fill="#E3B15A" font-family="Fraunces,serif" font-size="15" font-weight="600">Agent Board</text>
+      <text x="155" y="88" text-anchor="middle" fill="#8B90A0" font-family="IBM Plex Mono,monospace" font-size="9.5">vista operativa · gobierna</text>
+      <text x="155" y="106" text-anchor="middle" fill="#8B90A0" font-family="IBM Plex Mono,monospace" font-size="9.5">kanban · gate · WIP</text>
+      <!-- right lens -->
+      <rect x="650" y="40" width="230" height="90" rx="8" fill="none" stroke="#4FC5C0" stroke-width="1.5"/>
+      <text x="765" y="66" text-anchor="middle" fill="#4FC5C0" font-family="Fraunces,serif" font-size="15" font-weight="600">Capital Board</text>
+      <text x="765" y="88" text-anchor="middle" fill="#8B90A0" font-family="IBM Plex Mono,monospace" font-size="9.5">vista de acumulación · lee</text>
+      <text x="765" y="106" text-anchor="middle" fill="#8B90A0" font-family="IBM Plex Mono,monospace" font-size="9.5">foso · etiquetas · evaluaciones</text>
+      <!-- connectors -->
+      <path d="M270 95 Q330 130 355 150" fill="none" stroke="#E3B15A" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <path d="M650 95 Q590 130 565 150" fill="none" stroke="#4FC5C0" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <!-- output -->
+      <rect x="330" y="230" width="260" height="46" rx="8" fill="#B07AB0"/>
+      <text x="460" y="251" text-anchor="middle" fill="#fff" font-family="Fraunces,serif" font-size="13" font-weight="600">Capital Q</text>
+      <text x="460" y="268" text-anchor="middle" fill="#f0e0f0" font-family="IBM Plex Mono,monospace" font-size="9">energía → conocimiento propio</text>
+      <path d="M460 180 L460 228" fill="none" stroke="#B07AB0" stroke-width="2"/>
+      <polygon points="460,232 455,222 465,222" fill="#B07AB0"/>
+    </svg>
+    <div class="legend">
+      <span><i class="dot" style="background:#E3B15A"></i> Lente operativa — gobierna la acción</span>
+      <span><i class="dot" style="background:#4FC5C0"></i> Lente de capital — lee la acumulación</span>
+      <span><i class="dot" style="background:#B07AB0"></i> Producto — foso que se compone</span>
+    </div>
+  </div>
+</section>
+
+<!-- 05 ACCUMULATION SPIRAL -->
+<section id="flywheel">
+  <div class="sec-head"><span class="sec-num">05</span><h2>La espiral de acumulación</h2></div>
+  <p class="sec-sub">El motor de la empresa es un ciclo <b>Design–Build–Test–Learn</b> (DBTL). Cada vuelta convierte el gasto fundacional de hoy en capacidad local de mañana, dejando un depósito de capital más lleno. La espiral gana impulso: cada vuelta cuesta menos y rinde más.</p>
+
+  <div class="diagram-frame">
+    <svg viewBox="0 0 760 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Espiral de acumulación DBTL">
+      <defs>
+        <marker id="arw" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+          <path d="M0,0 L7,3 L0,6 Z" fill="#4FC5C0"/>
+        </marker>
+      </defs>
+      <!-- center -->
+      <circle cx="380" cy="210" r="70" fill="#171B24" stroke="#252A36" stroke-width="1.5"/>
+      <text x="380" y="200" text-anchor="middle" fill="#E3B15A" font-family="Fraunces,serif" font-size="18" font-weight="900">Capital Q</text>
+      <text x="380" y="222" text-anchor="middle" fill="#8B90A0" font-family="IBM Plex Mono,monospace" font-size="9">energía →</text>
+      <text x="380" y="236" text-anchor="middle" fill="#8B90A0" font-family="IBM Plex Mono,monospace" font-size="9">conocimiento</text>
+      <!-- D -->
+      <circle cx="380" cy="70" r="46" fill="#171B24" stroke="#E3B15A" stroke-width="2"/>
+      <text x="380" y="66" text-anchor="middle" fill="#E3B15A" font-family="Fraunces,serif" font-size="16" font-weight="600">Design</text>
+      <text x="380" y="84" text-anchor="middle" fill="#8B90A0" font-family="IBM Plex Mono,monospace" font-size="8.5">Agent Canvas</text>
+      <!-- B -->
+      <circle cx="620" cy="210" r="46" fill="#171B24" stroke="#4FC5C0" stroke-width="2"/>
+      <text x="620" y="206" text-anchor="middle" fill="#4FC5C0" font-family="Fraunces,serif" font-size="16" font-weight="600">Build</text>
+      <text x="620" y="224" text-anchor="middle" fill="#8B90A0" font-family="IBM Plex Mono,monospace" font-size="8.5">tokens fundacionales</text>
+      <!-- T -->
+      <circle cx="380" cy="350" r="46" fill="#171B24" stroke="#B07AB0" stroke-width="2"/>
+      <text x="380" y="346" text-anchor="middle" fill="#B07AB0" font-family="Fraunces,serif" font-size="16" font-weight="600">Test</text>
+      <text x="380" y="364" text-anchor="middle" fill="#8B90A0" font-family="IBM Plex Mono,monospace" font-size="8.5">gate + evaluaciones</text>
+      <!-- L -->
+      <circle cx="140" cy="210" r="46" fill="#171B24" stroke="#81B29A" stroke-width="2"/>
+      <text x="140" y="206" text-anchor="middle" fill="#81B29A" font-family="Fraunces,serif" font-size="16" font-weight="600">Learn</text>
+      <text x="140" y="224" text-anchor="middle" fill="#8B90A0" font-family="IBM Plex Mono,monospace" font-size="8.5">fine-tune local</text>
+      <!-- arrows -->
+      <path d="M424 92 A 160 160 0 0 1 598 168" fill="none" stroke="#4FC5C0" stroke-width="2" marker-end="url(#arw)"/>
+      <path d="M598 252 A 160 160 0 0 1 424 328" fill="none" stroke="#4FC5C0" stroke-width="2" marker-end="url(#arw)"/>
+      <path d="M336 328 A 160 160 0 0 1 162 252" fill="none" stroke="#4FC5C0" stroke-width="2" marker-end="url(#arw)"/>
+      <path d="M162 168 A 160 160 0 0 1 336 92" fill="none" stroke="#4FC5C0" stroke-width="2" marker-end="url(#arw)"/>
+    </svg>
+    <div class="legend">
+      <span><i class="dot" style="background:#E3B15A"></i> Design — qué agente, para quién, con qué salvaguardas</span>
+      <span><i class="dot" style="background:#4FC5C0"></i> Build — el trabajo duro, con tokens fundacionales</span>
+      <span><i class="dot" style="background:#B07AB0"></i> Test — el gate humano genera etiquetas; la auditoría, evaluaciones</span>
+      <span><i class="dot" style="background:#81B29A"></i> Learn — afinar modelos locales, migrar carga a Class B</span>
+    </div>
+  </div>
+
+  <ol class="steps">
+    <li><b>Design.</b> Antes de escribir código, el <b>Agent Canvas Model</b> fuerza las preguntas caras: para quién, qué problema resuelve, qué autonomía tiene, qué KPIs, qué puede salir mal. La ambigüedad se paga aquí o se paga, multiplicada, después.</li>
+    <li><b>Build.</b> El agente empieza haciendo el trabajo duro con <b>tokens fundacionales</b> — aún no has aprendido a destilar ese razonamiento, así que lo alquilas. Este es el gasto que financia la vuelta.</li>
+    <li><b>Test.</b> Todo pasa por el gate de gobernanza. Cada aprobación humana es una <b>etiqueta</b>; cada decisión, una entrada de auditoría. Aquí, testear no valida una salida: <em>captura capital</em>.</li>
+    <li><b>Learn.</b> Con etiquetas y evaluaciones acumuladas, se afinan modelos <b>locales</b> que absorben la tarea. La carga migra de Class A a Class B. El coste de la siguiente vuelta baja; la autonomía sube. La espiral gira más rápido.</li>
+  </ol>
+
+  <div class="callout plum">
+    <span class="lab">Por qué se compone</span>
+    <p>Un negocio de servicios normal gasta lo mismo en la tarea 1.000 que en la tarea 1. La empresa Capital Q no: la tarea 1.000 se ejecuta casi gratis en local porque las 999 anteriores dejaron el juicio para afinarla. <b>El coste marginal decae mientras el foso crece</b> — las dos curvas van en direcciones opuestas, y esa tijera es el modelo de negocio.</p>
+  </div>
+
+  <h3 class="sub">Cómo se cierra el ciclo: de la decisión al modelo propietario</h3>
+  <p class="body">La pata <b>Learn</b> no es una metáfora: es un pipeline concreto que convierte los <b>Depósitos 1 y 2</b> (juicio humano capturado + auditoría verificable) en <b>Depósito 3</b> (modelos locales afinados). La trazabilidad no es un requisito separado del <em>fine-tuning</em> — es lo que hace que el dataset de <em>fine-tuning</em> sea <em>fiable</em>.</p>
+
+  <div class="diagram-frame">
+    <svg viewBox="0 0 920 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pipeline: gate, auditoría, ETL, LoRA, evaluación y promoción">
+      <defs>
+        <marker id="pa" markerWidth="9" markerHeight="9" refX="6.5" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L6.5,3 L0,6 Z" fill="#8B90A0"/></marker>
+        <marker id="pg" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="#81B29A"/></marker>
+      </defs>
+      <!-- bracket labels -->
+      <text x="151" y="46" text-anchor="middle" fill="#E3B15A" font-family="IBM Plex Mono,monospace" font-size="10" font-weight="600" letter-spacing="1">DEPÓSITOS 1 + 2 · CAPTURA</text>
+      <path d="M15 54 L15 62 L296 62 L296 54" fill="none" stroke="#E3B15A" stroke-width="1.5"/>
+      <text x="612" y="46" text-anchor="middle" fill="#4FC5C0" font-family="IBM Plex Mono,monospace" font-size="10" font-weight="600" letter-spacing="1">DEPÓSITO 3 · MODELO PROPIETARIO</text>
+      <path d="M472 54 L472 62 L905 62 L905 54" fill="none" stroke="#4FC5C0" stroke-width="1.5"/>
+      <!-- stages -->
+      <rect x="15" y="80" width="128" height="72" rx="8" fill="#171B24" stroke="#E3B15A" stroke-width="1.5"/>
+      <text x="79" y="112" text-anchor="middle" fill="#E3B15A" font-family="Fraunces,serif" font-size="15" font-weight="600">Gate</text>
+      <text x="79" y="130" text-anchor="middle" fill="#8B90A0" font-family="IBM Plex Mono,monospace" font-size="8.5">humano decide</text>
+      <text x="79" y="143" text-anchor="middle" fill="#8B90A0" font-family="IBM Plex Mono,monospace" font-size="8.5">permitir / denegar / editar</text>
+
+      <rect x="168" y="80" width="128" height="72" rx="8" fill="#171B24" stroke="#E3B15A" stroke-width="1.5"/>
+      <text x="232" y="112" text-anchor="middle" fill="#E3B15A" font-family="Fraunces,serif" font-size="15" font-weight="600">Auditoría</text>
+      <text x="232" y="130" text-anchor="middle" fill="#8B90A0" font-family="IBM Plex Mono,monospace" font-size="8.5">hash-chain</text>
+      <text x="232" y="143" text-anchor="middle" fill="#8B90A0" font-family="IBM Plex Mono,monospace" font-size="8.5">etiqueta + procedencia</text>
+
+      <rect x="320" y="80" width="128" height="72" rx="8" fill="#252A36" stroke="#252A36" stroke-width="1.5"/>
+      <text x="384" y="112" text-anchor="middle" fill="#E3B15A" font-family="Fraunces,serif" font-size="15" font-weight="600">ETL</text>
+      <text x="384" y="130" text-anchor="middle" fill="#8B90A0" font-family="IBM Plex Mono,monospace" font-size="8.5">hash cursor</text>
+      <text x="384" y="143" text-anchor="middle" fill="#8B90A0" font-family="IBM Plex Mono,monospace" font-size="8.5">curar · dedup · dividir</text>
+
+      <rect x="472" y="80" width="128" height="72" rx="8" fill="#171B24" stroke="#4FC5C0" stroke-width="1.5"/>
+      <text x="536" y="108" text-anchor="middle" fill="#4FC5C0" font-family="Fraunces,serif" font-size="15" font-weight="600">LoRA</text>
+      <text x="536" y="126" text-anchor="middle" fill="#8B90A0" font-family="IBM Plex Mono,monospace" font-size="8.5">SFT / KTO / DPO</text>
+      <text x="536" y="139" text-anchor="middle" fill="#8B90A0" font-family="IBM Plex Mono,monospace" font-size="8.5">QLoRA en local</text>
+
+      <rect x="625" y="80" width="128" height="72" rx="8" fill="#171B24" stroke="#B07AB0" stroke-width="1.5"/>
+      <text x="689" y="108" text-anchor="middle" fill="#B07AB0" font-family="Fraunces,serif" font-size="14" font-weight="600">Evaluación</text>
+      <text x="689" y="126" text-anchor="middle" fill="#8B90A0" font-family="IBM Plex Mono,monospace" font-size="8.5">vs. decisiones reales</text>
+      <text x="689" y="139" text-anchor="middle" fill="#8B90A0" font-family="IBM Plex Mono,monospace" font-size="8.5">retenidas</text>
+
+      <rect x="777" y="80" width="128" height="72" rx="8" fill="#171B24" stroke="#81B29A" stroke-width="1.5"/>
+      <text x="841" y="108" text-anchor="middle" fill="#81B29A" font-family="Fraunces,serif" font-size="14" font-weight="600">Promoción</text>
+      <text x="841" y="126" text-anchor="middle" fill="#8B90A0" font-family="IBM Plex Mono,monospace" font-size="8.5">si supera umbral</text>
+      <text x="841" y="139" text-anchor="middle" fill="#8B90A0" font-family="IBM Plex Mono,monospace" font-size="8.5">→ desplegar local</text>
+
+      <!-- forward arrows -->
+      <line x1="145" y1="116" x2="164" y2="116" stroke="#8B90A0" stroke-width="1.5" marker-end="url(#pa)"/>
+      <line x1="298" y1="116" x2="316" y2="116" stroke="#8B90A0" stroke-width="1.5" marker-end="url(#pa)"/>
+      <line x1="450" y1="116" x2="468" y2="116" stroke="#8B90A0" stroke-width="1.5" marker-end="url(#pa)"/>
+      <line x1="602" y1="116" x2="621" y2="116" stroke="#8B90A0" stroke-width="1.5" marker-end="url(#pa)"/>
+      <line x1="755" y1="116" x2="773" y2="116" stroke="#8B90A0" stroke-width="1.5" marker-end="url(#pa)"/>
+
+      <!-- feedback arc -->
+      <path d="M841 152 L841 220 Q841 240 819 240 L101 240 Q79 240 79 220 L79 152" fill="none" stroke="#81B29A" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#pg)"/>
+      <rect x="330" y="226" width="260" height="28" rx="6" fill="#12151C" stroke="#81B29A" stroke-width="1"/>
+      <text x="460" y="244" text-anchor="middle" fill="#81B29A" font-family="IBM Plex Mono,monospace" font-size="9.5" font-weight="600">local propone mejor → menos "ask" → carga a Class B</text>
+
+      <text x="460" y="290" text-anchor="middle" fill="#5C6175" font-family="IBM Plex Mono,monospace" font-size="9">⚠ active learning: enviar una fracción a revisión para no agotar el flujo de etiquetas</text>
+    </svg>
+    <div class="legend">
+      <span><i class="dot" style="background:#E3B15A"></i> Captura — juicio + procedencia</span>
+      <span><i class="dot" style="background:#252A36;border:1px solid #5C6175"></i> ETL — extraer y curar</span>
+      <span><i class="dot" style="background:#4FC5C0"></i> Fine-tune — LoRA en local</span>
+      <span><i class="dot" style="background:#B07AB0"></i> Evaluar — contra decisiones reales</span>
+      <span><i class="dot" style="background:#81B29A"></i> Promover — cerrar el ciclo</span>
+    </div>
+  </div>
+
+  <p class="body" style="margin-top:20px;">Los datos emitidos por el gate ya tienen la forma de un ejemplo de entrenamiento — <em>contexto → acción propuesta → veredicto</em> — así que no hay que fabricar etiquetas: la operación las produce como residuo. Esos datos se explotan de tres formas:</p>
+
+  <div class="stack-3" style="margin-top:16px;">
+    <article class="card">
+      <span class="tag">Nivel 1 · SFT</span>
+      <h3>Aprender lo aprobado</h3>
+      <p>Los pares <span class="mono">(contexto → acción aprobada)</span> se convierten en el comportamiento "gold": el modelo local aprende a proponer lo que el humano habría aprobado. El enfoque más simple — ideal al arrancar.</p>
+    </article>
+    <article class="card c2">
+      <span class="tag">Nivel 2 · KTO / DPO</span>
+      <h3>Aprender de la preferencia</h3>
+      <p><b>KTO</b> encaja casi perfectamente: funciona con señal binaria suelta — aprobar / denegar — que es <em>literalmente</em> lo que el gate emite. <b>DPO</b> usa pares aprobado-vs-denegado cuando se tienen.</p>
+    </article>
+    <article class="card c3">
+      <span class="tag">Nivel 3 · Modelo de recompensa</span>
+      <h3>Aprender a puntuar</h3>
+      <p>Se agregan decisiones para entrenar un modelo que <b>puntúe</b> acciones futuras. Se convierte en un pre-filtro: eleva el listón de lo que el gate deja pasar sin preguntar.</p>
+    </article>
+  </div>
+
+  <div class="callout">
+    <span class="lab">Por qué la trazabilidad es control de calidad de datos</span>
+    <p>La cadena de hash da al pipeline cuatro cosas que un setup de <em>fine-tuning</em> normal no tiene: <b>procedencia</b> (prueba de que cada etiqueta vino de una decisión humana real), <b>inmutabilidad</b> (nadie envenena el conjunto silenciosamente), <b>linaje</b> (puedes reconstruir qué decisiones entrenaron qué versión del modelo — lo que el AI Act de la UE y los dossiers SaMD exigen), y <b>deduplicación por hash</b> (sabes qué decisiones se han "gastado" en ciclos de entrenamiento previos).</p>
+  </div>
+
+  <div class="callout gold">
+    <span class="lab">El riesgo del ciclo que se autoasfixia</span>
+    <p>A medida que el modelo local mejora, <b>menos casos llegan al gate</b> — y se generan menos etiquetas nuevas. El ciclo puede asfixiarse a sí mismo. La cura es <em>active learning</em>: enviar deliberadamente una fracción de casos a revisión humana, para mantener vivo el flujo de juicio y detectar deriva. La captura nunca debe caer a cero por completo.</p>
+  </div>
+</section>
+
+<!-- 06 VERTICAL WEDGE -->
+<section id="wedge">
+  <div class="sec-head"><span class="sec-num">06</span><h2>La cuña vertical: por qué bioinformática</h2></div>
+  <p class="sec-sub">Capital Q no se compone horizontalmente. Un asistente genérico compite con el modelo fundacional en su propio terreno — y pierde. Se compone en <b>una vertical estrecha y profunda</b>, donde el token genérico vale poco y el capital especializado vale mucho.</p>
+
+  <p class="body">La elección de vertical en QMetrika no es arbitraria: es donde la metáfora se hace literal. El motor científico es un perfil de <b>energía libre de apilamiento</b> (ΔG nearest-neighbor) del RNA. La empresa ya vivía de transformar energía en conocimiento — energía termodinámica en conocimiento biológico. Capital Q es esa misma ecuación elevada una capa.</p>
+
+  <div class="panel">
+    <span class="lab">El isomorfismo QMetrika</span>
+    <h3>Dos capas, una ecuación</h3>
+    <div class="metric-row">
+      <div class="met"><div class="val">ΔG</div><div class="lab2">capa científica</div></div>
+      <div class="met"><div class="val">→</div><div class="lab2">energía a conocimiento</div></div>
+      <div class="met"><div class="val">tokens</div><div class="lab2">capa empresa</div></div>
+    </div>
+    <p style="margin-top:16px;"><b>Capa científica:</b> se gasta energía termodinámica (stacking ΔG) y se extrae conocimiento biológico — clasificación de variantes, optimización de mRNA. <b>Capa empresa:</b> se gasta energía computacional (tokens) y se extrae conocimiento organizacional — etiquetas, evaluaciones, modelos propietarios. La empresa es fractal respecto a su propia ciencia.</p>
+  </div>
+
+  <p class="body">Y la vertical no solo da coherencia narrativa — da <b>defendibilidad que se compone</b>:</p>
+
+  <div class="stack-2">
+    <article class="card c-rust">
+      <span class="tag">Foso 1 · PI</span>
+      <h3>La patente</h3>
+      <p>P202630522 (OEPM, 2026) cubre el método de huella termodinámica del mRNA — tanto clasificación de variantes como optimización de codones. Un token fundacional no puede reproducir un método patentado. La extensión PCT (abril 2027) internacionaliza el foso.</p>
+    </article>
+    <article class="card">
+      <span class="tag">Foso 2 · datos</span>
+      <h3>Datos propietarios</h3>
+      <p>Logs reales de producción, pilotos clínicos, validación experimental. Juicio experto sobre variantes específicas. Estos datos no están en el corpus de entrenamiento de ningún modelo — solo tu operación los produce.</p>
+    </article>
+    <article class="card c2">
+      <span class="tag">Foso 3 · motor</span>
+      <h3>El motor ΔG</h3>
+      <p>Un perfil biofísico ortogonal a lo que ven los competidores (CADD, REVEL, AlphaMissense operan a nivel de proteína; el motor ΔG ve termodinámica del mRNA). No compite: <b>complementa</b>.</p>
+    </article>
+    <article class="card c3">
+      <span class="tag">Foso 4 · evaluaciones</span>
+      <h3>Capital de evaluación</h3>
+      <p>En un dominio donde equivocarse tiene coste clínico, poder <b>demostrar</b> que aciertas — con una cadena de auditoría verificable y un banco de evaluación propietario — es en sí mismo el producto.</p>
+    </article>
+  </div>
+
+  <div class="callout">
+    <span class="lab">La regla de la cuña</span>
+    <p>Empieza estrecho y profundo. Un agente excelente en clasificación de variantes para un puñado de genes vale más que uno mediocre que intenta toda la genómica. La profundidad es lo que hace que el token local especializado supere al token fundacional genérico — y solo entonces se ensancha la cuña.</p>
+  </div>
+</section>
+
+<!-- 07 STACK -->
+<section id="stack">
+  <div class="sec-head"><span class="sec-num">07</span><h2>El stack QMetrika: tres frameworks, un modelo</h2></div>
+  <p class="sec-sub">El paradigma se materializa en tres piezas que ya se han construido y publicado. Cada una cubre una fase del ciclo. Juntas, <b>son</b> la empresa Capital Q.</p>
+
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>Framework</th><th>Fase</th><th>Qué hace</th><th>Papel en el capital</th></tr></thead>
+      <tbody>
+        <tr><th>Agent Canvas Model</th><td><span class="badge gold">Design</span></td><td>9 bloques que fuerzan las decisiones caras antes de programar: segmento, propuesta de valor, canales, autonomía, KPIs, recursos, capacidades, integraciones, costes y riesgos.</td><td>Evita quemar tokens en agentes mal planificados.</td></tr>
+        <tr><th>Agent Board</th><td><span class="badge teal">Gobernar</span></td><td>Tablero de supervisión + gate determinista (allow/ask/deny) + WIP medido en coste + auditoría hash-chain. Agnóstico de LLM.</td><td>Convierte cada acción en una etiqueta y una entrada de auditoría.</td></tr>
+        <tr><th>Capital Board</th><td><span class="badge teal">Capitalizar</span></td><td>Segunda lente sobre el mismo sustrato: lee coste, decisiones y auditoría como capital acumulado.</td><td>Hace visible cuánto Capital Q se ha construido.</td></tr>
+        <tr><th>Motor ΔG · Bio-IA</th><td><span class="badge plum">Defender</span></td><td>Perfil de energía libre nearest-neighbor para clasificar variantes y optimizar mRNA. Patente + tres preprints.</td><td>El foso. Donde el capital especializado supera defendiblemente al token genérico.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pull">Otros montan un servidor MCP y le piden al modelo que "se porte bien." Capital Q pone el control en la herramienta, mide el gasto como física del sistema y lee cada decisión como <b>un ladrillo en el foso</b>. La diferencia no es tecnológica — es contable.</div>
+</section>
+
+<!-- 08 PRINCIPLES -->
+<section id="principles">
+  <div class="sec-head"><span class="sec-num">08</span><h2>Principios operativos</h2></div>
+  <p class="sec-sub">Ocho reglas que distinguen a una empresa Capital Q de una que simplemente "usa IA." No son aspiraciones — son decisiones arquitectónicas que o se toman al construir, o no se toman.</p>
+
+  <div class="principles">
+    <div class="principle"><span class="pid">P1</span><h4>El token es capital, no gasto</h4><p>Trata cada gasto fundacional como una inversión que debe dejar un depósito lleno (etiqueta, evaluación, modelo). Si un token se consume sin capturar nada, fue puro coste.</p></div>
+    <div class="principle"><span class="pid">P2</span><h4>Mide local vs fundacional</h4><p>El ratio de trabajo local frente a fundacional es la métrica de salud. Cada vuelta de la espiral debe desplazarlo hacia local. Más local = más margen, más autonomía.</p></div>
+    <div class="principle"><span class="pid">P3</span><h4>El control vive en la herramienta</h4><p>La decisión sobre qué se ejecuta es <b>código determinista</b> en el gate, no juicio del LLM. El efecto es inalcanzable sin cruzar el gate, independientemente de qué modelo lo invoque.</p></div>
+    <div class="principle"><span class="pid">P4</span><h4>Captura el juicio humano</h4><p>Cada aprobación es un dato de oro. Diseña para que el juicio experto se registre, etiquete y sea reutilizable. La etiqueta es el insumo más caro de la IA; aquí es un subproducto del trabajo.</p></div>
+    <div class="principle"><span class="pid">P5</span><h4>Auditoría desde el día uno</h4><p>Cadena verificable de todo lo que hacen los agentes. No es solo cumplimiento: es el dataset de evaluación y la confianza demostrable que ningún genérico puede alquilar.</p></div>
+    <div class="principle"><span class="pid">P6</span><h4>Estrecho y profundo antes que ancho</h4><p>La cuña vertical es donde el capital se compone. Un agente excelente en un caso específico supera a uno mediocre que lo intenta todo. Ensanchar solo cuando la profundidad da retornos.</p></div>
+    <div class="principle"><span class="pid">P7</span><h4>El foso son los datos, no los pesos</h4><p>Los modelos caducan; el juicio capturado y las evaluaciones de tu dominio no. Un mejor modelo fundacional solo hace que tu capital rinda <b>más</b> — nunca te descapitaliza.</p></div>
+    <div class="principle"><span class="pid">P8</span><h4>Diseña antes de gastar</h4><p>El Canvas antes del código. La ambigüedad sobre para quién es el agente y qué autonomía tiene se paga en tokens quemados. Resuélvela primero, en papel, donde es barato.</p></div>
+  </div>
+</section>
+
+<!-- 09 SYNTHESIS -->
+<section id="synthesis">
+  <div class="synthesis">
+    <h2>Síntesis</h2>
+    <p>Una empresa <b>Capital Q</b> es una máquina para convertir cómputo en conocimiento propio, gobernada para que cada acción deje capital detrás, afilada en una vertical donde ese capital se vuelve defendible.</p>
+    <p>En QMetrika, esa vertical es la termodinámica del RNA — pero el modelo es general. <em>Energía que se transforma en conocimiento</em>, en dos capas, componiéndose vuelta tras vuelta.</p>
+    <p>El token no es un coste a minimizar. Es la <b>materia prima de un nuevo tipo de capital</b> — uno que se compone cuando se gobierna y se evapora cuando no.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  QMetrika Labs · Capital Q — Un paradigma de empresa · Jose Antonio Vilar Sánchez (2026)<br>
+  ORCID: <a href="https://orcid.org/0009-0008-1057-4223">0009-0008-1057-4223</a> ·
+  GitHub: <a href="https://github.com/josevilar-qbioai">@josevilar-qbioai</a><br>
+  <br>
+  agent-board <a href="https://github.com/josevilar-qbioai/agent-board">github.com/josevilar-qbioai/agent-board</a> ·
+  agent-canvas-model <a href="https://github.com/josevilar-qbioai/agent-canvas-model">github.com/josevilar-qbioai/agent-canvas-model</a><br>
+  Capital Board (demo): <a href="https://josevilar-qbioai.github.io/agent-board/board/capital-board.html">josevilar-qbioai.github.io/agent-board</a> ·
+  Patente: P202630522 (OEPM, 2026)<br>
+  <br>
+  Frameworks MIT. Documento de tesis · Capital Q — energía que se transforma en conocimiento.
+</footer>
+
+</div><!-- wrap -->
+
+<script>
+const sections=document.querySelectorAll('section[id]');
+const navLinks=document.querySelectorAll('nav .links a:not(.lang-switch)');
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      navLinks.forEach(link=>{
+        link.classList.toggle('active',link.getAttribute('href')==='#'+entry.target.id);
+      });
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+sections.forEach(s=>observer.observe(s));
+</script>
+</body>
+</html>
