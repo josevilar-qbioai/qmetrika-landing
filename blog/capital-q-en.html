@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capital Q — QMetrika Labs Blog</title>
+<meta name="description" content="A company model where the governed and captured token compounds as proprietary and defensible knowledge.">
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#0B0E14;--surface:#12151C;--card:#171B24;
+  --border:#252A36;--border-light:#2F3545;
+  --text:#E2E4EA;--muted:#8B90A0;--soft:#5C6175;
+  --teal:#4FC5C0;--teal-dim:rgba(79,197,192,.07);--teal-glow:rgba(79,197,192,.15);
+  --gold:#E3B15A;--gold-dim:rgba(227,177,90,.07);
+  --plum:#B07AB0;--plum-dim:rgba(176,122,176,.07);
+  --white:#fff;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:"Inter",system-ui,sans-serif;font-size:16px;line-height:1.65;color:var(--text);background:var(--ink);-webkit-font-smoothing:antialiased;}
+.wrap{max-width:720px;margin:0 auto;padding:0 28px;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(11,14,20,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:16px 0;}
+nav .inner{max-width:720px;margin:0 auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;}
+.logo{text-decoration:none;display:flex;align-items:center;gap:10px;}
+.logo-mark{width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,var(--teal),#3AA8A3);display:flex;align-items:center;justify-content:center;}
+.logo-mark span{font-family:"Fraunces",serif;font-weight:900;font-size:14px;color:var(--ink);}
+.logo-name{font-weight:800;font-size:1.05rem;color:var(--white);letter-spacing:-.01em;}
+nav .links{display:flex;gap:24px;align-items:center;}
+nav .links a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;transition:color .2s;}
+nav .links a:hover{color:var(--white);}
+.lang-switch{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;letter-spacing:.08em;color:var(--soft);text-decoration:none;border:1px solid var(--border);border-radius:4px;padding:2px 7px;transition:all .2s;}
+.lang-switch:hover{color:var(--teal);border-color:var(--teal);}
+
+/* ARTICLE */
+.post-header{padding:120px 0 40px;border-bottom:1px solid var(--border);}
+.back{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--teal);text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-bottom:20px;font-weight:500;}
+.back:hover{text-decoration:underline;}
+.post-date{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--soft);letter-spacing:.06em;text-transform:uppercase;font-weight:500;margin-bottom:12px;}
+.post-header h1{font-weight:900;font-size:clamp(1.8rem,4vw,2.6rem);color:var(--white);line-height:1.12;margin-bottom:16px;letter-spacing:-.02em;}
+.post-header h1 em{font-family:"Fraunces",serif;font-style:italic;color:var(--teal);}
+.post-header .excerpt{color:var(--muted);font-size:1.08rem;line-height:1.7;}
+.post-tags{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;}
+.tag{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:20px;font-weight:600;}
+.tag.t{background:var(--teal-dim);color:var(--teal);border:1px solid rgba(79,197,192,.15);}
+.tag.g{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(227,177,90,.15);}
+
+.post-body{padding:48px 0 64px;}
+.post-body h2{font-weight:800;font-size:1.5rem;color:var(--white);margin:48px 0 16px;letter-spacing:-.01em;}
+.post-body h2:first-child{margin-top:0;}
+.post-body p{color:var(--muted);font-size:15.5px;line-height:1.8;margin-bottom:18px;}
+.post-body p b{color:var(--text);font-weight:600;}
+.post-body p em{color:var(--teal);font-style:italic;}
+
+.pullquote{font-family:"Fraunces",serif;font-size:1.4rem;font-style:italic;color:var(--white);line-height:1.4;border-left:3px solid var(--gold);padding:4px 0 4px 24px;margin:36px 0;}
+.pullquote b{color:var(--teal);font-weight:700;font-style:normal;}
+
+.principle-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:32px 0;}
+@media(max-width:600px){.principle-grid{grid-template-columns:1fr;}}
+.pcard{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;}
+.pcard .pid{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--teal);font-weight:600;letter-spacing:.08em;}
+.pcard h4{font-weight:700;font-size:.95rem;color:var(--white);margin:4px 0 6px;}
+.pcard p{font-size:13px;color:var(--muted);line-height:1.6;margin:0;}
+
+.cta-box{background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:28px;text-align:center;margin:40px 0;}
+.cta-box p{color:var(--muted);font-size:14px;margin-bottom:16px;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;transition:all .25s;}
+.btn-teal{background:var(--teal);color:var(--ink);}
+.btn-teal:hover{background:#5fd6d1;box-shadow:0 0 24px var(--teal-glow);}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;margin:28px 0;border:1px solid var(--border);border-radius:10px;}
+table{border-collapse:collapse;width:100%;min-width:500px;font-size:13.5px;}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--border);}
+thead th{background:var(--card);color:var(--white);font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;}
+tbody td{color:var(--muted);}
+tbody td b{color:var(--text);}
+tbody tr:last-child td{border-bottom:none;}
+
+/* FOOTER */
+footer{padding:28px 0 48px;border-top:1px solid var(--border);}
+footer p{color:var(--soft);font-family:"IBM Plex Mono",monospace;font-size:11px;}
+footer a{color:var(--teal);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="inner">
+    <a href="../en.html" class="logo">
+      <div class="logo-mark"><span>Q</span></div>
+      <span class="logo-name">QMetrika Labs</span>
+    </a>
+    <div class="links">
+      <a href="../en.html">Home</a>
+      <a href="en.html">Blog</a>
+      <a href="../en.html#contact">Contact</a>
+      <a href="capital-de-tokens.html" class="lang-switch">ES</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <div class="post-header">
+    <a href="en.html" class="back">&larr; Blog</a>
+    <div class="post-date">July 2026</div>
+    <h1>Capital <em>Q</em>: tokens, the energy that transforms into knowledge</h1>
+    <p class="excerpt">A company model where the unit of capital is not labor hours or physical assets, but the token: inference compute that, when governed and captured, compounds as proprietary, defensible and composable knowledge.</p>
+    <div class="post-tags">
+      <span class="tag g">philosophy</span>
+      <span class="tag t">capital q</span>
+    </div>
+  </div>
+
+  <div class="post-body">
+
+    <h2>The thesis in one sentence</h2>
+
+    <p>For two centuries, a company built capital on two pillars: <b>labor</b> (person-hours) and <b>physical assets</b> (machines, buildings, inventory). The balance sheet measured what was tangible; the income statement measured how much labor it took to produce revenue.</p>
+
+    <p>Generative AI breaks that framework at its foundation: cognitive work — writing, classifying, reasoning, deciding — is now produced in tokens, at a cost trending to zero and with a virtually infinite supply. If anyone can rent the same foundational model and generate the same tokens, the raw token is not capital: it is a <em>commodity</em>.</p>
+
+    <p>Capital emerges when the token stops being ephemeral and becomes something that <b>compounds</b>: a captured human judgment, an evaluation datapoint, a fine-tuned model that does tomorrow for free what today cost dearly.</p>
+
+    <div class="pullquote">A token spent and forgotten is <b>expense</b>. A token spent, governed and captured is <b>capital</b>. The difference is not in the model — it is in the architecture of the company.</div>
+
+    <h2>Not all tokens are equal</h2>
+
+    <p>The first accounting error of the AI-native company is treating all tokens as the same input. There are two classes, with opposing economics — and the company's health is measured by the ratio between them.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Dimension</th><th>Foundational token (rented)</th><th>Local token (owned)</th></tr></thead>
+        <tbody>
+          <tr><td>Marginal cost</td><td>High, per million tokens</td><td><b>&#8776; 0</b> after hardware amortization</td></tr>
+          <tr><td>Nature</td><td>OPEX — consumed and gone</td><td>CAPEX — yields in perpetuity</td></tr>
+          <tr><td>Ownership</td><td>Not yours; depends on a provider</td><td>Yours; no network, no fee, no leakage</td></tr>
+          <tr><td>Sensitive data</td><td>Leaves your perimeter (GDPR, IP)</td><td>Never leaves your infrastructure</td></tr>
+          <tr><td>Optimal use</td><td>Hard reasoning, bootstrapping</td><td>Routine, high volume, distilled tasks</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>The master metric is not "spend less on AI." It is the <b>ratio of local work to foundational work</b>. The more it shifts toward local, the greater the autonomy, the lower the cost, and the more proprietary knowledge compounds.</p>
+
+    <h2>Three forms of durable capital</h2>
+
+    <p>If the raw token is a commodity, where does capital accumulate? In three deposits that fill as a byproduct of daily work — but only if the company is built to <b>capture</b> them.</p>
+
+    <p><b>1. Captured human judgment.</b> Every time a human approves or denies an agent action at the governance gate, they produce a label: a tagged decision about what was correct. That judgment is the most expensive data in AI — and here it is generated for free, as a residue of work.</p>
+
+    <p><b>2. Verifiable audit trail.</b> Not just compliance: it is the evaluation dataset that no competitor can rent. A verifiable hash chain capturing every decision, every action, every outcome.</p>
+
+    <p><b>3. Fine-tuned models.</b> The distillate of foundational work turned into local capability: a proprietary model that, once trained, yields tokens almost for free forever on already-mastered tasks.</p>
+
+    <h2>The vertical wedge</h2>
+
+    <p>Start narrow and deep. One agent excelling at variant classification for a handful of genes is worth more than a mediocre one attempting all of genomics. Depth is what makes the specialized local token outperform the generic foundational token — and only then does the wedge widen.</p>
+
+    <p>At QMetrika, that vertical is <b>RNA thermodynamics</b>. The nearest-neighbor ΔG engine (patent P202630522) feeds three research sub-lines, three preprints with permanent DOIs, and a dual optimizer that outperforms commercial vaccines. But the Capital Q model is general — it is the same equation in any domain where depth builds a moat.</p>
+
+    <div class="pullquote">In QMetrika's science, we profile the free energy (ΔG) of an RNA molecule to extract biological knowledge. In the company, we spend computational energy (tokens) to extract organizational knowledge. It is the same equation on two layers.</div>
+
+    <h2>Eight operating principles</h2>
+
+    <p>These are not aspirations — they are architectural decisions that must be made at build time, or not at all.</p>
+
+    <div class="principle-grid">
+      <div class="pcard"><span class="pid">P1</span><h4>The token is capital, not expense</h4><p>Every foundational spend must leave a deposit: label, eval, model. If it is consumed without capturing anything, it was pure cost.</p></div>
+      <div class="pcard"><span class="pid">P2</span><h4>Measure local vs foundational</h4><p>The ratio of local work to rented work is the health metric. More local = more margin, more autonomy.</p></div>
+      <div class="pcard"><span class="pid">P3</span><h4>Control lives in the tool</h4><p>The decision is deterministic code at the gate, not LLM judgment. Fail-closed by design.</p></div>
+      <div class="pcard"><span class="pid">P4</span><h4>Capture human judgment</h4><p>Every approval is recorded, labeled and reusable. The label is a residue of work.</p></div>
+      <div class="pcard"><span class="pid">P5</span><h4>Audit from day one</h4><p>Verifiable chain. Not just GDPR: it is the evals dataset that no generic can rent.</p></div>
+      <div class="pcard"><span class="pid">P6</span><h4>Narrow and deep</h4><p>The vertical wedge is where capital compounds. Widen only when depth already yields returns.</p></div>
+      <div class="pcard"><span class="pid">P7</span><h4>The moat is the data</h4><p>Models expire; captured judgments and evals do not. A better model only makes your capital yield more.</p></div>
+      <div class="pcard"><span class="pid">P8</span><h4>Design before spending</h4><p>Canvas before code. Ambiguity is paid for in burned tokens.</p></div>
+    </div>
+
+    <div class="cta-box">
+      <p>Full thesis document with diagrams, tables and the detailed QMetrika stack.</p>
+      <a href="../TOKEN_CAPITAL_QMETRIKA.html" target="_blank" class="btn btn-teal">Read full version</a>
+    </div>
+
+  </div>
+
+  <footer>
+    <p><a href="en.html">&larr; Back to blog</a> · <a href="../en.html">QMetrika Labs</a> · 2026</p>
+  </footer>
+
+</div>
+</body>
+</html>

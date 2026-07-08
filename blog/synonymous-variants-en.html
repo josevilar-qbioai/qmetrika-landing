@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pathogenic synonymous variants — QMetrika Labs Blog</title>
+<meta name="description" content="First CNN predictor with pure thermodynamic signal for synonymous variants. AUC 0.683. Conceptual framework Λ = S ⊗ Φ.">
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0B0E14;--surface:#12151C;--card:#171B24;--border:#252A36;--border-light:#2F3545;--text:#E2E4EA;--muted:#8B90A0;--soft:#5C6175;--teal:#4FC5C0;--teal-dim:rgba(79,197,192,.07);--teal-glow:rgba(79,197,192,.15);--gold:#E3B15A;--gold-dim:rgba(227,177,90,.07);--plum:#B07AB0;--plum-dim:rgba(176,122,176,.07);--white:#fff;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:"Inter",system-ui,sans-serif;font-size:16px;line-height:1.65;color:var(--text);background:var(--ink);-webkit-font-smoothing:antialiased;}
+.wrap{max-width:720px;margin:0 auto;padding:0 28px;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(11,14,20,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:16px 0;}
+nav .inner{max-width:720px;margin:0 auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;}
+.logo{text-decoration:none;display:flex;align-items:center;gap:10px;}
+.logo-mark{width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,var(--teal),#3AA8A3);display:flex;align-items:center;justify-content:center;}
+.logo-mark span{font-family:"Fraunces",serif;font-weight:900;font-size:14px;color:var(--ink);}
+.logo-name{font-weight:800;font-size:1.05rem;color:var(--white);letter-spacing:-.01em;}
+nav .links{display:flex;gap:24px;align-items:center;}
+nav .links a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;transition:color .2s;}
+nav .links a:hover{color:var(--white);}
+.lang-switch{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;letter-spacing:.08em;color:var(--soft);text-decoration:none;border:1px solid var(--border);border-radius:4px;padding:2px 7px;transition:all .2s;}
+.lang-switch:hover{color:var(--teal);border-color:var(--teal);}
+.post-header{padding:120px 0 40px;border-bottom:1px solid var(--border);}
+.back{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--teal);text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-bottom:20px;font-weight:500;}
+.back:hover{text-decoration:underline;}
+.post-date{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--soft);letter-spacing:.06em;text-transform:uppercase;font-weight:500;margin-bottom:12px;}
+.post-header h1{font-weight:900;font-size:clamp(1.8rem,4vw,2.6rem);color:var(--white);line-height:1.12;margin-bottom:16px;letter-spacing:-.02em;}
+.post-header h1 em{font-family:"Fraunces",serif;font-style:italic;color:var(--plum);}
+.post-header .excerpt{color:var(--muted);font-size:1.08rem;line-height:1.7;}
+.post-tags{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;}
+.tag{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:20px;font-weight:600;}
+.tag.t{background:var(--teal-dim);color:var(--teal);border:1px solid rgba(79,197,192,.15);}
+.tag.g{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(227,177,90,.15);}
+.tag.p{background:var(--plum-dim);color:var(--plum);border:1px solid rgba(176,122,176,.15);}
+.post-body{padding:48px 0 64px;}
+.post-body h2{font-weight:800;font-size:1.5rem;color:var(--white);margin:48px 0 16px;letter-spacing:-.01em;}
+.post-body h2:first-child{margin-top:0;}
+.post-body p{color:var(--muted);font-size:15.5px;line-height:1.8;margin-bottom:18px;}
+.post-body p b{color:var(--text);font-weight:600;}
+.post-body p em{color:var(--plum);font-style:italic;}
+.pullquote{font-family:"Fraunces",serif;font-size:1.4rem;font-style:italic;color:var(--white);line-height:1.4;border-left:3px solid var(--plum);padding:4px 0 4px 24px;margin:36px 0;}
+.pullquote b{color:var(--teal);font-weight:700;font-style:normal;}
+.formula{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:28px 32px;text-align:center;margin:32px 0;}
+.formula .f{font-family:"Fraunces",serif;font-size:2rem;font-style:italic;color:var(--white);letter-spacing:.02em;}
+.formula .f .sym{color:var(--plum);}
+.formula .f .op{color:var(--gold);margin:0 4px;}
+.formula .desc{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted);margin-top:12px;line-height:1.7;}
+.mechanism-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:28px 0;}
+@media(max-width:600px){.mechanism-grid{grid-template-columns:1fr;}}
+.mcard{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;}
+.mcard h4{font-weight:700;font-size:.95rem;color:var(--white);margin-bottom:6px;}
+.mcard p{font-size:13px;color:var(--muted);line-height:1.6;margin:0;}
+.stat-row{display:flex;gap:24px;flex-wrap:wrap;margin:28px 0;padding:24px;background:var(--card);border:1px solid var(--border);border-radius:10px;}
+.stat{text-align:center;flex:1;min-width:100px;}
+.stat .v{font-family:"Fraunces",serif;font-weight:900;font-size:1.8rem;line-height:1;}
+.stat .v.teal{color:var(--teal);}
+.stat .v.plum{color:var(--plum);}
+.stat .v.gold{color:var(--gold);}
+.stat .l{font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:4px;}
+.trilogy{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:28px;margin:32px 0;}
+.trilogy h3{font-weight:800;font-size:1.1rem;color:var(--white);margin-bottom:16px;}
+.trilogy-item{display:flex;gap:14px;margin-bottom:14px;align-items:flex-start;}
+.trilogy-item:last-child{margin-bottom:0;}
+.trilogy-num{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;color:var(--ink);background:var(--plum);width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.trilogy-item p{font-size:14px;color:var(--muted);margin:0;line-height:1.6;}
+.trilogy-item p b{color:var(--text);}
+.cta-box{background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:28px;text-align:center;margin:40px 0;}
+.cta-box p{color:var(--muted);font-size:14px;margin-bottom:16px;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;transition:all .25s;}
+.btn-teal{background:var(--teal);color:var(--ink);}
+.btn-teal:hover{background:#5fd6d1;box-shadow:0 0 24px var(--teal-glow);}
+.btn-ghost{background:transparent;color:var(--text);border:1.5px solid var(--border-light);margin-left:10px;}
+.btn-ghost:hover{border-color:var(--teal);color:var(--teal);}
+footer{padding:28px 0 48px;border-top:1px solid var(--border);}
+footer p{color:var(--soft);font-family:"IBM Plex Mono",monospace;font-size:11px;}
+footer a{color:var(--teal);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="inner">
+    <a href="../en.html" class="logo"><div class="logo-mark"><span>Q</span></div><span class="logo-name">QMetrika Labs</span></a>
+    <div class="links"><a href="../en.html">Home</a><a href="en.html">Blog</a><a href="../en.html#contact">Contact</a><a href="synonymous-variants.html" class="lang-switch">ES</a></div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <div class="post-header">
+    <a href="en.html" class="back">&larr; Blog</a>
+    <div class="post-date">May 2026</div>
+    <h1>Pathogenic synonymous variants: the signal that <em>REVEL can't see</em></h1>
+    <p class="excerpt">Synonymous variants don't change the protein, but they do alter the mRNA thermodynamic profile. First CNN predictor with pure thermodynamic signal: AUC 0.683. Conceptual framework Λ = S ⊗ Φ. Paper 1 of a trilogy.</p>
+    <div class="post-tags">
+      <span class="tag p">bio-ia</span>
+      <span class="tag t">paper</span>
+      <span class="tag g">trilogy · paper 1</span>
+    </div>
+  </div>
+
+  <div class="post-body">
+
+    <h2>Genomics' blind spot</h2>
+
+    <p>A synonymous variant is a DNA mutation that <b>does not change</b> the encoded amino acid. The codon changes, but the resulting protein is identical. For decades, synonymous variants were considered "silent" — with no functional effect.</p>
+
+    <p>We know that is false. Synonymous variants cause cystic fibrosis, cancer, and dozens of diseases. But the most powerful genomics predictors — <b>REVEL</b>, <b>AlphaMissense</b>, <b>CADD</b> — are fundamentally blind to them. They operate at the protein level: if the protein doesn't change, they have no signal to measure.</p>
+
+    <p>This is where QMetrika's two research lines converge.</p>
+
+    <div class="pullquote">If the protein doesn't change but the patient becomes ill, the pathology is in the <b>mRNA</b>, not in the protein. And the mRNA has its own physics that a synonymous mutation can alter.</div>
+
+    <h2>The framework: Λ = S ⊗ Φ</h2>
+
+    <div class="formula">
+      <div class="f"><span class="sym">Λ</span> <span class="op">=</span> S <span class="op">⊗</span> <span class="sym">Φ</span></div>
+      <div class="desc">
+        Λ — biological viability of the transcript<br>
+        S — genetic code (protein sequence) · semantic identity<br>
+        Φ — biophysical constraints (mRNA thermodynamic form factor)<br>
+        ⊗ — systemic dependency between both axes
+      </div>
+    </div>
+
+    <p>Every mRNA transcript has two layers of information. <b>S</b> is the digital message: the amino acid sequence it encodes. <b>Φ</b> is the analog channel: the mRNA thermodynamics that determine how efficiently that message is translated — local stability, translation speed, cotranslational folding.</p>
+
+    <p>In a missense variant, both axes change: ΔS ≠ 0, ΔΦ ≠ 0. In a synonymous variant, the argument is elegant: <b>ΔS = 0, ΔΦ ≠ 0</b>. The protein doesn't change, but the mRNA form factor does. If that causes disease, the pathology is purely thermodynamic.</p>
+
+    <p>This framework is presented in Paper 1 as a qualitative conceptual framework — not as formal algebra. The mathematical formalization of ⊗ as an operation on a thermodynamic graph comes in Paper 2.</p>
+
+    <h2>Pathogenic mechanisms</h2>
+
+    <p>How can a variant that doesn't change the protein cause disease? Four mechanisms that the ΔG profile can capture:</p>
+
+    <div class="mechanism-grid">
+      <div class="mcard">
+        <h4>mRNA destabilization</h4>
+        <p>Alteration of local stacking that reduces thermodynamic stability → accelerated mRNA degradation → less protein produced.</p>
+      </div>
+      <div class="mcard">
+        <h4>Aberrant splicing</h4>
+        <p>Local secondary structure change that alters splice sites or disrupts exonic enhancers/silencers (ESE/ESS).</p>
+      </div>
+      <div class="mcard">
+        <h4>Translation speed</h4>
+        <p>Rare codons or stacking changes that slow the ribosome → cotranslational misfolding of the protein.</p>
+      </div>
+      <div class="mcard">
+        <h4>Cis regulation</h4>
+        <p>Disruption of regulatory elements that depend on the nucleotide sequence, not the protein sequence.</p>
+      </div>
+    </div>
+
+    <h2>Results</h2>
+
+    <div class="stat-row">
+      <div class="stat"><div class="v plum">0.683</div><div class="l">Dedicated AUC</div></div>
+      <div class="stat"><div class="v teal">0.625</div><div class="l">LOGO AUC</div></div>
+      <div class="stat"><div class="v gold">2.60×</div><div class="l">G>A enrichment</div></div>
+    </div>
+
+    <p><b>Dedicated CNN:</b> AUC 0.683 using only mRNA thermodynamic signal (ΔG channels). No evolutionary information, no conservation, no 3D structure. Pure nucleotide physics.</p>
+
+    <p><b>LOGO (Leave-One-Gene-Out):</b> AUC 0.625 — the signal generalizes across genes; it is not an artifact of a particular gene.</p>
+
+    <p><b>Mechanistic finding — G>A enrichment:</b> Pathogenic synonymous variants are 2.60× enriched in G>A transitions. This has a direct thermodynamic explanation: G>A reduces stacking (guanine stacks more strongly than adenine), and this effect is captured by the ΔG profile.</p>
+
+    <p><b>CDS length effect:</b> Genes with longer CDS have stronger thermodynamic signal. This is consistent with the model: longer mRNAs have more opportunities for a local perturbation to propagate.</p>
+
+    <h2>What this implies</h2>
+
+    <p>An AUC of 0.683 does not compete with the best missense predictors (which reach 0.99). But it doesn't have to. The question is not "Is it better than AlphaMissense?" but <b>"Does a thermodynamic signal exist in synonymous variants?"</b> And the answer is yes.</p>
+
+    <p>This opens a niche that no published predictor covers. REVEL, AlphaMissense, CADD — all are blind to synonymous variants because they operate at the protein level. EnergyFingerprint operates at the nucleotide level. The biophysical channel already works for synonymous variants without modification.</p>
+
+    <div class="pullquote">We are not competing with AlphaMissense on its turf. We are opening new ground where <b>nobody can operate</b> — because nobody else looks at the physics of the mRNA.</div>
+
+    <h2>The trilogy</h2>
+
+    <p>This paper is the first of three that progressively unfold the Λ = S ⊗ Φ framework:</p>
+
+    <div class="trilogy">
+      <h3>Three papers, one escalating question</h3>
+      <div class="trilogy-item">
+        <div class="trilogy-num">1</div>
+        <p><b>"The signal exists"</b> (this paper) — A dedicated CNN demonstrates that the thermodynamic signal discriminates pathogenic synonymous variants from benign ones. The Λ = S ⊗ Φ framework is presented as a qualitative conceptual framework.</p>
+      </div>
+      <div class="trilogy-item">
+        <div class="trilogy-num">2</div>
+        <p><b>"The signal has mathematical structure"</b> (horizon 2027) — Formalizes ⊗ as an operation on a thermodynamic graph. DT-GNN (Dual-Thermodynamic Graph Neural Network) + Markov blankets define functional regions of the mRNA.</p>
+      </div>
+      <div class="trilogy-item">
+        <div class="trilogy-num">3</div>
+        <p><b>"The predicted physics occurs in the cell"</b> (horizon 2027-2028) — Direct experimental validation. DMS-MaPseq measures in vivo accessibility. Reporter assays measure expression. Does predicted ΔΦ = actual structural change?</p>
+      </div>
+    </div>
+
+    <h2>L1 × L2 convergence</h2>
+
+    <p>This work is the natural convergence of QMetrika's two research lines. <b>L1</b> (EnergyFingerprint) provides the CNN and the transferability gradient. <b>L2</b> (mRNA Design) demonstrates that the ΔG profile is a useful and orthogonal dimension.</p>
+
+    <p>Together they predict exactly this result: if ΔG is informative for missense and orthogonal to MFE, it should also be informative for synonymous variants — where it is the <b>only</b> available signal, because the protein doesn't change.</p>
+
+    <p>The natural extension is the evolutionary channel. ESM-1v operates at the protein level — for synonymous variants it does not directly apply. But a masked marginal at the DNA level (not protein) could capture evolutionary pressure on the nucleotide sequence. That is the subject of Paper 2.</p>
+
+    <div class="cta-box">
+      <p>Preprint with dedicated CNN, LOGO analysis, mechanistic findings and the Λ = S ⊗ Φ framework.</p>
+      <a href="https://doi.org/10.5281/zenodo.20275792" target="_blank" class="btn btn-teal">Zenodo · DOI 10.5281/zenodo.20275792</a>
+      <a href="https://github.com/josevilar-qbioai/synonymous-thermodynamic-classification" target="_blank" class="btn btn-ghost">GitHub</a>
+    </div>
+
+  </div>
+
+  <footer>
+    <p><a href="en.html">&larr; Back to blog</a> · <a href="../en.html">QMetrika Labs</a> · 2026</p>
+  </footer>
+
+</div>
+</body>
+</html>
