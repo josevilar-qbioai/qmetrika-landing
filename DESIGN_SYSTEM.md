@@ -7,6 +7,71 @@ Last updated: July 2026
 
 ---
 
+## 0. Brand identity
+
+### Logo files
+
+All brand assets are in `assets/`:
+
+| File | Description | Use |
+|------|-------------|-----|
+| `simbolo-q.svg` | Q symbol only (light bg) | Favicon, social, small contexts |
+| `simbolo-q-negativo.svg` | Q symbol only (dark bg) | Dark sections, overlays |
+| `logo-qmetrika.svg` | Symbol + "qmetrika" wordmark (light bg) | Headers, documents |
+| `logo-qmetrika-negativo.svg` | Symbol + wordmark (dark bg) | Dark backgrounds |
+| `favicon.svg` | SVG favicon (same as symbol) | All pages `<link rel="icon">` |
+
+### The Q symbol
+
+The symbol is a geometric Q built from concentric circles:
+
+```svg
+<circle cx="28" cy="28" r="18" fill="none" stroke="#1B1B18" stroke-width="4.5"/>  <!-- outer ring -->
+<circle cx="41" cy="41" r="9.6" fill="#E9E7E0"/>  <!-- background mask -->
+<circle cx="41" cy="41" r="7.4" fill="#1B1B18"/>   <!-- ink ring of dot -->
+<circle cx="41" cy="41" r="5.4" fill="#A6542E"/>   <!-- accent core of dot -->
+```
+
+The dot sits at the bottom-right of the Q, offset from center. Three colors: ink stroke, background mask, accent core. ViewBox: `6 6 46 46`.
+
+For dark backgrounds, swap ink ↔ background but keep accent:
+- Outer ring stroke: `#E9E7E0` (was `#1B1B18`)
+- Background mask: `#1B1B18` (was `#E9E7E0`)
+- Ink ring: `#E9E7E0` (was `#1B1B18`)
+- Accent core: `#A6542E` (unchanged)
+
+### Brand mark in navigation
+
+The Q symbol replaces the old text-based square. It's rendered as inline SVG at 26×26px:
+
+```html
+<svg class="brand-mark" width="26" height="26" viewBox="6 6 46 46" fill="none"
+     xmlns="http://www.w3.org/2000/svg">
+  <circle cx="28" cy="28" r="18" stroke="#1B1B18" stroke-width="4.5"/>
+  <circle cx="41" cy="41" r="9.6" fill="#E9E7E0"/>
+  <circle cx="41" cy="41" r="7.4" fill="#1B1B18"/>
+  <circle cx="41" cy="41" r="5.4" fill="#A6542E"/>
+</svg>
+```
+
+CSS: `.brand-mark { width: 26px; height: 26px; flex-shrink: 0; }`
+
+Blog posts use class `.logo-mark` instead of `.brand-mark` (same SVG, different class name).
+
+### Favicon
+
+All pages include the SVG favicon. Root-level pages:
+```html
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+```
+
+Blog posts (one level deep):
+```html
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+```
+
+---
+
 ## 1. Foundations
 
 ### Color palette
