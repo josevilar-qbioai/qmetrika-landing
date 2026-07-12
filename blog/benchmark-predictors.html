@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Benchmark: EnergyFingerprint vs CADD, REVEL, AlphaMissense — QMetrika Labs Blog</title>
-<meta name="description" content="Comparativa formal en 7 genes: EnergyFingerprint alcanza ΔAUC de -0.024 a -0.040 frente a predictores entrenados en datasets masivos, y supera a CADD en SCN1A.">
+<meta name="description" content="Comparativa formal en 7 genes: EnergyFingerprint alcanza ΔAUC de -0.024 a -0.040 frente a predictores entrenados en conjuntos de datos masivos, y supera a CADD en SCN1A.">
 <link rel="preconnect" href="https://fonts.googleapis.com/">
 <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -126,7 +126,7 @@ footer a{color:var(--accent);}
     <a href="./" class="back">&larr; Blog</a>
     <div class="post-date">Julio 2026</div>
     <h1>Benchmark: EnergyFingerprint vs CADD, REVEL, <em>AlphaMissense</em></h1>
-    <p class="excerpt">Comparativa formal en 7 genes con meta-análisis estratificado. EnergyFingerprint alcanza ΔAUC de -0.024 a -0.040 frente a predictores entrenados en datasets masivos — y supera a CADD en el canal de sodio SCN1A (0.913 vs 0.832). Señal ortogonal confirmada.</p>
+    <p class="excerpt">Comparativa formal en 7 genes con meta-análisis estratificado. EnergyFingerprint alcanza ΔAUC de -0.024 a -0.040 frente a predictores entrenados en conjuntos de datos masivos — y supera a CADD en el canal de sodio SCN1A (0.913 vs 0.832). La señal ortogonal se ha confirmado: EnergyFingerprint aporta información termodinámica que los predictores existentes no capturan, lo que la convierte en una dimensión complementaria e independiente para la clasificación de variantes.</p>
     <div class="post-tags">
       <span class="tag p">bio-ia</span>
       <span class="tag t">benchmark</span>
@@ -138,18 +138,18 @@ footer a{color:var(--accent);}
 
     <h2>La pregunta que faltaba</h2>
 
-    <p>Cuando presentamos EnergyFingerprint en junio, la pregunta obvia era: <b>¿cómo se compara con los predictores establecidos?</b> CADD, REVEL y AlphaMissense son el estándar de la industria — entrenados en cientos de miles de variantes, decenas de miles de genes, con anotaciones funcionales masivas. EnergyFingerprint es un modelo per-gene de ~228K parámetros que usa solo dos señales: la física del mRNA y la evolución de la proteína.</p>
+    <p>Cuando presentamos EnergyFingerprint en junio, la pregunta obvia era: <b>¿cómo se compara con los predictores establecidos?</b> CADD, REVEL y AlphaMissense son el estándar de la industria — entrenados en cientos de miles de variantes, decenas de miles de genes, con anotaciones funcionales masivas. EnergyFingerprint es un modelo por gen de ~228K parámetros que usa solo dos señales: la física del mRNA y la evolución de la proteína.</p>
 
     <p>Ahora tenemos la respuesta cuantitativa.</p>
 
     <h2>Metodología: comparación justa</h2>
 
-    <p>El benchmark usa el subconjunto <b>"Likely"</b> de ClinVar (Likely pathogenic vs Likely benign) — variantes con clasificación clínica consistente. Para cada variante, obtuvimos los scores de CADD, REVEL y AlphaMissense vía dbNSFP (myvariant.info, GRCh38). Cobertura: CADD 99.9%, REVEL 99.1%, AlphaMissense 98.6%.</p>
+    <p>La comparativa usa el subconjunto <b>"Likely"</b> de ClinVar (Likely pathogenic vs Likely benign) — variantes con clasificación clínica consistente. Para cada variante, obtuvimos las puntuaciones de CADD, REVEL y AlphaMissense vía dbNSFP (myvariant.info, GRCh38). Cobertura: CADD 99.9%, REVEL 99.1%, AlphaMissense 98.6%.</p>
 
-    <p>Todas las comparaciones usan el subconjunto <b>complete-case</b> — solo variantes donde los cuatro predictores tienen score. Así cada comparación es pareada sobre las mismas variantes. El test estadístico es <b>DeLong</b> para curvas ROC correlacionadas, y la inferencia pooled usa <b>meta-análisis de varianza inversa</b> estratificado por gen — no la concatenación naive de scores que produciría un Simpson's paradox.</p>
+    <p>Todas las comparaciones usan el subconjunto de <b>caso completo</b> — solo variantes donde los cuatro predictores tienen puntuación. Así cada comparación es pareada sobre las mismas variantes. El test estadístico es <b>DeLong</b> para curvas ROC correlacionadas, y la inferencia combinada usa <b>meta-análisis de varianza inversa</b> estratificado por gen — no la concatenación ingenua de puntuaciones que produciría una paradoja de Simpson.</p>
 
     <div class="meta-box">
-      <b>¿Por qué no concatenar scores?</b> EnergyFingerprint entrena un modelo separado por gen. Los scores de BRCA1 y los de SCN1A no están en la misma escala. Concatenarlos y calcular un AUC global penaliza artificialmente a EF. El meta-análisis estratificado es el test correcto: combina la evidencia de cada gen ponderando por precisión.
+      <b>¿Por qué no concatenar puntuaciones?</b> EnergyFingerprint entrena un modelo separado por gen. Las puntuaciones de BRCA1 y las de SCN1A no están en la misma escala. Concatenarlas y calcular un AUC global penaliza artificialmente a EF. El meta-análisis estratificado es la prueba correcta: combina la evidencia de cada gen ponderando por precisión.
     </div>
 
     <h2>Resultados: a 2-4% de distancia</h2>
@@ -177,11 +177,11 @@ footer a{color:var(--accent);}
       </table>
     </div>
 
-    <p>MECP2 se excluye del benchmark: sus 4 variantes Likely-pathogenic no tienen cobertura en REVEL ni AlphaMissense, dejando 0 positivos en el subconjunto complete-case.</p>
+    <p>MECP2 se excluye de la comparativa: sus 4 variantes Likely-pathogenic no tienen cobertura en REVEL ni AlphaMissense, dejando 0 positivos en el subconjunto de caso completo.</p>
 
     <h2>El hallazgo: SCN1A</h2>
 
-    <p>La fila marcada en la tabla es el resultado más importante del benchmark. En <b>SCN1A</b> — un canal de sodio dependiente de voltaje con 24 segmentos transmembrana — EnergyFingerprint obtiene <em>0.913</em> frente al <em>0.832</em> de CADD. Una diferencia de +0.081 AUC a favor de un modelo de 228K parámetros frente a un predictor que integra docenas de anotaciones genómicas.</p>
+    <p>La fila marcada en la tabla es el resultado más importante de la comparativa. En <b>SCN1A</b> — un canal de sodio dependiente de voltaje con 24 segmentos transmembrana — EnergyFingerprint obtiene <em>0.913</em> frente al <em>0.832</em> de CADD. Una diferencia de +0.081 AUC a favor de un modelo de 228K parámetros frente a un predictor que integra docenas de anotaciones genómicas.</p>
 
     <div class="pullquote">En SCN1A, la <b>física del mRNA</b> captura algo que las anotaciones genómicas no ven. Los canales iónicos de membrana tienen una gramática termodinámica propia: barreras de ΔG que pausan al ribosoma para el plegamiento cotraduccional acoplado a la maquinaria de inserción en membrana.</div>
 
@@ -198,7 +198,7 @@ footer a{color:var(--accent);}
 
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Comparación</th><th>ΔAUC pooled</th><th>p</th><th>p (BH adj.)</th><th>Interpretación</th></tr></thead>
+        <thead><tr><th>Comparación</th><th>ΔAUC combinado</th><th>p</th><th>p (BH adj.)</th><th>Interpretación</th></tr></thead>
         <tbody>
           <tr><td><b>EF vs CADD</b></td><td>-0.024</td><td>0.048</td><td>0.048</td><td>Estadísticamente a la par</td></tr>
           <tr><td><b>EF vs REVEL</b></td><td>-0.028</td><td>0.022</td><td>0.033</td><td>Marginalmente detrás</td></tr>
@@ -207,27 +207,27 @@ footer a{color:var(--accent);}
       </table>
     </div>
 
-    <p>EnergyFingerprint queda a <b>2.4 puntos</b> de CADD, <b>2.8 puntos</b> de REVEL y <b>4 puntos</b> de AlphaMissense en AUC medio. Con ~228K parámetros per-gene frente a predictores entrenados en datasets masivos cross-gene, el resultado demuestra que la señal termodinámica del mRNA es <b>competitiva como dimensión independiente</b>.</p>
+    <p>EnergyFingerprint queda a <b>2.4 puntos</b> de CADD, <b>2.8 puntos</b> de REVEL y <b>4 puntos</b> de AlphaMissense en AUC medio. Con ~228K parámetros por gen frente a predictores entrenados en conjuntos de datos masivos multi-gen, el resultado demuestra que la señal termodinámica del mRNA es <b>competitiva como dimensión independiente</b>.</p>
 
     <h2>Otros resultados destacados</h2>
 
     <ul>
       <li><b>BRCA1:</b> EF (0.929) iguala a REVEL (0.927) — DeLong p = 0.90, indistinguibles estadísticamente.</li>
       <li><b>PALB2:</b> EF (0.902) supera a REVEL (0.880), aunque con solo 2 variantes patogénicas la potencia es limitada.</li>
-      <li><b>HBB:</b> El punto débil de EF (0.586). La hemoglobina es una proteína atípica — muy pequeña, sin regiones de membrana ni estructura compleja. Coherente con el gradiente de transferibilidad: globinas tienen presión termodinámica débil.</li>
+      <li><b>HBB:</b> El punto débil de EF (0.586). La hemoglobina es una proteína atípica — muy pequeña, sin regiones de membrana ni estructura compleja. Coherente con el gradiente de transferibilidad: las globinas tienen una presión termodinámica débil.</li>
     </ul>
 
     <h2>Qué significa para el diagnóstico</h2>
 
-    <p>El benchmark confirma que EnergyFingerprint aporta una <b>señal ortogonal</b> a los predictores existentes. No es un sustituto — es un complemento. La información termodinámica del mRNA es una dimensión que CADD, REVEL y AlphaMissense no modelan, y en ciertos contextos (canales iónicos de membrana, proteínas con restricciones de plegamiento cotraduccional) esa dimensión domina.</p>
+    <p>La comparativa confirma que EnergyFingerprint aporta una <b>señal ortogonal</b> — es decir, información independiente y complementaria — a los predictores existentes. Decimos "ortogonal" porque la señal termodinámica del mRNA y las señales de conservación evolutiva que usan CADD, REVEL y AlphaMissense capturan aspectos distintos de la biología: son dimensiones perpendiculares, no redundantes. EnergyFingerprint no es un sustituto, sino un complemento que mide lo que los otros no ven. En ciertos contextos — canales iónicos de membrana, proteínas con restricciones de plegamiento cotraduccional — esa dimensión termodinámica domina.</p>
 
-    <p>Para un laboratorio de diagnóstico genético, el valor está en el <b>ensemble</b>: añadir EF al panel de predictores existentes aportaría señal adicional precisamente en los genes donde los predictores actuales son más débiles.</p>
+    <p>Para un laboratorio de diagnóstico genético, el valor está en la <b>combinación</b>: añadir EF al panel de predictores existentes aportaría señal adicional precisamente en los genes donde los predictores actuales son más débiles.</p>
 
     <p>Y para la investigación, el resultado de SCN1A abre una puerta: si la física del mRNA explica mejor las variantes en canales iónicos, ¿qué otros genes de membrana se beneficiarían de un predictor termodinámico? El zero-shot cruzado SCN1A↔CFTR es el siguiente experimento.</p>
 
     <div class="cta-box">
-      <p>Datos completos del benchmark: tablas, scores por variante, y figura ROC publicable.</p>
-      <a href="https://doi.org/10.5281/zenodo.21309529" target="_blank" class="btn btn-teal">Technical Report · DOI 10.5281/zenodo.21309529</a>
+      <p>Datos completos de la comparativa: tablas, puntuaciones por variante, y figura ROC publicable.</p>
+      <a href="https://doi.org/10.5281/zenodo.21309529" target="_blank" class="btn btn-teal">Informe Técnico · DOI 10.5281/zenodo.21309529</a>
       <a href="https://doi.org/10.5281/zenodo.19831154" target="_blank" class="btn btn-teal">Preprint · DOI 10.5281/zenodo.19831154</a>
       <a href="https://github.com/josevilar-qbioai/energyfingerprint" target="_blank" class="btn btn-ghost">GitHub</a>
     </div>
