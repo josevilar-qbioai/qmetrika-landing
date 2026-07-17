@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EnergyFingerprint: missense variant classification — QMetrika Labs Blog</title>
-<meta name="description" content="Multichannel 1D CNN classifying missense variants using mRNA stacking thermodynamic profiles and ESM-1v evolutionary signals.">
+<meta name="description" content="Multichannel 1D CNN classifying missense variants using mRNA stacking thermodynamic profiles and ESMC-300M evolutionary signal. 42 validated genes.">
 <link rel="preconnect" href="https://fonts.googleapis.com/">
 <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -131,7 +131,7 @@ footer a{color:var(--accent);}
     <a href="en.html" class="back">&larr; Blog</a>
     <div class="post-date">June 2026</div>
     <h1>EnergyFingerprint: missense variant classification with <em>thermodynamic profiles</em></h1>
-    <p class="excerpt">Multichannel 1D CNN (~228K parameters) that classifies missense variants as pathogenic or benign by combining mRNA stacking free energy with evolutionary signals from ESM-1v. Eight validated genes, AUC up to 0.994, zero-shot transferability across protein families.</p>
+    <p class="excerpt">Multichannel 1D CNN (~228K parameters) that classifies missense variants as pathogenic or benign by combining mRNA stacking free energy with ESMC-300M evolutionary signal. 42 validated genes, AUC up to 0.994, zero-shot transferability across protein families.</p>
     <div class="post-tags">
       <span class="tag p">bio-ia</span>
       <span class="tag t">paper</span>
@@ -153,14 +153,14 @@ footer a{color:var(--accent);}
 
     <p><b>Biophysical axis (channels 1-4):</b> mRNA stacking thermodynamic profiles computed with nearest-neighbor parameters (SantaLucia 1998, Turner 2004). They capture the <em>Gibbs free energy</em> (ΔG) between adjacent dinucleotides — local context information that simple metrics like GC3 cannot capture.</p>
 
-    <p><b>Evolutionary axis (channels 5-11):</b> ESM-1v protein language model. Masked marginal scoring: the mutated position is masked, and the log-likelihood ratio between the native and mutant amino acid is measured. It captures the evolutionary pressure that has acted on that position for millions of years.</p>
+    <p><b>Evolutionary axis (channels 5-11):</b> ESMC-300M protein language model (EvolutionaryScale, successor to ESM-1v). Masked marginal scoring: the mutated position is masked, and the log-likelihood ratio between the native and mutant amino acid is measured. It captures the evolutionary pressure that has acted on that position for millions of years.</p>
 
     <div class="pullquote">The key is not that each axis is better than competitors on its own — it is that the two axes are <b>orthogonal</b>. One operates at the nucleotide level, the other at the protein level. Together they see what neither can see alone.</div>
 
-    <h2>Results: 8 validated genes</h2>
+    <h2>Results: 42 validated genes</h2>
 
     <div class="stat-row">
-      <div class="stat"><div class="v">8</div><div class="l">Genes</div></div>
+      <div class="stat"><div class="v">42</div><div class="l">Genes</div></div>
       <div class="stat"><div class="v">0.994</div><div class="l">Max AUC (PTEN)</div></div>
       <div class="stat"><div class="v">~228K</div><div class="l">CNN parameters</div></div>
       <div class="stat"><div class="v">11</div><div class="l">Channels</div></div>
@@ -177,10 +177,12 @@ footer a{color:var(--accent);}
           <tr><td><b>CFTR</b></td><td>Cystic fibrosis (ABC channel)</td><td><b>0.979</b></td><td>0.777</td></tr>
           <tr><td><b>HBB</b></td><td>Sickle cell disease (globin)</td><td><b>0.721</b></td><td>0.707</td></tr>
           <tr><td><b>MECP2</b></td><td>Rett syndrome (IDR)</td><td><b>0.911</b></td><td>0.430</td></tr>
-          <tr><td><b>SCN1A</b></td><td>Epilepsy (TM ion channel)</td><td><b>0.868</b></td><td>0.637</td></tr>
+          <tr><td><b>SCN1A</b></td><td>Epilepsy (TM ion channel)</td><td><b>0.913</b></td><td>0.637</td></tr>
         </tbody>
       </table>
     </div>
+
+    <p><b>July 2026 update:</b> The panel has expanded from 8 to <b>42 genes</b> (12 trainable + 30 zero-shot only), with a mean zero-shot AUC of 0.876 across 41 evaluable genes. The evolutionary model has been migrated from ESM-1v to ESMC-300M (CNN AUC 0.961 on BRCA1). Full results in the <a class="tlink" href="https://doi.org/10.5281/zenodo.21309529">TECH-2 technical report</a>.</p>
 
     <h2>The transferability gradient</h2>
 
@@ -196,7 +198,7 @@ footer a{color:var(--accent);}
 
     <p>The CNN is deliberately small (~228K parameters) to avoid overfitting on genetic datasets where samples are scarce. It uses <b>CrossEntropyLoss</b> with 2 outputs (not BCEWithLogitsLoss with 1), class weights <b>[1.0, n_neg/n_pos]</b> for imbalanced datasets, and GradCAM1D for explainability — the model indicates which mRNA regions contributed to its prediction.</p>
 
-    <p>The shared engine (<em>energy.py</em>) computes the nearest-neighbor ΔG profiles. For proteins longer than 1022 amino acids, ESM-1v requires windowing (the "Regression weights not found" warning is normal and does not affect scoring).</p>
+    <p>The shared engine (<em>energy.py</em>) computes the nearest-neighbor ΔG profiles. For proteins longer than 1022 amino acids, ESMC-300M requires windowing.</p>
 
     <h2>Competitors and differentiation</h2>
 

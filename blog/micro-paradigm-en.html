@@ -171,7 +171,7 @@ footer a{color:var(--accent);}
 
     <p><b>Foundational models</b> (Claude, GPT, Gemini): Complex reasoning, adversarial review, scientific writing, clinical interpretation. High cost per token, but irreplaceable when the task demands sophisticated judgment. At QMetrika, the <em>clinical verifier</em> — the agent that cross-references predictions against CADD, REVEL, UniProt and ACMG guidelines — needs this level of reasoning.</p>
 
-    <p><b>Local models and own compute</b> (PyTorch, ESM-1v, ESMC-6B, RNAfold): Deterministic or high-volume tasks where a foundational model would be wasteful. The thermodynamic engine (<em>energy.py</em>) computes ΔG profiles without any LLM. The CNN trains on a local GPU. ESM-1v scoring runs locally. Marginal cost: zero.</p>
+    <p><b>Local models and own compute</b> (PyTorch, ESMC-300M, RNAfold): Deterministic or high-volume tasks where a foundational model would be wasteful. The thermodynamic engine (<em>energy.py</em>) computes ΔG profiles without any LLM. The CNN trains locally. Evolutionary scoring (ESMC-300M, successor to ESM-1v) runs on a Mac Mini with Apple Silicon at 0.08 seconds per variant. Marginal cost: zero. The entire precomputation pipeline runs on desktop hardware.</p>
 
     <p>The ratio of local tokens to foundational tokens is the project's health metric. The more it shifts toward local, the greater the autonomy, the lower the cost, and the more proprietary knowledge compounds. But without selective access to the foundational model, certain tasks — those requiring high-level reasoning — simply don't get done.</p>
 
@@ -181,14 +181,25 @@ footer a{color:var(--accent);}
 
     <div class="agent-grid">
       <div class="acard"><span class="role">Agent 1</span><h4>Data curator</h4><p>Downloads ClinVar, filters ambiguous categories, validates labels. Mechanical task, high volume. Lightweight model.</p></div>
-      <div class="acard"><span class="role">Agent 2</span><h4>Biophysical engine</h4><p>Nearest-neighbor ΔG profile + ESM-1v scoring + 11-channel tensor. Local compute, PyTorch, cost $0.</p></div>
+      <div class="acard"><span class="role">Agent 2</span><h4>Biophysical engine</h4><p>Nearest-neighbor ΔG profile + ESMC-300M scoring + 11-channel tensor. Local compute on Apple Silicon, PyTorch, cost $0.</p></div>
       <div class="acard"><span class="role">Agent 3</span><h4>CNN predictor</h4><p>Training and forward pass of EnergySignalCNN. GradCAM for explainability. Local GPU.</p></div>
       <div class="acard"><span class="role">Agent 4</span><h4>Clinical verifier</h4><p>Cross-references predictions against public databases, applies ACMG criteria. Requires complex reasoning — foundational model.</p></div>
     </div>
 
     <p>Between the predictor and the verifier there is an <b>approval gate</b>: the pipeline halts until the founder — in this case, the principal investigator — reviews the prediction before cross-validation proceeds. The system is <em>fail-closed</em>: without explicit approval, nothing advances. The AI proposes, the human decides.</p>
 
-    <p>The result of operating this way: three preprints with permanent DOIs, a registered patent (OEPM), an mRNA optimizer that outperforms commercial vaccines, and a theoretical framework (Λ = S ⊗ Φ) unfolding across a trilogy of papers planned through 2028. All from a desk with a GPU, an internet connection, and an API account.</p>
+    <p>The result of operating this way, in numbers:</p>
+
+    <div class="stat-row">
+      <div class="stat"><div class="v">0.961</div><div class="l">AUC BRCA1 (CNN 11ch)</div></div>
+      <div class="stat"><div class="v">42</div><div class="l">Genes validated (mean AUC 0.876)</div></div>
+      <div class="stat"><div class="v">4</div><div class="l">Publications with permanent DOIs</div></div>
+      <div class="stat"><div class="v">228K</div><div class="l">Model parameters</div></div>
+    </div>
+
+    <p>Three preprints (missense classification, therapeutic mRNA optimization, synonymous variants) and a formal benchmark comparing EnergyFingerprint against CADD, REVEL, and AlphaMissense. A registered patent (OEPM). An mRNA optimizer that outperforms the Pfizer and Moderna vaccines in thermodynamic stability. An additive value study showing that EF improves CADD on ion channels (<b>SCN1A: +0.109 AUC</b>) and reclassifies VUS with 90.6% accuracy. A prototype graph neural network over thermodynamic graphs (DT-GNN) with <em>glass-box</em> interpretability. And a theoretical framework (Λ = S ⊗ Φ) unfolding across a trilogy of papers planned through 2028.</p>
+
+    <p>All from a desk with a Mac Mini, an internet connection, and an API account.</p>
 
     <h2>What doesn't change</h2>
 
@@ -206,13 +217,13 @@ footer a{color:var(--accent);}
 
     <h2>Where the micro paradigm needs to stop being micro</h2>
 
-    <p>Everything above is real and working. Three published preprints, a registered patent, an optimizer that outperforms commercial vaccines — all from a desk. But it would be dishonest to close here without saying what comes next.</p>
+    <p>Everything above is real and working. Four publications with DOIs, a registered patent, a formal published benchmark, 42 validated genes, an optimizer that outperforms commercial vaccines — all from a desk. But it would be dishonest to close here without saying what comes next.</p>
 
     <p>This model is extraordinarily effective at <b>validating a hypothesis, building a prototype, and generating publishable evidence</b>. The exploration and proof-of-concept phase compresses from years to months. Up to that point, a founder with an orchestra of agents is enough.</p>
 
     <p>But science doesn't end at the preprint. Experimental validation — synthesizing mRNA constructs, measuring expression in cell cultures, running DMS-MaPseq assays — requires a <b>physical laboratory</b>. International patent extension requires <b>capital</b>. Scaling from a prototype to a certified clinical tool requires <b>regulation, infrastructure, and people</b>.</p>
 
-    <p>The micro paradigm proves that the barrier to entry in deep-tech has dropped dramatically. But the barrier to <b>scaling</b> remains where it was. What changes is the position from which one negotiates: it's no longer an idea on a napkin — it's a project with results, with DOIs, with protected IP, and with a proven operating system.</p>
+    <p>The micro paradigm proves that the barrier to entry in deep-tech has dropped dramatically. But the barrier to <b>scaling</b> remains where it was. What changes is the position from which one negotiates: it's no longer an idea on a napkin — it's a project with quantified results (AUC 0.961, 42 genes, a published benchmark against the three dominant predictors), with DOIs, with protected IP, and with a proven operating system.</p>
 
     <p>The natural next step for QMetrika is <b>collaboration with universities</b> for experimental validation, <b>cooperation with capital firms</b> for the PCT extension and product development, and <b>partnerships with diagnostic labs and pharma</b> for clinical pilots. The micro-project has proved the science works. Now it needs the ecosystem to grow.</p>
 

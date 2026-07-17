@@ -171,7 +171,7 @@ footer a{color:var(--accent);}
 
     <p><b>Modelos fundacionales</b> (Claude, GPT, Gemini): Razonamiento complejo, revisión adversarial, redacción científica, interpretación clínica. Alto coste por token, pero insustituibles cuando la tarea requiere juicio sofisticado. En QMetrika, el <em>verificador clínico</em> — el agente que cruza predicciones con CADD, REVEL, UniProt y las guías ACMG — necesita este nivel de razonamiento.</p>
 
-    <p><b>Modelos locales y cómputo propio</b> (PyTorch, ESM-1v, ESMC-6B, RNAfold): Tareas deterministas o de alto volumen donde el modelo fundacional sería un desperdicio. El motor termodinámico (<em>energy.py</em>) computa perfiles ΔG sin LLM. La CNN entrena en GPU local. El scoring ESM-1v se ejecuta en local. Coste marginal: cero.</p>
+    <p><b>Modelos locales y cómputo propio</b> (PyTorch, ESMC-300M, RNAfold): Tareas deterministas o de alto volumen donde el modelo fundacional sería un desperdicio. El motor termodinámico (<em>energy.py</em>) computa perfiles ΔG sin LLM. La CNN entrena localmente. El scoring evolutivo (ESMC-300M, sucesor de ESM-1v) se ejecuta en un Mac Mini con Apple Silicon a 0.08 segundos por variante. Coste marginal: cero. Todo el pipeline de precomputación corre en hardware de escritorio.</p>
 
     <p>El ratio entre tokens locales y tokens fundacionales es la métrica de salud del proyecto. Cuanto más se desplaza hacia lo local, mayor autonomía, menor coste y más conocimiento propio se acumula. Pero sin acceso puntual al modelo fundacional, ciertas tareas — las que requieren razonamiento de alto nivel — simplemente no se hacen.</p>
 
@@ -181,14 +181,25 @@ footer a{color:var(--accent);}
 
     <div class="agent-grid">
       <div class="acard"><span class="role">Agente 1</span><h4>Curador de datos</h4><p>Descarga ClinVar, filtra categorías ambiguas, valida etiquetas. Tarea mecánica, alto volumen. Modelo ligero.</p></div>
-      <div class="acard"><span class="role">Agente 2</span><h4>Motor biofísico</h4><p>Perfil ΔG nearest-neighbor + scoring ESM-1v + tensor 11 canales. Cómputo local, PyTorch, coste $0.</p></div>
+      <div class="acard"><span class="role">Agente 2</span><h4>Motor biofísico</h4><p>Perfil ΔG nearest-neighbor + scoring ESMC-300M + tensor 11 canales. Cómputo local en Apple Silicon, PyTorch, coste $0.</p></div>
       <div class="acard"><span class="role">Agente 3</span><h4>Predictor CNN</h4><p>Entrenamiento y forward pass de EnergySignalCNN. GradCAM para explicabilidad. GPU local.</p></div>
       <div class="acard"><span class="role">Agente 4</span><h4>Verificador clínico</h4><p>Cruza predicciones con bases de datos públicas, aplica criterios ACMG. Requiere razonamiento complejo — modelo fundacional.</p></div>
     </div>
 
     <p>Entre el predictor y el verificador hay un <b>gate de aprobación</b>: el pipeline se detiene hasta que el fundador — en este caso, el investigador principal — revisa la predicción antes de pasar a la verificación cruzada. El sistema es <em>fail-closed</em>: si no hay aprobación explícita, nada avanza. La IA propone, el humano decide.</p>
 
-    <p>El resultado de operar así: tres preprints con DOI permanente, una patente registrada (OEPM), un optimizador de mRNA que supera a vacunas comerciales, y un marco teórico (Λ = S ⊗ Φ) que despliega una trilogía de papers planificada hasta 2028. Todo desde un escritorio con GPU, conexión a internet y una cuenta de API.</p>
+    <p>El resultado de operar así, en números:</p>
+
+    <div class="stat-row">
+      <div class="stat"><div class="v">0.961</div><div class="l">AUC BRCA1 (CNN 11ch)</div></div>
+      <div class="stat"><div class="v">42</div><div class="l">Genes validados (AUC medio 0.876)</div></div>
+      <div class="stat"><div class="v">4</div><div class="l">Publicaciones con DOI permanente</div></div>
+      <div class="stat"><div class="v">228K</div><div class="l">Parámetros del modelo</div></div>
+    </div>
+
+    <p>Tres preprints (clasificación missense, optimización de mRNA terapéutico, variantes sinónimas) y un benchmark formal publicado que compara EnergyFingerprint contra CADD, REVEL y AlphaMissense. Una patente registrada (OEPM). Un optimizador de mRNA que supera a las vacunas de Pfizer y Moderna en estabilidad termodinámica. Un estudio de valor aditivo que demuestra que EF mejora a CADD en canales iónicos (<b>SCN1A: +0.109 AUC</b>) y reclasifica VUS con 90.6% de precisión. Un prototipo de red neuronal sobre grafos termodinámicos (DT-GNN) con interpretabilidad <em>glass-box</em>. Y un marco teórico (Λ = S ⊗ Φ) que despliega una trilogía de papers planificada hasta 2028.</p>
+
+    <p>Todo desde un escritorio con un Mac Mini, conexión a internet y una cuenta de API.</p>
 
     <h2>Lo que no cambia</h2>
 
@@ -206,13 +217,13 @@ footer a{color:var(--accent);}
 
     <h2>Donde el paradigma micro necesita dejar de ser micro</h2>
 
-    <p>Todo lo anterior es real y funciona. Tres preprints publicados, una patente registrada, un optimizador que supera vacunas comerciales — todo desde un escritorio. Pero sería deshonesto cerrar aquí sin decir lo que viene después.</p>
+    <p>Todo lo anterior es real y funciona. Cuatro publicaciones con DOI, una patente registrada, un benchmark formal publicado, 42 genes validados, un optimizador que supera vacunas comerciales — todo desde un escritorio. Pero sería deshonesto cerrar aquí sin decir lo que viene después.</p>
 
     <p>Este modelo es extraordinariamente eficaz para <b>validar una hipótesis, construir un prototipo y generar evidencia publicable</b>. La fase de exploración y prueba de concepto se comprime de años a meses. Hasta ahí, un fundador con una orquesta de agentes es suficiente.</p>
 
     <p>Pero la ciencia no termina en el preprint. La validación experimental — sintetizar constructos de mRNA, medir expresión en cultivos celulares, realizar ensayos DMS-MaPseq — requiere un <b>laboratorio físico</b>. La extensión internacional de la patente requiere <b>capital</b>. Escalar el producto desde un prototipo hasta una herramienta clínica certificada requiere <b>regulación, infraestructura y personas</b>.</p>
 
-    <p>El paradigma micro demuestra que la barrera de entrada al deep-tech ha bajado drásticamente. Pero la barrera de <b>escalado</b> sigue donde estaba. Lo que cambia es la posición desde la que se negocia: ya no es una idea en una servilleta — es un proyecto con resultados, con DOIs, con IP protegida y con un sistema operativo probado.</p>
+    <p>El paradigma micro demuestra que la barrera de entrada al deep-tech ha bajado drásticamente. Pero la barrera de <b>escalado</b> sigue donde estaba. Lo que cambia es la posición desde la que se negocia: ya no es una idea en una servilleta — es un proyecto con resultados cuantificados (AUC 0.961, 42 genes, benchmark publicado contra los tres predictores dominantes), con DOIs, con IP protegida y con un sistema operativo probado.</p>
 
     <p>El siguiente paso natural para QMetrika es <b>colaboración con universidades</b> para validación experimental, <b>cooperación con empresas de capital</b> para la extensión PCT y el desarrollo de producto, y <b>partnerships con laboratorios de diagnóstico y pharma</b> para pilotos clínicos. El micro-proyecto ha demostrado que la ciencia funciona. Ahora necesita el ecosistema para crecer.</p>
 

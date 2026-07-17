@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EnergyFingerprint: clasificación de variantes missense — QMetrika Labs Blog</title>
-<meta name="description" content="CNN 1D multicanal que clasifica variantes missense usando perfiles termodinámicos de apilamiento del mRNA y señales evolutivas de ESM-1v.">
+<meta name="description" content="CNN 1D multicanal que clasifica variantes missense usando perfiles termodinámicos de apilamiento del mRNA y señal evolutiva de ESMC-300M. 42 genes validados.">
 <link rel="preconnect" href="https://fonts.googleapis.com/">
 <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -131,7 +131,7 @@ footer a{color:var(--accent);}
     <a href="./" class="back">&larr; Blog</a>
     <div class="post-date">Junio 2026</div>
     <h1>EnergyFingerprint: clasificación de variantes missense con <em>perfiles termodinámicos</em></h1>
-    <p class="excerpt">CNN 1D multicanal (~228K parámetros) que clasifica variantes missense como patogénicas o benignas combinando la energía libre de apilamiento del mRNA con señales evolutivas de ESM-1v. Ocho genes validados, AUC hasta 0.994, transferibilidad zero-shot entre familias de proteínas.</p>
+    <p class="excerpt">CNN 1D multicanal (~228K parámetros) que clasifica variantes missense como patogénicas o benignas combinando la energía libre de apilamiento del mRNA con señal evolutiva de ESMC-300M. 42 genes validados, AUC hasta 0.994, transferibilidad zero-shot entre familias de proteínas.</p>
     <div class="post-tags">
       <span class="tag p">bio-ia</span>
       <span class="tag t">paper</span>
@@ -153,14 +153,14 @@ footer a{color:var(--accent);}
 
     <p><b>Eje biofísico (canales 1-4):</b> Perfiles termodinámicos de apilamiento del mRNA calculados con parámetros nearest-neighbor (SantaLucia 1998, Turner 2004). Capturan la <em>energía libre de Gibbs</em> (ΔG) entre dinucleótidos adyacentes — información de contexto local que métricas simples como GC3 no contienen.</p>
 
-    <p><b>Eje evolutivo (canales 5-11):</b> ESM-1v protein language model. Masked marginal scoring: se enmascara la posición mutada, se mide la log-likelihood ratio entre el aminoácido nativo y el mutante. Captura la presión evolutiva que ha actuado sobre esa posición durante millones de años.</p>
+    <p><b>Eje evolutivo (canales 5-11):</b> ESMC-300M protein language model (EvolutionaryScale, sucesor de ESM-1v). Masked marginal scoring: se enmascara la posición mutada, se mide la log-likelihood ratio entre el aminoácido nativo y el mutante. Captura la presión evolutiva que ha actuado sobre esa posición durante millones de años.</p>
 
     <div class="pullquote">La clave no es que cada eje sea mejor que los competidores por separado — es que los dos ejes son <b>ortogonales</b>. Uno opera a nivel de nucleótido, el otro a nivel de proteína. Juntos ven lo que ninguno ve solo.</div>
 
-    <h2>Resultados: 8 genes validados</h2>
+    <h2>Resultados: 42 genes validados</h2>
 
     <div class="stat-row">
-      <div class="stat"><div class="v">8</div><div class="l">Genes</div></div>
+      <div class="stat"><div class="v">42</div><div class="l">Genes</div></div>
       <div class="stat"><div class="v">0.994</div><div class="l">AUC máximo (PTEN)</div></div>
       <div class="stat"><div class="v">~228K</div><div class="l">Parámetros CNN</div></div>
       <div class="stat"><div class="v">11</div><div class="l">Canales</div></div>
@@ -177,10 +177,12 @@ footer a{color:var(--accent);}
           <tr><td><b>CFTR</b></td><td>Fibrosis quística (canal ABC)</td><td><b>0.979</b></td><td>0.777</td></tr>
           <tr><td><b>HBB</b></td><td>Anemia falciforme (globina)</td><td><b>0.721</b></td><td>0.707</td></tr>
           <tr><td><b>MECP2</b></td><td>Síndrome de Rett (IDR)</td><td><b>0.911</b></td><td>0.430</td></tr>
-          <tr><td><b>SCN1A</b></td><td>Epilepsia (canal iónico TM)</td><td><b>0.868</b></td><td>0.637</td></tr>
+          <tr><td><b>SCN1A</b></td><td>Epilepsia (canal iónico TM)</td><td><b>0.913</b></td><td>0.637</td></tr>
         </tbody>
       </table>
     </div>
+
+    <p><b>Actualización julio 2026:</b> El panel se ha expandido de 8 a <b>42 genes</b> (12 entrenables + 30 solo zero-shot), con AUC medio zero-shot de 0.876 sobre 41 genes evaluables. El modelo evolutivo se ha migrado de ESM-1v a ESMC-300M (AUC CNN 0.961 en BRCA1). Resultados completos en el <a class="tlink" href="https://doi.org/10.5281/zenodo.21309529">informe técnico TECH-2</a>.</p>
 
     <h2>El gradiente de transferibilidad</h2>
 
@@ -196,7 +198,7 @@ footer a{color:var(--accent);}
 
     <p>La CNN es deliberadamente pequeña (~228K parámetros) para evitar overfitting en datasets genéticos donde las muestras son escasas. Usa <b>CrossEntropyLoss</b> con 2 outputs (no BCEWithLogitsLoss con 1), class weights <b>[1.0, n_neg/n_pos]</b> para datasets desbalanceados, y GradCAM1D para explicabilidad — el modelo señala qué regiones del mRNA contribuyeron a su predicción.</p>
 
-    <p>El motor compartido (<em>energy.py</em>) computa los perfiles ΔG nearest-neighbor. Para proteínas de más de 1022 aminoácidos, ESM-1v necesita windowing (el warning "Regression weights not found" es normal y no afecta scoring).</p>
+    <p>El motor compartido (<em>energy.py</em>) computa los perfiles ΔG nearest-neighbor. Para proteínas de más de 1022 aminoácidos, ESMC-300M necesita windowing.</p>
 
     <h2>Competidores y diferenciación</h2>
 
