@@ -27,9 +27,8 @@ a.tlink:hover{text-decoration:underline;}
 
 /* NAV */
 nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:20px 40px;background:rgba(233,231,224,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
-.brand{display:flex;align-items:center;gap:11px;}
-.brand-mark{width:26px;height:26px;flex-shrink:0;}
-.brand-name{font-weight:600;font-size:15px;letter-spacing:-.01em;}
+.brand{display:flex;align-items:center;}
+.brand-logo{height:27px;width:auto;display:block;}
 .nav-links{display:flex;align-items:center;gap:26px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);}
 .nav-links a:hover:not(.nav-cta):not(.nav-lang){color:var(--ink);}
 .nav-lang{color:var(--ink)!important;}
@@ -148,7 +147,7 @@ footer{padding:40px;border-top:1px solid var(--rule);display:flex;justify-conten
 
   <!-- NAV -->
   <nav>
-    <a href="#top" class="brand"><svg class="brand-mark" width="26" height="26" viewBox="6 6 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="28" cy="28" r="18" stroke="#1B1B18" stroke-width="4.5"/><circle cx="41" cy="41" r="9.6" fill="#E9E7E0"/><circle cx="41" cy="41" r="7.4" fill="#1B1B18"/><circle cx="41" cy="41" r="5.4" fill="#A6542E"/></svg><span class="brand-name">QMetrika Labs</span></a>
+    <a href="#top" class="brand"><img class="brand-logo" src="assets/logo-qmetrika.svg" alt="QMetrika Labs" width="96" height="27"></a>
     <div class="nav-links">
       <a href="#bio-ai">bio-ai</a>
       <a href="#publications">papers</a>
