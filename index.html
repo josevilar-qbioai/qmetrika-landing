@@ -100,17 +100,21 @@ header h1 .hl{color:var(--accent);}
 .idea h3{font-weight:600;font-size:17px;margin-bottom:9px;letter-spacing:-.01em;}
 .idea p{font-size:15px;line-height:1.6;color:var(--muted);}
 
-/* AGENT-BOARD — slim callout */
-.callout{background:var(--ink);color:var(--dark-fg);padding:48px 44px;border-radius:4px;}
-.callout-top{display:flex;align-items:center;gap:16px;margin-bottom:18px;flex-wrap:wrap;}
-.callout-top h3{font-weight:600;font-size:23px;letter-spacing:-.015em;}
-.callout-badge{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.06em;color:var(--ink);background:var(--accent-lt);padding:6px 13px;border-radius:2px;}
-.callout p{font-size:16px;line-height:1.65;color:var(--dark-muted);max-width:640px;margin-bottom:32px;}
-.callout p b{color:var(--dark-fg);font-weight:600;}
-.callout-foot{display:flex;align-items:center;gap:40px;flex-wrap:wrap;}
-.callout-stats{display:flex;gap:40px;font-family:'IBM Plex Mono',monospace;}
-.callout-stats .n{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:28px;line-height:1;color:var(--accent-lt);}
-.callout-stats .l{font-size:10px;color:#8F8B80;margin-top:7px;letter-spacing:.04em;}
+/* FRAMEWORKS */
+.fw-cycle{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--faint);margin-bottom:40px;letter-spacing:.04em;}
+.fw-cycle b{color:var(--accent);font-weight:500;}
+.frameworks{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.fw{background:var(--panel);padding:30px 26px;border-radius:4px;display:flex;flex-direction:column;}
+.fw .phase{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;}
+.fw h3{font-weight:600;font-size:17px;margin-bottom:10px;letter-spacing:-.01em;}
+.fw p{font-size:14px;line-height:1.55;color:var(--muted);margin-bottom:20px;flex:1;}
+.fw a.fwlink{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--accent);}
+.fw a.fwlink:hover{text-decoration:underline;}
+.fw.moat{background:var(--ink);}
+.fw.moat .phase{color:var(--accent-lt);}
+.fw.moat h3{color:var(--dark-fg);}
+.fw.moat p{color:var(--dark-muted);}
+.fw.moat a.fwlink{color:var(--accent-lt);}
 
 /* CONTACT */
 .contact{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;}
@@ -126,7 +130,7 @@ footer{padding:40px;border-top:1px solid var(--rule);display:flex;justify-conten
 @media(max-width:820px){
   nav{padding:16px 22px;}
   .nav-links{gap:16px;font-size:11px;}
-  .nav-links a[href="#capital-q"],.nav-links a[href="#tecnologia"]{display:none;}
+  .nav-links a[href="#capital-q"],.nav-links a[href="#frameworks"]{display:none;}
   section,header,footer{padding:76px 22px;}
   header{padding:88px 22px 72px;}
   .identity{padding:44px 22px;}
@@ -135,8 +139,7 @@ footer{padding:40px;border-top:1px solid var(--rule);display:flex;justify-conten
   .videos{grid-template-columns:1fr;}
   .ideas{grid-template-columns:1fr;gap:32px;}
   .contact{grid-template-columns:1fr;gap:40px;}
-  .callout{padding:36px 26px;}
-  .callout-stats{gap:28px;}
+  .frameworks{grid-template-columns:1fr 1fr;}
 }
 </style>
 </head>
@@ -150,6 +153,7 @@ footer{padding:40px;border-top:1px solid var(--rule);display:flex;justify-conten
       <a href="#bio-ia">bio-ia</a>
       <a href="#publicaciones">papers</a>
       <a href="#capital-q">capital q</a>
+      <a href="#frameworks">frameworks</a>
       <a href="blog/">blog</a>
       <a href="en.html" class="nav-lang">es<span style="color:var(--accent);">/</span>en</a>
       <a href="#contacto" class="nav-cta">contacto →</a>
@@ -232,21 +236,36 @@ footer{padding:40px;border-top:1px solid var(--rule);display:flex;justify-conten
     <a href="TOKEN_CAPITAL_QMETRIKA_ES.html" target="_blank" class="btn btn-line">leer_documento_completo →</a>
   </section>
 
-  <!-- AGENT-BOARD -->
-  <section id="tecnologia" class="panel">
-    <div class="kick">Capital tecnológico</div>
-    <h2>Infraestructura transversal al laboratorio</h2>
-    <p class="sub">Tecnología reutilizable que escala con cada nueva línea de investigación.</p>
-    <div class="callout">
-      <div class="callout-top"><h3>Agent-Board</h3><span class="callout-badge">orquestación_multi-agente</span></div>
-      <p>Kanban de 5 columnas donde cada tarjeta la ejecuta un agente especializado con su modelo óptimo — Haiku para lo mecánico, PyTorch local a coste cero, Opus para el razonamiento clínico. Intermediario de aprobación cerrado por defecto, políticas RBAC y un adaptador universal multi-LLM en <b>~60 líneas</b> de Python. Sin dependencia de proveedor.</p>
-      <div class="callout-foot">
-        <div class="callout-stats">
-          <div><div class="n">~80%</div><div class="l">ahorro_vs_todo-opus</div></div>
-          <div><div class="n">5</div><div class="l">columnas</div></div>
-          <div><div class="n">15</div><div class="l">amenazas_catalogadas</div></div>
-        </div>
-        <a href="https://josevilar-qbioai.github.io/agent-board/demos/board-demo.html?profile=claude-science" target="_blank" class="btn" style="background:var(--accent-lt);color:var(--ink);">ver_demo_interactiva →</a>
+  <!-- FRAMEWORKS CAPITAL Q -->
+  <section id="frameworks" class="panel">
+    <div class="kick">Frameworks Capital Q</div>
+    <h2>Cuatro frameworks, un ciclo</h2>
+    <p class="sub">El paradigma Capital Q no es solo teoría: se materializa en un conjunto de frameworks reutilizables, desarrollados en el laboratorio y agnósticos de LLM. Del diseño del agente al foso científico. Licencia MIT.</p>
+    <div class="fw-cycle"><b>Design</b> → <b>Gobernar</b> → <b>Capitalizar</b> → <b>Defender</b></div>
+    <div class="frameworks">
+      <div class="fw">
+        <div class="phase">Design</div>
+        <h3>Agent Canvas Model</h3>
+        <p>9 bloques que fuerzan las decisiones caras antes de programar: segmento, autonomía, KPIs, integraciones, costes y riesgos. Evita quemar tokens en agentes mal planificados.</p>
+        <a class="fwlink" href="https://josevilar-qbioai.github.io/agent-canvas-model/" target="_blank">demo_interactiva →</a>
+      </div>
+      <div class="fw">
+        <div class="phase">Gobernar</div>
+        <h3>Agent Board</h3>
+        <p>Kanban de 5 columnas con gate determinista, WIP medido en coste y auditoría hash-chain. Adaptador multi-LLM en ~60 líneas y ~80% de ahorro frente a todo-Opus.</p>
+        <a class="fwlink" href="https://josevilar-qbioai.github.io/agent-board/demos/board-demo.html?profile=claude-science" target="_blank">demo_interactiva →</a>
+      </div>
+      <div class="fw">
+        <div class="phase">Capitalizar</div>
+        <h3>Capital Board</h3>
+        <p>La misma acción operativa leída a través de otra lente: coste, decisiones y evaluaciones que se acumulan como conocimiento propio. Hace visible cuánto Capital Q has construido.</p>
+        <a class="fwlink" href="https://josevilar-qbioai.github.io/agent-board/board/capital-board.html" target="_blank">ver_demo →</a>
+      </div>
+      <div class="fw moat">
+        <div class="phase">Defender</div>
+        <h3>Motor ΔG · Bio-IA</h3>
+        <p>El foso científico. Perfil termodinámico nearest-neighbor para clasificar variantes y optimizar mRNA. Donde el capital especializado supera al token genérico. Patente + 4 papers.</p>
+        <a class="fwlink" href="#bio-ia">ver_línea_bio-ia →</a>
       </div>
     </div>
   </section>
