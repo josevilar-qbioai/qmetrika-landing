@@ -3,24 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EF-Synonymous · scoring de variantes sinónimas (prototipo)</title>
+<title>EF-Synonymous · scoring de variantes sinónimas · QMetrika Labs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --navy:#12233b; --teal:#0d7d84; --teal-dark:#0a5f65; --mint:#e6f4f3;
-    --ink:#1c2733; --muted:#5b6b7a; --line:#e2e8ee; --bg:#f6f8fa; --card:#fff;
-    --amber:#b26a00; --amber-bg:#fdf4e3; --red:#b23b3b; --green:#1f8a5b; --gold:#c8952a;
+    /* Paleta de marca QMetrika (crema + terracota) */
+    --navy:#1B1B18; --teal:#A6542E; --teal-dark:#8A4526; --mint:#EAE1D6;
+    --ink:#1B1B18; --muted:#54514A; --line:#D3D0C6; --bg:#E9E7E0; --card:#F5F3EC;
+    --amber:#8A5A1E; --amber-bg:#EFE6D6; --red:#9E3B2E; --green:#2C6B4A; --gold:#A6542E;
+    --faint:#827F74; --accent-lt:#D98A5E;
   }
   *{box-sizing:border-box;}
   body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-family:'Space Grotesk',system-ui,-apple-system,sans-serif;
     line-height:1.55;font-size:15px;}
   .wrap{max-width:900px;margin:0 auto;padding:0 20px 70px;}
-  header.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--teal-dark) 100%);
-    color:#fff;padding:38px 24px 30px;}
+  header.hero{background:var(--navy);
+    color:#F5F3EC;padding:38px 24px 30px;}
   header .inner{max-width:900px;margin:0 auto;}
-  .kicker{text-transform:uppercase;letter-spacing:.14em;font-size:11px;font-weight:700;color:#8fd4d0;margin:0 0 8px;}
+  .kicker{font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.14em;font-size:11px;font-weight:500;color:var(--accent-lt);margin:0 0 8px;}
   header h1{margin:0 0 6px;font-size:26px;font-weight:800;}
-  header p{margin:0;font-size:14px;color:#c6d6e2;}
+  header p{margin:0;font-size:14px;color:#C3BEB0;}
   .ribbon{background:var(--amber-bg);border-bottom:1px solid #ead9bc;color:#7a4e00;
     font-size:12.5px;padding:8px 20px;text-align:center;}
   .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
@@ -28,7 +33,7 @@
   h2{font-size:16px;color:var(--navy);margin:0 0 12px;font-weight:700;}
   label{display:block;font-size:13px;font-weight:600;color:var(--navy);margin:12px 0 4px;}
   textarea,input{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 11px;
-    font-family:"SF Mono",Menlo,Consolas,monospace;font-size:13px;color:var(--ink);background:#fbfdfd;}
+    font-family:'IBM Plex Mono',"SF Mono",Menlo,Consolas,monospace;font-size:13px;color:var(--ink);background:#fbfdfd;}
   textarea{height:96px;resize:vertical;letter-spacing:.5px;}
   .row{display:flex;gap:12px;flex-wrap:wrap;}
   .row>div{flex:1;min-width:120px;}
@@ -41,7 +46,7 @@
   .scorebar{display:flex;align-items:center;gap:16px;margin:6px 0 4px;}
   .gauge{flex:1;height:16px;border-radius:10px;position:relative;
     background:linear-gradient(90deg,#2c8a5b 0%,#e6c34a 50%,#c0453b 100%);}
-  .gauge .mark{position:absolute;top:-5px;width:3px;height:26px;background:#12233b;border-radius:2px;transform:translateX(-50%);}
+  .gauge .mark{position:absolute;top:-5px;width:3px;height:26px;background:#1B1B18;border-radius:2px;transform:translateX(-50%);}
   .gauge .gray{position:absolute;top:0;height:100%;background:rgba(255,255,255,.55);}
   .bignum{font-size:34px;font-weight:800;color:var(--navy);min-width:96px;text-align:right;}
   .verdict-badge{display:inline-block;font-size:13px;font-weight:700;padding:5px 14px;border-radius:20px;color:#fff;}
@@ -52,7 +57,7 @@
   .contrib-bar{height:9px;border-radius:5px;background:#e6ecf0;overflow:hidden;position:relative;min-width:90px;}
   .contrib-bar>span{position:absolute;top:0;height:100%;}
   .pos{background:var(--red);} .neg{background:var(--green);}
-  code{background:#eef2f5;padding:1px 5px;border-radius:4px;font-family:"SF Mono",Menlo,monospace;font-size:12.5px;color:var(--teal-dark);}
+  code{background:#eef2f5;padding:1px 5px;border-radius:4px;font-family:'IBM Plex Mono',"SF Mono",Menlo,monospace;font-size:12.5px;color:var(--teal-dark);}
   .flag{font-size:13px;padding:8px 12px;border-radius:8px;margin:8px 0;}
   .flag.ok{background:#eaf6f1;color:#1f6b4a;} .flag.warn{background:var(--amber-bg);color:#7a4e00;}
   .flag.err{background:#fbeceb;color:#8a2b25;}
@@ -81,7 +86,7 @@
       <div style="flex:2"><input id="gene" placeholder="p. ej. BRCA1, CFTR, SCN1A" spellcheck="false"></div>
       <div style="flex:0 0 auto"><button class="btn-ghost" style="margin:0" onclick="fetchTranscripts()">Buscar transcritos</button></div>
     </div>
-    <select id="transcript" style="display:none;width:100%;margin-top:8px;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:#fbfdfd;font-family:'SF Mono',Menlo,monospace;font-size:13px" onchange="fetchCDS(this.value)"></select>
+    <select id="transcript" style="display:none;width:100%;margin-top:8px;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:#fbfdfd;font-family:'IBM Plex Mono','SF Mono',Menlo,monospace;font-size:13px" onchange="fetchCDS(this.value)"></select>
     <div class="hint" id="fetchstatus"></div>
     <label style="margin-top:16px">Secuencia CDS del transcrito (solo A/C/G/T, sin cabecera)</label>
     <textarea id="cds" spellcheck="false"></textarea>
@@ -116,9 +121,9 @@
     <h2 style="margin-top:22px;">Perfil de apilamiento ΔG (Turner) alrededor de la variante</h2>
     <svg class="chart" id="chart" viewBox="0 0 700 180" preserveAspectRatio="none"></svg>
     <div class="legend">
-      <span><span class="sw" style="background:#12233b"></span>Φ nativo (WT)</span>
-      <span><span class="sw" style="background:#c8952a"></span>Φ mutante</span>
-      <span><span class="sw" style="background:#0d7d84;height:9px;width:9px;border-radius:2px;opacity:.18"></span>ventana ±10 nt (σ)</span>
+      <span><span class="sw" style="background:#1B1B18"></span>Φ nativo (WT)</span>
+      <span><span class="sw" style="background:#A6542E"></span>Φ mutante</span>
+      <span><span class="sw" style="background:#A6542E;height:9px;width:9px;border-radius:2px;opacity:.18"></span>ventana ±10 nt (σ)</span>
       <span>línea vertical = posición de la variante</span>
     </div>
     <button class="btn-ghost" style="margin-top:18px" onclick="exportDossier()">⤓ Exportar dossier auditable (JSON)</button>
@@ -282,10 +287,10 @@ function drawChart(sg){
   // banda ventana σ (±10)
   const bx1=X(Math.max(lo,sg.lo)), bx2=X(Math.min(hi-1,sg.hi-1));
   let svg='';
-  svg+='<rect x="'+bx1.toFixed(1)+'" y="'+padY+'" width="'+(bx2-bx1).toFixed(1)+'" height="'+(H-2*padY)+'" fill="#0d7d84" opacity="0.10"/>';
-  svg+='<line x1="'+X(c).toFixed(1)+'" y1="6" x2="'+X(c).toFixed(1)+'" y2="'+(H-6)+'" stroke="#b23b3b" stroke-width="1.5" stroke-dasharray="3 3"/>';
-  svg+='<path d="'+path(sg.fw)+'" fill="none" stroke="#12233b" stroke-width="2"/>';
-  svg+='<path d="'+path(sg.fm)+'" fill="none" stroke="#c8952a" stroke-width="2"/>';
+  svg+='<rect x="'+bx1.toFixed(1)+'" y="'+padY+'" width="'+(bx2-bx1).toFixed(1)+'" height="'+(H-2*padY)+'" fill="#A6542E" opacity="0.10"/>';
+  svg+='<line x1="'+X(c).toFixed(1)+'" y1="6" x2="'+X(c).toFixed(1)+'" y2="'+(H-6)+'" stroke="#9E3B2E" stroke-width="1.5" stroke-dasharray="3 3"/>';
+  svg+='<path d="'+path(sg.fw)+'" fill="none" stroke="#1B1B18" stroke-width="2"/>';
+  svg+='<path d="'+path(sg.fm)+'" fill="none" stroke="#A6542E" stroke-width="2"/>';
   document.getElementById('chart').innerHTML=svg;
 }
 // ─── Fetch multi-transcrito por símbolo de gen (Ensembl REST, client-side) ───
@@ -308,7 +313,7 @@ async function fetchTranscripts(){
     sel.style.display='block';
     st.innerHTML=ts.length+' transcritos ('+d.display_name+', '+d.assembly_name+'). Selecciona uno para cargar su CDS.';
     fetchCDS(ts[0].id);
-  }catch(e){st.innerHTML='<span style="color:#b23b3b">No se pudo consultar Ensembl: '+e.message+'. Puedes pegar el CDS a mano.</span>';}
+  }catch(e){st.innerHTML='<span style="color:#9E3B2E">No se pudo consultar Ensembl: '+e.message+'. Puedes pegar el CDS a mano.</span>';}
 }
 async function fetchCDS(tid){
   const st=document.getElementById('fetchstatus');
@@ -321,7 +326,7 @@ async function fetchCDS(tid){
     document.getElementById('cds').value=d.seq.toUpperCase();
     document.getElementById('hgvs').value='';
     st.innerHTML='CDS de <code>'+tid+'</code> cargado ('+d.seq.length+' nt). Introduce la variante <code>c.…</code> y calcula.';
-  }catch(e){st.innerHTML='<span style="color:#b23b3b">No se pudo descargar el CDS: '+e.message+'.</span>';}
+  }catch(e){st.innerHTML='<span style="color:#9E3B2E">No se pudo descargar el CDS: '+e.message+'.</span>';}
 }
 
 // ─── Export del dossier auditable (JSON) — base del argumento SaMD ───
