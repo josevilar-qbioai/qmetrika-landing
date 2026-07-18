@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EF-Synonymous · scoring de variantes sinónimas · QMetrika Labs</title>
+<title>EF-Synonymous · synonymous variant scoring · QMetrika Labs</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -81,85 +81,85 @@
 </head>
 <body>
 <nav class="qm">
-  <a href="../index.html" class="brand"><img src="../assets/logo-qmetrika-negativo.svg" alt="QMetrika Labs"></a>
+  <a href="../en.html" class="brand"><img src="../assets/logo-qmetrika-negativo.svg" alt="QMetrika Labs"></a>
   <div class="links">
-    <a href="../index.html" class="back">← qmetrika.xyz</a>
-    <a href="ef-synonymous-en.html" class="lang">es<span style="color:var(--accent-lt)">/</span>en</a>
+    <a href="../en.html" class="back">← qmetrika.xyz</a>
+    <a href="ef-synonymous.html" class="lang">es<span style="color:var(--accent-lt)">/</span>en</a>
   </div>
 </nav>
 <header class="hero"><div class="inner">
-  <p class="kicker">QMetrika Labs · EnergyFingerprint · prototipo</p>
+  <p class="kicker">QMetrika Labs · EnergyFingerprint · prototype</p>
   <h1>EF-Synonymous</h1>
-  <p>Scoring termodinámico de variantes sinónimas · glass-box · 100% en el navegador</p>
+  <p>Thermodynamic scoring of synonymous variants · glass-box · 100% in your browser</p>
 </div></header>
-<div class="ribbon">⚠ Prototipo de investigación (RUO) — no es un dispositivo médico. Umbrales ilustrativos sin calibrar clínicamente.</div>
+<div class="ribbon">⚠ Research prototype (RUO) — not a medical device. Illustrative thresholds, not clinically calibrated.</div>
 
 <div class="wrap">
 
   <div class="card">
-    <h2>Entrada</h2>
-    <label>Buscar por gen (Ensembl REST) — opcional</label>
+    <h2>Input</h2>
+    <label>Search by gene (Ensembl REST) — optional</label>
     <div class="row">
-      <div style="flex:2"><input id="gene" placeholder="p. ej. BRCA1, CFTR, SCN1A" spellcheck="false"></div>
-      <div style="flex:0 0 auto"><button class="btn-ghost" style="margin:0" onclick="fetchTranscripts()">Buscar transcritos</button></div>
+      <div style="flex:2"><input id="gene" placeholder="e.g. BRCA1, CFTR, SCN1A" spellcheck="false"></div>
+      <div style="flex:0 0 auto"><button class="btn-ghost" style="margin:0" onclick="fetchTranscripts()">Fetch transcripts</button></div>
     </div>
     <select id="transcript" style="display:none;width:100%;margin-top:8px;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:var(--field);color:var(--ink);font-family:'IBM Plex Mono','SF Mono',Menlo,monospace;font-size:13px" onchange="fetchCDS(this.value)"></select>
     <div class="hint" id="fetchstatus"></div>
-    <label style="margin-top:16px">Secuencia CDS del transcrito (solo A/C/G/T, sin cabecera)</label>
+    <label style="margin-top:16px">Transcript CDS sequence (A/C/G/T only, no header)</label>
     <textarea id="cds" spellcheck="false"></textarea>
-    <div class="hint">Pega el CDS completo (o un fragmento con ≥64 nt a cada lado de la variante). Posición 1 = primera base del codón de inicio.</div>
+    <div class="hint">Paste the full CDS (or a fragment with ≥64 nt on each side of the variant). Position 1 = first base of the start codon.</div>
     <div class="row">
       <div>
-        <label>Variante HGVS (c.)</label>
+        <label>HGVS variant (c.)</label>
         <input id="hgvs" placeholder="c.213G>A" spellcheck="false">
-        <div class="hint">Formato <code>c.{pos}{REF}>{ALT}</code> a nivel de CDS.</div>
+        <div class="hint">Format <code>c.{pos}{REF}>{ALT}</code> at CDS level.</div>
       </div>
     </div>
-    <button onclick="run()">Calcular score_sigma</button>
-    <button class="btn-ghost" onclick="loadDemo()">Cargar ejemplo (CACNA1C c.213G&gt;A)</button>
+    <button onclick="run()">Compute score_sigma</button>
+    <button class="btn-ghost" onclick="loadDemo()">Load example (CACNA1C c.213G&gt;A)</button>
   </div>
 
   <div class="card" id="result">
-    <h2>Resultado</h2>
+    <h2>Result</h2>
     <div id="flags"></div>
 
     <div class="scorebar">
       <div class="gauge" id="gauge"><div class="gray" id="grayzone"></div><div class="mark" id="mark"></div></div>
       <div class="bignum" id="prob">–</div>
     </div>
-    <div class="legend">P(patogénica) · zona gris sombreada = sin evidencia · escala 0 (benigna) → 1 (patogénica)</div>
-    <p style="margin:14px 0 4px;">Evidencia ACMG: <span id="acmg" class="verdict-badge b-ind">–</span> <span class="disc" id="acmgnote"></span></p>
+    <div class="legend">P(pathogenic) · shaded gray zone = no evidence · scale 0 (benign) → 1 (pathogenic)</div>
+    <p style="margin:14px 0 4px;">ACMG evidence: <span id="acmg" class="verdict-badge b-ind">–</span> <span class="disc" id="acmgnote"></span></p>
 
-    <h2 style="margin-top:22px;">Descomposición glass-box</h2>
-    <p class="disc">La predicción es la suma de dos contribuciones físicas interpretables (logit). Nada opaco.</p>
+    <h2 style="margin-top:22px;">Glass-box breakdown</h2>
+    <p class="disc">The prediction is the sum of two interpretable physical contributions (logit). Nothing opaque.</p>
     <table id="contrib"></table>
     <p class="disc" id="logitline"></p>
 
-    <h2 style="margin-top:22px;">Perfil de apilamiento ΔG (Turner) alrededor de la variante</h2>
+    <h2 style="margin-top:22px;">ΔG stacking profile (Turner) around the variant</h2>
     <svg class="chart" id="chart" viewBox="0 0 700 180" preserveAspectRatio="none"></svg>
     <div class="legend">
-      <span><span class="sw" style="background:#E9E6DD"></span>Φ nativo (WT)</span>
-      <span><span class="sw" style="background:#C2673B"></span>Φ mutante</span>
-      <span><span class="sw" style="background:#C2673B;height:9px;width:9px;border-radius:2px;opacity:.3"></span>ventana ±10 nt (σ)</span>
-      <span>línea vertical = posición de la variante</span>
+      <span><span class="sw" style="background:#E9E6DD"></span>Φ native (WT)</span>
+      <span><span class="sw" style="background:#C2673B"></span>Φ mutant</span>
+      <span><span class="sw" style="background:#C2673B;height:9px;width:9px;border-radius:2px;opacity:.3"></span>±10 nt window (σ)</span>
+      <span>vertical line = variant position</span>
     </div>
-    <button class="btn-ghost" style="margin-top:18px" onclick="exportDossier()">⤓ Exportar dossier auditable (JSON)</button>
-    <span class="disc" style="margin-left:8px">trazabilidad SaMD: features, contribuciones, versión del modelo y huella del CDS</span>
+    <button class="btn-ghost" style="margin-top:18px" onclick="exportDossier()">⤓ Export auditable dossier (JSON)</button>
+    <span class="disc" style="margin-left:8px">SaMD traceability: features, contributions, model version and CDS fingerprint</span>
   </div>
 
   <div class="card">
-    <h2>Cómo funciona (y qué NO es)</h2>
-    <p>El modelo es una regresión logística de <b>dos observables físicos</b> que iguala a la CNN dedicada del Paper 1 (AUC 0.683):</p>
+    <h2>How it works (and what it is not)</h2>
+    <p>The model is a logistic regression over <b>two physical observables</b> matching the dedicated CNN of Paper 1 (AUC 0.683):</p>
     <ul>
-      <li><b>σ (sigma_signed):</b> suma con signo del ΔΔG de apilamiento nearest-neighbor (parámetros Turner de RNA) en ±10 nt alrededor de la variante. Mide la desestabilización termodinámica local del mRNA.</li>
-      <li><b>is_GtoA:</b> transición G&gt;A (sesgo mutacional CpG, enriquecido 2.60× en patogénicas).</li>
+      <li><b>σ (sigma_signed):</b> signed sum of nearest-neighbor stacking ΔΔG (Turner RNA parameters) over ±10 nt around the variant. Measures the local thermodynamic destabilization of the mRNA.</li>
+      <li><b>is_GtoA:</b> G&gt;A transition (CpG mutational bias, 2.60× enriched in pathogenic).</li>
     </ul>
-    <p>Toda la inferencia corre en tu navegador con <code>numpy</code> portado a JavaScript — no hay servidor, no se envía tu secuencia a ningún sitio. Es el <b>argumento glass-box para SaMD/ACMG</b>: cada predicción es reproducible, auditable y trazable variante a variante.</p>
-    <p class="disc"><b>Limitaciones honestas:</b> AUC ~0.68 (evidencia de apoyo, no veredicto). Zona gris amplia. Umbrales de mapeo ACMG ilustrativos, requieren calibración local. Entrenado sobre ClinVar sinónimas (v2, n=1957). No usar para decisiones clínicas.</p>
+    <p>All inference runs in your browser with <code>numpy</code> ported to JavaScript — no server, your sequence is never sent anywhere. This is the <b>glass-box argument for SaMD/ACMG</b>: every prediction is reproducible, auditable and traceable variant by variant.</p>
+    <p class="disc"><b>Honest limitations:</b> AUC ~0.68 (supporting evidence, not a verdict). Wide gray zone. Illustrative ACMG mapping thresholds, require local calibration. Trained on ClinVar synonymous variants (v2, n=1957). Do not use for clinical decisions.</p>
   </div>
 
   <footer>
-    EF-Synonymous · QMetrika Labs · método cubierto por P202630522 (OEPM). Modelo σ+G&gt;A validado 17/07/2026 (AUC 0.671 pooled / 0.680 leave-genes-out). Paper 1: Zenodo 10.5281/zenodo.20275792. Investigación (RUO).
+    EF-Synonymous · QMetrika Labs · method covered by P202630522 (OEPM). σ+G&gt;A model validated 2026-07-17 (AUC 0.671 pooled / 0.680 leave-genes-out). Paper 1: Zenodo 10.5281/zenodo.20275792. Research use only (RUO).
   </footer>
 </div>
 
@@ -236,10 +236,10 @@ function run(){
     document.getElementById('contrib').innerHTML='';document.getElementById('chart').innerHTML='';
     document.getElementById('acmg').textContent='–';document.getElementById('acmg').className='verdict-badge b-ind';
     document.getElementById('acmgnote').textContent='';document.getElementById('logitline').textContent='';}
-  if(!cds||!/^[ACGT]+$/.test(cds)) return err('La secuencia CDS está vacía o contiene caracteres no válidos (solo A/C/G/T).');
-  if(!hg) return err('Variante no reconocida. Usa el formato <code>c.213G&gt;A</code>.');
-  if(hg.pos<1||hg.pos>cds.length) return err('La posición c.'+hg.pos+' está fuera del CDS (longitud '+cds.length+').');
-  if(cds[hg.pos-1]!==hg.ref) return err('Mismatch: en c.'+hg.pos+' el CDS tiene <code>'+cds[hg.pos-1]+'</code>, no <code>'+hg.ref+'</code>. ¿Transcrito/hebra correctos? (para hebra − usa el complemento o el HGVS c.)');
+  if(!cds||!/^[ACGT]+$/.test(cds)) return err('The CDS sequence is empty or contains invalid characters (A/C/G/T only).');
+  if(!hg) return err('Variant not recognized. Use the format <code>c.213G&gt;A</code>.');
+  if(hg.pos<1||hg.pos>cds.length) return err('Position c.'+hg.pos+' is outside the CDS (length '+cds.length+').');
+  if(cds[hg.pos-1]!==hg.ref) return err('Mismatch: at c.'+hg.pos+' the CDS has <code>'+cds[hg.pos-1]+'</code>, not <code>'+hg.ref+'</code>. Correct transcript/strand? (for the − strand use the complement or the c. HGVS)');
 
   document.getElementById('gauge').style.opacity=1;
   const out=predict(cds,hg.pos,hg.ref,hg.alt);
@@ -251,13 +251,13 @@ function run(){
     const wtC=cds.substr(cs,3), off=(hg.pos-1)-cs;
     const mutC=wtC.substring(0,off)+hg.alt+wtC.substring(off+1);
     const aWt=CODON[wtC], aMut=CODON[mutC];
-    if(aWt&&aMut){ if(aWt===aMut) synMsg='<div class="flag ok">✓ Variante <b>sinónima</b> ('+wtC+'→'+mutC+', '+aWt+'). Dominio del modelo.</div>';
-      else synMsg='<div class="flag warn">⚠ Esta variante <b>NO es sinónima</b> ('+wtC+' '+aWt+' → '+mutC+' '+aMut+'). El modelo σ está entrenado para sinónimas; el score no aplica.</div>';}
+    if(aWt&&aMut){ if(aWt===aMut) synMsg='<div class="flag ok">✓ <b>Synonymous</b> variant ('+wtC+'→'+mutC+', '+aWt+'). Within model domain.</div>';
+      else synMsg='<div class="flag warn">⚠ This variant is <b>NOT synonymous</b> ('+wtC+' '+aWt+' → '+mutC+' '+aMut+'). The σ model is trained for synonymous variants; the score does not apply.</div>';}
   }
-  // applicability flag (P-L1b: proteínas grandes → fiabilidad reducida)
+  // applicability flag (P-L1b: large proteins → reduced reliability)
   const aa=Math.floor(cds.length/3);
-  let appMsg=(aa>2500)?'<div class="flag warn">⚠ Proteína grande (~'+aa+' aa &gt; 2500): fiabilidad reducida (P-L1b).</div>'
-                      :'<div class="flag ok">✓ Longitud dentro del dominio de validez (~'+aa+' aa).</div>';
+  let appMsg=(aa>2500)?'<div class="flag warn">⚠ Large protein (~'+aa+' aa &gt; 2500): reduced reliability (P-L1b).</div>'
+                      :'<div class="flag ok">✓ Length within the validity domain (~'+aa+' aa).</div>';
   flags.innerHTML=synMsg+appMsg;
 
   // score + gauge
@@ -269,22 +269,22 @@ function run(){
 
   // ACMG (umbrales ilustrativos)
   const badge=document.getElementById('acmg'), note=document.getElementById('acmgnote');
-  if(p>=0.65){badge.textContent='PP3 · apoyo patogénico';badge.className='verdict-badge b-path';}
-  else if(p<=0.35){badge.textContent='BP4 · apoyo benigno';badge.className='verdict-badge b-ben';}
-  else{badge.textContent='Indeterminado · sin evidencia';badge.className='verdict-badge b-ind';}
-  note.textContent=' (umbral ilustrativo 0.35 / 0.65, sin calibrar)';
+  if(p>=0.65){badge.textContent='PP3 · supporting pathogenic';badge.className='verdict-badge b-path';}
+  else if(p<=0.35){badge.textContent='BP4 · supporting benign';badge.className='verdict-badge b-ben';}
+  else{badge.textContent='Indeterminate · no evidence';badge.className='verdict-badge b-ind';}
+  note.textContent=' (illustrative threshold 0.35 / 0.65, uncalibrated)';
 
   // contribuciones
-  const names={sigma_signed:'σ · ΔΔG apilamiento (Turner) local',is_GtoA:'is_GtoA · transición G&gt;A'};
+  const names={sigma_signed:'σ · ΔΔG stacking (Turner) local',is_GtoA:'is_GtoA · G&gt;A transition'};
   const maxAbs=Math.max(Math.abs(out.contrib[0]),Math.abs(out.contrib[1]),0.001);
-  let rows='<tr><th>Observable</th><th>Valor</th><th>Aporte al logit</th><th style="width:130px">peso</th></tr>';
+  let rows='<tr><th>Observable</th><th>Value</th><th>Logit contribution</th><th style="width:130px">weight</th></tr>';
   for(let i=0;i<2;i++){const cb=out.contrib[i],val=out.x[i];
     const wpc=Math.abs(cb)/maxAbs*100, side=cb>=0?'left:50%':'right:50%', cls=cb>=0?'pos':'neg';
     rows+='<tr><td>'+names[MODEL.features[i]]+'</td><td><code>'+(i===0?val.toFixed(2)+' kcal/mol':val)+'</code></td>'
       +'<td>'+(cb>=0?'+':'')+cb.toFixed(3)+'</td>'
       +'<td><div class="contrib-bar"><span class="'+cls+'" style="'+side+';width:'+(wpc/2)+'%"></span></div></td></tr>';}
   document.getElementById('contrib').innerHTML=rows;
-  document.getElementById('logitline').innerHTML='logit = intercepto ('+out.intercept.toFixed(3)+') + Σ contribuciones = <b>'+out.logit.toFixed(3)+'</b> → P = σ(logit) = <b>'+p.toFixed(3)+'</b>';
+  document.getElementById('logitline').innerHTML='logit = intercept ('+out.intercept.toFixed(3)+') + Σ contributions = <b>'+out.logit.toFixed(3)+'</b> → P = σ(logit) = <b>'+p.toFixed(3)+'</b>';
 
   drawChart(out.sg);
   res.style.display='block';
@@ -292,7 +292,7 @@ function run(){
 }
 
 function drawChart(sg){
-  const view=32; // ±32 nt alrededor de la variante
+  const view=32; // ±32 nt around the variant
   const c=sg.c, lo=Math.max(0,c-view), hi=Math.min(sg.fw.length,c+view+1);
   const W=700,H=180,padY=18,padX=10;
   let all=[]; for(let i=lo;i<hi;i++){all.push(sg.fw[i]);all.push(sg.fm[i]);}
@@ -316,34 +316,34 @@ async function fetchTranscripts(){
   const gene=document.getElementById('gene').value.trim();
   const st=document.getElementById('fetchstatus'), sel=document.getElementById('transcript');
   sel.style.display='none'; sel.innerHTML='';
-  if(!gene){st.textContent='Escribe un símbolo de gen (p. ej. BRCA1).';return;}
-  st.textContent='Buscando transcritos de '+gene+'…';
+  if(!gene){st.textContent='Enter a gene symbol (e.g. BRCA1).';return;}
+  st.textContent='Fetching transcripts for '+gene+'…';
   try{
     const r=await fetch(ENSEMBL+'/lookup/symbol/homo_sapiens/'+encodeURIComponent(gene)+'?expand=1;content-type=application/json');
-    if(!r.ok) throw new Error('HTTP '+r.status+(r.status===400?' (¿gen no encontrado?)':''));
+    if(!r.ok) throw new Error('HTTP '+r.status+(r.status===400?' (gene not found?)':''));
     const d=await r.json();
     const ts=(d.Transcript||[]).filter(t=>t.biotype==='protein_coding');
-    if(!ts.length) throw new Error('sin transcritos codificantes');
+    if(!ts.length) throw new Error('no coding transcripts');
     ts.sort((a,b)=>(b.is_canonical||0)-(a.is_canonical||0));
     for(const t of ts){const o=document.createElement('option');o.value=t.id;
-      o.textContent=t.id+(t.is_canonical?'  ★ canónico':'')+'  ·  '+(t.display_name||'');sel.appendChild(o);}
+      o.textContent=t.id+(t.is_canonical?'  ★ canonical':'')+'  ·  '+(t.display_name||'');sel.appendChild(o);}
     sel.style.display='block';
-    st.innerHTML=ts.length+' transcritos ('+d.display_name+', '+d.assembly_name+'). Selecciona uno para cargar su CDS.';
+    st.innerHTML=ts.length+' transcripts ('+d.display_name+', '+d.assembly_name+'). Select one to load its CDS.';
     fetchCDS(ts[0].id);
-  }catch(e){st.innerHTML='<span style="color:#E8968A">No se pudo consultar Ensembl: '+e.message+'. Puedes pegar el CDS a mano.</span>';}
+  }catch(e){st.innerHTML='<span style="color:#E8968A">Could not query Ensembl: '+e.message+'. You can paste the CDS manually.</span>';}
 }
 async function fetchCDS(tid){
   const st=document.getElementById('fetchstatus');
-  st.innerHTML='Descargando CDS de <code>'+tid+'</code>…';
+  st.innerHTML='Downloading CDS for <code>'+tid+'</code>…';
   try{
     const r=await fetch(ENSEMBL+'/sequence/id/'+tid+'?type=cds;content-type=application/json');
     if(!r.ok) throw new Error('HTTP '+r.status);
     const d=await r.json();
-    if(!d.seq) throw new Error('sin secuencia CDS');
+    if(!d.seq) throw new Error('no CDS sequence');
     document.getElementById('cds').value=d.seq.toUpperCase();
     document.getElementById('hgvs').value='';
-    st.innerHTML='CDS de <code>'+tid+'</code> cargado ('+d.seq.length+' nt). Introduce la variante <code>c.…</code> y calcula.';
-  }catch(e){st.innerHTML='<span style="color:#E8968A">No se pudo descargar el CDS: '+e.message+'.</span>';}
+    st.innerHTML='CDS de <code>'+tid+'</code> loaded ('+d.seq.length+' nt). Enter the <code>c.…</code> variant and compute.';
+  }catch(e){st.innerHTML='<span style="color:#E8968A">Could not download the CDS: '+e.message+'.</span>';}
 }
 
 // ─── Export del dossier auditable (JSON) — base del argumento SaMD ───
@@ -351,16 +351,16 @@ function fnv1a(s){let h=0x811c9dc5;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i
 function exportDossier(){
   const cds=document.getElementById('cds').value.replace(/\s/g,'').toUpperCase().replace(/U/g,'T');
   const hg=parseHGVS(document.getElementById('hgvs').value);
-  if(!/^[ACGT]+$/.test(cds)||!hg){alert('Calcula primero un resultado válido antes de exportar.');return;}
-  if(hg.pos<1||hg.pos>cds.length||cds[hg.pos-1]!==hg.ref){alert('La variante no casa con el CDS; corrige antes de exportar.');return;}
-  const out=predict(cds,hg.pos,hg.ref,hg.alt); if(!out){alert('No se pudo calcular.');return;}
+  if(!/^[ACGT]+$/.test(cds)||!hg){alert('Compute a valid result first before exporting.');return;}
+  if(hg.pos<1||hg.pos>cds.length||cds[hg.pos-1]!==hg.ref){alert('The variant does not match the CDS; fix it before exporting.');return;}
+  const out=predict(cds,hg.pos,hg.ref,hg.alt); if(!out){alert('Could not compute.');return;}
   const p=out.prob, z=[(out.x[0]-MODEL.mean[0])/MODEL.std[0],(out.x[1]-MODEL.mean[1])/MODEL.std[1]];
   // sinonimia
   const cs=Math.floor((hg.pos-1)/3)*3; let syn=null;
   if(cs+3<=cds.length){const wtC=cds.substr(cs,3),off=(hg.pos-1)-cs,mutC=wtC.substring(0,off)+hg.alt+wtC.substring(off+1);
     syn={wt_codon:wtC,mut_codon:mutC,wt_aa:CODON[wtC]||null,mut_aa:CODON[mutC]||null,synonymous:(CODON[wtC]&&CODON[wtC]===CODON[mutC])||false};}
   const aa=Math.floor(cds.length/3);
-  const acmg=p>=0.65?{code:'PP3',call:'apoyo patogénico'}:p<=0.35?{code:'BP4',call:'apoyo benigno'}:{code:'—',call:'indeterminado'};
+  const acmg=p>=0.65?{code:'PP3',call:'supporting pathogenic'}:p<=0.35?{code:'BP4',call:'supporting benign'}:{code:'—',call:'indeterminate'};
   const dossier={
     tool:'EF-Synonymous (prototipo)', tool_version:'0.2',
     generated_utc:new Date().toISOString(),
