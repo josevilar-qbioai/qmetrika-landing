@@ -143,7 +143,8 @@
       <span><span class="sw" style="background:#C2673B;height:9px;width:9px;border-radius:2px;opacity:.3"></span>ventana ±10 nt (σ)</span>
       <span>línea vertical = posición de la variante</span>
     </div>
-    <button class="btn-ghost" style="margin-top:18px" onclick="exportDossier()">⤓ Exportar dossier auditable (JSON)</button>
+    <button class="btn-ghost" style="margin-top:18px" onclick="exportDossier()">⤓ Dossier JSON</button>
+    <button class="btn-ghost" style="margin-top:18px" onclick="exportPDF()">⤓ Informe PDF</button>
     <span class="disc" style="margin-left:8px">trazabilidad SaMD: features, contribuciones, versión del modelo y huella del CDS</span>
   </div>
 
@@ -391,6 +392,66 @@ function exportDossier(){
   const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
   a.download='EF-Synonymous_'+(dossier.input.gene||'variant')+'_c'+hg.pos+hg.ref+'-'+hg.alt+'.json';
   document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(a.href);
+}
+// ─── Export del informe PDF (vía diálogo de impresión, sin dependencias) ───
+function exportPDF(){
+  const cds=document.getElementById('cds').value.replace(/\s/g,'').toUpperCase().replace(/U/g,'T');
+  const hg=parseHGVS(document.getElementById('hgvs').value);
+  if(!/^[ACGT]+$/.test(cds)||!hg){alert('Calcula primero un resultado válido antes de exportar.');return;}
+  if(hg.pos<1||hg.pos>cds.length||cds[hg.pos-1]!==hg.ref){alert('La variante no casa con el CDS; corrige antes de exportar.');return;}
+  const out=predict(cds,hg.pos,hg.ref,hg.alt); if(!out){alert('No se pudo calcular.');return;}
+  const p=out.prob, r=(x,d)=>x.toFixed(d);
+  const cs=Math.floor((hg.pos-1)/3)*3; let syn=null;
+  if(cs+3<=cds.length){const wtC=cds.substr(cs,3),off=(hg.pos-1)-cs,mutC=wtC.substring(0,off)+hg.alt+wtC.substring(off+1);
+    syn={wtC,mutC,wtA:CODON[wtC]||'?',mutA:CODON[mutC]||'?',ok:(CODON[wtC]&&CODON[wtC]===CODON[mutC])};}
+  const aa=Math.floor(cds.length/3);
+  const acmg=p>=0.65?{code:'PP3',call:'apoyo patogénico',c:'#B23B2E'}:p<=0.35?{code:'BP4',call:'apoyo benigno',c:'#2C6B4A'}:{code:'—',call:'indeterminado',c:'#6C6960'};
+  const gene=document.getElementById('gene').value.trim()||'—', tr=document.getElementById('transcript').value||'—', hgvs=document.getElementById('hgvs').value.trim();
+  const fp=fnv1a(cds), now=new Date();
+  const html=`<!doctype html><html lang="es"><head><meta charset="utf-8"><title>EF-Synonymous · informe · ${gene} ${hgvs}</title>
+<style>@page{size:A4;margin:16mm;}*{box-sizing:border-box;}
+body{font-family:'Space Grotesk',system-ui,Arial,sans-serif;color:#1B1B18;margin:0;font-size:12px;line-height:1.5;}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace;}
+.top{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid #A6542E;padding-bottom:8px;}
+.brand{font-weight:800;font-size:16px;}.brand span{color:#A6542E;}
+.doc{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#54514A;text-transform:uppercase;letter-spacing:.1em;}
+h1{font-size:18px;margin:16px 0 2px;}.sub{color:#54514A;margin:0 0 14px;}
+.ruo{background:#F4EEDD;border:1px solid #E0D3AE;color:#7A5A16;padding:6px 10px;border-radius:4px;font-size:10.5px;margin-bottom:14px;}
+.score{display:flex;align-items:center;gap:18px;margin:10px 0 6px;}.big{font-size:40px;font-weight:800;}
+.badge{color:#fff;font-weight:700;padding:5px 14px;border-radius:20px;font-size:12px;}
+h2{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#A6542E;border-bottom:1px solid #D3D0C6;padding-bottom:3px;margin:16px 0 6px;}
+table{width:100%;border-collapse:collapse;font-size:11px;}td,th{text-align:left;padding:4px 6px;border-bottom:1px solid #E6E3D9;}th{color:#54514A;font-weight:600;}
+.kv{display:grid;grid-template-columns:150px 1fr;gap:2px 14px;font-size:11px;}.kv dt{color:#54514A;}.kv dd{margin:0;}
+footer{margin-top:20px;border-top:1px solid #D3D0C6;padding-top:8px;font-size:9.5px;color:#827F74;}</style></head><body>
+<div class="top"><div class="brand">QMetrika<span> Labs</span></div><div class="doc">EF-Synonymous · informe</div></div>
+<h1>Informe de variante sinónima</h1>
+<p class="sub mono">${gene} · ${hgvs} · ${now.toLocaleString('es-ES')}</p>
+<div class="ruo">⚠ Investigación (RUO) — no es un dispositivo médico. Evidencia computacional de apoyo; umbrales ACMG ilustrativos sin calibrar.</div>
+<div class="score"><div class="big">${r(p,3)}</div><div><span class="badge" style="background:${acmg.c}">${acmg.code} · ${acmg.call}</span><div class="mono" style="color:#54514A;margin-top:5px;font-size:10px;">P(patogénica) · zona gris 0.35–0.65</div></div></div>
+<h2>Descomposición glass-box</h2>
+<table><tr><th>Observable</th><th>Valor</th><th>Aporte al logit</th></tr>
+<tr><td>σ · ΔΔG apilamiento (Turner) local</td><td class="mono">${r(out.x[0],2)} kcal/mol</td><td class="mono">${out.contrib[0]>=0?'+':''}${r(out.contrib[0],3)}</td></tr>
+<tr><td>is_GtoA · transición G&gt;A</td><td class="mono">${out.x[1]}</td><td class="mono">${out.contrib[1]>=0?'+':''}${r(out.contrib[1],3)}</td></tr>
+<tr><td>intercepto</td><td class="mono">—</td><td class="mono">${r(MODEL.intercept,3)}</td></tr></table>
+<p class="mono" style="font-size:10.5px;margin-top:6px;">logit = ${r(out.logit,3)} → P = σ(logit) = ${r(p,3)}</p>
+<h2>Variante</h2>
+<dl class="kv"><dt>Gen</dt><dd>${gene}</dd><dt>Transcrito</dt><dd class="mono">${tr}</dd><dt>HGVS (c.)</dt><dd class="mono">${hgvs}</dd>
+<dt>Codón</dt><dd class="mono">${syn?syn.wtC+' ('+syn.wtA+') → '+syn.mutC+' ('+syn.mutA+') · '+(syn.ok?'sinónima':'NO sinónima'):'—'}</dd>
+<dt>Aplicabilidad</dt><dd>~${aa} aa${aa>2500?' · fiabilidad reducida (P-L1b)':''}</dd></dl>
+<h2>Procedencia del modelo</h2>
+<dl class="kv"><dt>Modelo</dt><dd>σ + G&gt;A (regresión logística glass-box)</dd>
+<dt>Parámetros</dt><dd>Turner (RNA) nearest-neighbor · v2 2026-07-17</dd>
+<dt>Rendimiento</dt><dd>AUC 0.671 pooled / 0.680 leave-genes-out (≈ CNN 0.683)</dd>
+<dt>Entrenamiento</dt><dd>ClinVar sinónimas v2 (n=1957; 657P/1300B; 456 genes)</dd>
+<dt>Huella CDS</dt><dd class="mono">FNV-1a ${fp} · ${cds.length} nt</dd>
+<dt>Patente</dt><dd>P202630522 (OEPM)</dd><dt>Paper</dt><dd>Zenodo 10.5281/zenodo.20275792</dd>
+<dt>Herramienta</dt><dd>ef-synonymous 0.2 · umbrales ACMG sin calibrar</dd></dl>
+<footer>QMetrika Labs · EF-Synonymous · Evidencia computacional de apoyo (AUC ~0.68). No usar para decisiones clínicas. Generado ${now.toISOString()}.</footer>
+</body></html>`;
+  const w=window.open('','_blank');
+  if(!w){alert('El navegador bloqueó la ventana emergente. Permite pop-ups para exportar el PDF.');return;}
+  w.document.write(html); w.document.close(); w.focus();
+  setTimeout(()=>{w.print();}, 350);
 }
 window.addEventListener('DOMContentLoaded',loadDemo);
 </script>
