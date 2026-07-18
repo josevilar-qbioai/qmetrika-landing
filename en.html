@@ -151,6 +151,7 @@ footer{padding:40px;border-top:1px solid var(--rule);display:flex;justify-conten
     <div class="nav-links">
       <a href="#bio-ai">bio-ai</a>
       <a href="#publications">papers</a>
+      <a href="#try-it" class="nav-cta">try it</a>
       <a href="#capital-q">capital q</a>
       <a href="#frameworks">frameworks</a>
       <a href="blog/en.html">blog</a>
@@ -219,6 +220,23 @@ footer{padding:40px;border-top:1px solid var(--rule);display:flex;justify-conten
       <div class="pub"><div class="pn">P-L2</div><div><h4>mRNA Stacking Optimization: Codon design guided by nearest-neighbor thermodynamics</h4><div class="doi">Zenodo · <a class="tlink" href="https://doi.org/10.5281/zenodo.20228980">10.5281/zenodo.20228980</a></div><div class="desc">ΔG as an axis orthogonal to MFE (R²=0.144). Dual optimizer outperforms commercial vaccines.</div></div></div>
       <div class="pub"><div class="pn">P1</div><div><h4>Synonymous variants alter mRNA thermodynamic profiles: a CNN-based pathogenicity signal</h4><div class="doi">Zenodo · <a class="tlink" href="https://doi.org/10.5281/zenodo.20275792">10.5281/zenodo.20275792</a> · trilogy_paper_1</div><div class="desc">AUC 0.683. Λ = S ⊗ Φ framework. First synonymous-variant predictor with thermodynamic signal. The CNN reduces to <b>2 interpretable physical observables</b> (signed stacking ΔΔG + G>A bias) that match it and generalize across genes — glass-box, auditable as ACMG evidence (PP3/BP4).</div></div></div>
       <div class="pub"><div class="pn">TECH-2</div><div><h4>Benchmark: EnergyFingerprint vs CADD, REVEL, AlphaMissense</h4><div class="doi">Zenodo · <a class="tlink" href="https://doi.org/10.5281/zenodo.21309529">10.5281/zenodo.21309529</a> · technical_report</div><div class="desc">Formal comparison across 7 genes. EF outperforms CADD on SCN1A (0.913 vs 0.832). Additive value demonstrated.</div></div></div>
+    </div>
+  </section>
+
+  <!-- TRY IT -->
+  <section id="try-it">
+    <div class="kick">Try it · Pruébalo</div>
+    <h2>Score a synonymous variant in seconds</h2>
+    <p class="sub">Glass-box, free, no signup. The thermodynamic signal (<b>σ + G&gt;A</b>) that matches the deep network, running entirely in your browser or your terminal. No data leaves your machine.</p>
+    <div class="btn-row" style="margin-bottom:38px">
+      <a href="tools/ef-synonymous.html" target="_blank" class="btn btn-solid">▶ open_the_web_tool →</a>
+      <a href="https://pypi.org/project/ef-synonymous/" target="_blank" class="btn btn-line">view_on_pypi →</a>
+      <a href="https://github.com/josevilar-qbioai/ef-synonymous" target="_blank" class="btn btn-line">code_on_github →</a>
+    </div>
+    <div class="mono" style="background:var(--ink);color:var(--bg);padding:22px 24px;border-radius:3px;font-size:13px;line-height:1.85;overflow-x:auto;max-width:660px;">
+      <span style="color:var(--faint)"># install and drop it into your pipeline</span><br>
+      pip install ef-synonymous<br>
+      ef-syn score --transcript ENST00000399655 --hgvs c.213G&gt;A
     </div>
   </section>
 

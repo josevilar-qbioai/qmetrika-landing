@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EF-Synonymous · scoring de variantes sinónimas (prototipo)</title>
+<style>
+  :root{
+    --navy:#12233b; --teal:#0d7d84; --teal-dark:#0a5f65; --mint:#e6f4f3;
+    --ink:#1c2733; --muted:#5b6b7a; --line:#e2e8ee; --bg:#f6f8fa; --card:#fff;
+    --amber:#b26a00; --amber-bg:#fdf4e3; --red:#b23b3b; --green:#1f8a5b; --gold:#c8952a;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55;font-size:15px;}
+  .wrap{max-width:900px;margin:0 auto;padding:0 20px 70px;}
+  header.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--teal-dark) 100%);
+    color:#fff;padding:38px 24px 30px;}
+  header .inner{max-width:900px;margin:0 auto;}
+  .kicker{text-transform:uppercase;letter-spacing:.14em;font-size:11px;font-weight:700;color:#8fd4d0;margin:0 0 8px;}
+  header h1{margin:0 0 6px;font-size:26px;font-weight:800;}
+  header p{margin:0;font-size:14px;color:#c6d6e2;}
+  .ribbon{background:var(--amber-bg);border-bottom:1px solid #ead9bc;color:#7a4e00;
+    font-size:12.5px;padding:8px 20px;text-align:center;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:18px 20px;margin:18px 0;box-shadow:0 1px 3px rgba(18,35,59,.05);}
+  h2{font-size:16px;color:var(--navy);margin:0 0 12px;font-weight:700;}
+  label{display:block;font-size:13px;font-weight:600;color:var(--navy);margin:12px 0 4px;}
+  textarea,input{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 11px;
+    font-family:"SF Mono",Menlo,Consolas,monospace;font-size:13px;color:var(--ink);background:#fbfdfd;}
+  textarea{height:96px;resize:vertical;letter-spacing:.5px;}
+  .row{display:flex;gap:12px;flex-wrap:wrap;}
+  .row>div{flex:1;min-width:120px;}
+  button{background:var(--teal);color:#fff;border:none;border-radius:8px;padding:11px 22px;
+    font-size:14px;font-weight:700;cursor:pointer;margin-top:14px;}
+  button:hover{background:var(--teal-dark);}
+  .btn-ghost{background:transparent;color:var(--teal-dark);border:1px solid var(--teal);margin-left:8px;}
+  .hint{font-size:12px;color:var(--muted);margin-top:4px;}
+  #result{display:none;}
+  .scorebar{display:flex;align-items:center;gap:16px;margin:6px 0 4px;}
+  .gauge{flex:1;height:16px;border-radius:10px;position:relative;
+    background:linear-gradient(90deg,#2c8a5b 0%,#e6c34a 50%,#c0453b 100%);}
+  .gauge .mark{position:absolute;top:-5px;width:3px;height:26px;background:#12233b;border-radius:2px;transform:translateX(-50%);}
+  .gauge .gray{position:absolute;top:0;height:100%;background:rgba(255,255,255,.55);}
+  .bignum{font-size:34px;font-weight:800;color:var(--navy);min-width:96px;text-align:right;}
+  .verdict-badge{display:inline-block;font-size:13px;font-weight:700;padding:5px 14px;border-radius:20px;color:#fff;}
+  .b-path{background:var(--red);} .b-ben{background:var(--green);} .b-ind{background:var(--muted);}
+  table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13.5px;}
+  th,td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--line);}
+  th{background:var(--mint);color:var(--navy);}
+  .contrib-bar{height:9px;border-radius:5px;background:#e6ecf0;overflow:hidden;position:relative;min-width:90px;}
+  .contrib-bar>span{position:absolute;top:0;height:100%;}
+  .pos{background:var(--red);} .neg{background:var(--green);}
+  code{background:#eef2f5;padding:1px 5px;border-radius:4px;font-family:"SF Mono",Menlo,monospace;font-size:12.5px;color:var(--teal-dark);}
+  .flag{font-size:13px;padding:8px 12px;border-radius:8px;margin:8px 0;}
+  .flag.ok{background:#eaf6f1;color:#1f6b4a;} .flag.warn{background:var(--amber-bg);color:#7a4e00;}
+  .flag.err{background:#fbeceb;color:#8a2b25;}
+  svg.chart{width:100%;height:180px;background:#fbfdfd;border:1px solid var(--line);border-radius:8px;}
+  .legend{font-size:12px;color:var(--muted);margin-top:4px;}
+  .legend span{display:inline-block;margin-right:14px;}
+  .sw{display:inline-block;width:11px;height:3px;vertical-align:middle;margin-right:4px;border-radius:2px;}
+  footer{font-size:12px;color:var(--muted);margin-top:26px;border-top:1px solid var(--line);padding-top:14px;}
+  .disc{font-size:12px;color:var(--muted);}
+</style>
+</head>
+<body>
+<header class="hero"><div class="inner">
+  <p class="kicker">QMetrika Labs · EnergyFingerprint · prototipo</p>
+  <h1>EF-Synonymous</h1>
+  <p>Scoring termodinámico de variantes sinónimas · glass-box · 100% en el navegador</p>
+</div></header>
+<div class="ribbon">⚠ Prototipo de investigación (RUO) — no es un dispositivo médico. Umbrales ilustrativos sin calibrar clínicamente.</div>
+
+<div class="wrap">
+
+  <div class="card">
+    <h2>Entrada</h2>
+    <label>Buscar por gen (Ensembl REST) — opcional</label>
+    <div class="row">
+      <div style="flex:2"><input id="gene" placeholder="p. ej. BRCA1, CFTR, SCN1A" spellcheck="false"></div>
+      <div style="flex:0 0 auto"><button class="btn-ghost" style="margin:0" onclick="fetchTranscripts()">Buscar transcritos</button></div>
+    </div>
+    <select id="transcript" style="display:none;width:100%;margin-top:8px;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:#fbfdfd;font-family:'SF Mono',Menlo,monospace;font-size:13px" onchange="fetchCDS(this.value)"></select>
+    <div class="hint" id="fetchstatus"></div>
+    <label style="margin-top:16px">Secuencia CDS del transcrito (solo A/C/G/T, sin cabecera)</label>
+    <textarea id="cds" spellcheck="false"></textarea>
+    <div class="hint">Pega el CDS completo (o un fragmento con ≥64 nt a cada lado de la variante). Posición 1 = primera base del codón de inicio.</div>
+    <div class="row">
+      <div>
+        <label>Variante HGVS (c.)</label>
+        <input id="hgvs" placeholder="c.213G>A" spellcheck="false">
+        <div class="hint">Formato <code>c.{pos}{REF}>{ALT}</code> a nivel de CDS.</div>
+      </div>
+    </div>
+    <button onclick="run()">Calcular score_sigma</button>
+    <button class="btn-ghost" onclick="loadDemo()">Cargar ejemplo (CACNA1C c.213G&gt;A)</button>
+  </div>
+
+  <div class="card" id="result">
+    <h2>Resultado</h2>
+    <div id="flags"></div>
+
+    <div class="scorebar">
+      <div class="gauge" id="gauge"><div class="gray" id="grayzone"></div><div class="mark" id="mark"></div></div>
+      <div class="bignum" id="prob">–</div>
+    </div>
+    <div class="legend">P(patogénica) · zona gris sombreada = sin evidencia · escala 0 (benigna) → 1 (patogénica)</div>
+    <p style="margin:14px 0 4px;">Evidencia ACMG: <span id="acmg" class="verdict-badge b-ind">–</span> <span class="disc" id="acmgnote"></span></p>
+
+    <h2 style="margin-top:22px;">Descomposición glass-box</h2>
+    <p class="disc">La predicción es la suma de dos contribuciones físicas interpretables (logit). Nada opaco.</p>
+    <table id="contrib"></table>
+    <p class="disc" id="logitline"></p>
+
+    <h2 style="margin-top:22px;">Perfil de apilamiento ΔG (Turner) alrededor de la variante</h2>
+    <svg class="chart" id="chart" viewBox="0 0 700 180" preserveAspectRatio="none"></svg>
+    <div class="legend">
+      <span><span class="sw" style="background:#12233b"></span>Φ nativo (WT)</span>
+      <span><span class="sw" style="background:#c8952a"></span>Φ mutante</span>
+      <span><span class="sw" style="background:#0d7d84;height:9px;width:9px;border-radius:2px;opacity:.18"></span>ventana ±10 nt (σ)</span>
+      <span>línea vertical = posición de la variante</span>
+    </div>
+    <button class="btn-ghost" style="margin-top:18px" onclick="exportDossier()">⤓ Exportar dossier auditable (JSON)</button>
+    <span class="disc" style="margin-left:8px">trazabilidad SaMD: features, contribuciones, versión del modelo y huella del CDS</span>
+  </div>
+
+  <div class="card">
+    <h2>Cómo funciona (y qué NO es)</h2>
+    <p>El modelo es una regresión logística de <b>dos observables físicos</b> que iguala a la CNN dedicada del Paper 1 (AUC 0.683):</p>
+    <ul>
+      <li><b>σ (sigma_signed):</b> suma con signo del ΔΔG de apilamiento nearest-neighbor (parámetros Turner de RNA) en ±10 nt alrededor de la variante. Mide la desestabilización termodinámica local del mRNA.</li>
+      <li><b>is_GtoA:</b> transición G&gt;A (sesgo mutacional CpG, enriquecido 2.60× en patogénicas).</li>
+    </ul>
+    <p>Toda la inferencia corre en tu navegador con <code>numpy</code> portado a JavaScript — no hay servidor, no se envía tu secuencia a ningún sitio. Es el <b>argumento glass-box para SaMD/ACMG</b>: cada predicción es reproducible, auditable y trazable variante a variante.</p>
+    <p class="disc"><b>Limitaciones honestas:</b> AUC ~0.68 (evidencia de apoyo, no veredicto). Zona gris amplia. Umbrales de mapeo ACMG ilustrativos, requieren calibración local. Entrenado sobre ClinVar sinónimas (v2, n=1957). No usar para decisiones clínicas.</p>
+  </div>
+
+  <footer>
+    EF-Synonymous · QMetrika Labs · método cubierto por P202630522 (OEPM). Modelo σ+G&gt;A validado 17/07/2026 (AUC 0.671 pooled / 0.680 leave-genes-out). Paper 1: Zenodo 10.5281/zenodo.20275792. Investigación (RUO).
+  </footer>
+</div>
+
+<script>
+// ─── Parámetros Turner (RNA) nearest-neighbor, kcal/mol ───
+const TURNER = {AA:-0.93,AT:-1.10,AG:-2.08,AC:-2.24,TA:-1.33,TT:-0.93,TG:-2.35,TC:-2.11,
+  GA:-2.35,GT:-2.24,GG:-3.26,GC:-3.42,CA:-2.11,CT:-2.08,CG:-2.36,CC:-3.26};
+// ─── Modelo σ+G>A (glass-box, entrenado) ───
+const MODEL = {features:["sigma_signed","is_GtoA"],
+  coef:[0.16482249208383623,0.5576100073875074], intercept:-0.06194690256461833,
+  mean:[0.9596780786918752,0.3372508942258559], std:[1.6404340467143472,0.4727713279903049],
+  window:128, local_w:10};
+// ─── Código genético (chequeo de sinonimia) ───
+const CODON={TTT:'F',TTC:'F',TTA:'L',TTG:'L',CTT:'L',CTC:'L',CTA:'L',CTG:'L',ATT:'I',ATC:'I',ATA:'I',ATG:'M',
+  GTT:'V',GTC:'V',GTA:'V',GTG:'V',TCT:'S',TCC:'S',TCA:'S',TCG:'S',CCT:'P',CCC:'P',CCA:'P',CCG:'P',
+  ACT:'T',ACC:'T',ACA:'T',ACG:'T',GCT:'A',GCC:'A',GCA:'A',GCG:'A',TAT:'Y',TAC:'Y',TAA:'*',TAG:'*',
+  CAT:'H',CAC:'H',CAA:'Q',CAG:'Q',AAT:'N',AAC:'N',AAA:'K',AAG:'K',GAT:'D',GAC:'D',GAA:'E',GAG:'E',
+  TGT:'C',TGC:'C',TGA:'*',TGG:'W',CGT:'R',CGC:'R',CGA:'R',CGG:'R',AGT:'S',AGC:'S',AGA:'R',AGG:'R',
+  GGT:'G',GGC:'G',GGA:'G',GGG:'G'};
+const DEMO_CDS="ATGGTCAATGAGAATACGAGGATGTACATTCCAGAGGAAAACCACCAAGGTTCCAACTATGGGAGCCCACGCCCCGCCCATGCCAACATGAATGCCAATGCGGCAGCGGGGCTGGCCCCTGAGCACATCCCCACCCCGGGGGCTGCCCTGTCGTGGCAGGCGGCCATCGACGCAGCCCGGCAGGCTAAGCTGATGGGCAGCGCTGGCAATGCGACCATCTCCACAGTCAGCTCCACGCAGCGGAAGCGGCAGCAATATGGGAAACCCAAGAAGCAGGGCAGCACCACGGCCACACGCCCGCCCCGAGCCCTGCTCTGCCTGACCCTGAAGAACCCCATCCGGAGGGCCTGCATCAGCATTGTCGAATGGAAACCATTTGAAATAATTATTTTACTGACTATTTTTGCCAATTGTGTGGCCTTAGCGATCTATATTCCCTTTCCAGAAGATGATTCCAACGCCACCAATTCCAACCTGGAACGAGTGGAATATCTCTTTCTCATAATTTTTACGGTGGAAGCGTTTTTAAAAGTAATCGCCTATGGACTCCTCTTTCACCCCAATGCCTACCTCCGCAACGGCTGGAACCTACTAGATTTTATAATTGTGGTTGTGGGGCTTTTTAGTGCAATTTTAGAACAAGCAACCAAAGCAGATGGGGCAAACGCTCTCGGAGGGAAAGGGGCCGGATTTGATGTGAAGGCGCTGAGGGCCTTCCGCGTGCTGCGCCCCCTGCGGCTGGTGTCCGGAGTCCCAAGTCTCCAGGTGGTCCTGAATTCCATCATCAAGGCCATGGTCCCCCTGCTGCACATCGCCCTGCTTGTGCTGTTTGTCATCATCATCTACGCCATCATCGGCTTGGAGCTCTTCATGGGGAAGATGCACAAGACCTGCTACAACCAGGAGGGCATAGCAGATGTTCCAGCAGAAGATGACCCTTCCCCTTGTGCGCTGGAAACGGGCCACGGGCGGCAGTGCCAGAACGGCACGGTGTGCAAGCCCGGCTGGGATGGTCCCAAGCACGGCATCACCAACTTTGACAACTTTGCCTTCGCCATGCTCACGGTGTTCCAGTGCATCACCATGGAGGGCTGGACGGACGTGCTGTACTGGGTCAATGATGCCGTAGGAAGGGACTGGCCCTGGATCTATTTTGTTACACTAATCATCATAGGGTCATTTTTTGTACTTAACTTGGTTCTCGGTGTGCTTAGCGGAGAGTTTTCCAAAGAGAGGGAGAAGGCCAAGGCCCGGGGAGATTTCCAGAAGCTGCGGGAGAAGCAGCAGCTAGAAGAGGATCTCAAAGGCTACCTGGATTGGATCACTCAGGCCGAAGACATCGATCCTGAGAATGAGGACGAAGGCATGGATGAGGAGAAGCCCCGAAACATGAGCATGCCCACCAGTGAGACCGAGTCCGTCAACACCGAAAACGTGGCTGGAGGTGACATCGAGGGAGAAAACTGCGGGGCCAGGCTGGCCCACCGGATCTCCAAGTCAAAGTTCAGCCGCTACTGGCGCCGGTGGAATCGGTTCTGCAGAAGGAAGTGCCGCGCCGCAGTCAAGTCTAATGTCTTCTACTGGCTGGTGATTTTCCTGGTGTTCCTCAACACGCTCACCATTGCCTCTGAGCACTACAACCAGCCCAACTGGCTCACAGAAGTCCAAGACACGGCAAACAAGGCCCTGCTGGCCCTGTTCACGGCAGAGATGCTCCTGAAGATGTACAGCCTGGGCCTGCAGGCCTACTTCGTGTCCCTCTTCAACCGCTTTGACTGCTTCGTCGTGTGTGGCGGCATCCTGGAGACCATCCTGGTGGAGACCAAGATCATGTCCCCACTGGGCATCTCCGTGCTCAGATGCGTCCGGCTGCTGAGGATTTTCAAGATCACGAGGTACTGGAACTCCTTGAGCAACCTGGTGGCATCCTTGCTGAACTCTGTGCGCTCCATCGCCTCCCTGCTCCTTCTCCTCTTCCTCTTCATCATCATCTTCTCCCTCCTGGGGATGCAGCTCTTTGGAGGAAAGTTCAACTTTGATGAGATGCAGACCCGGAGGAGCACATTCGATAACTTCCCCCAGTCCCTCCTCACTGTGTTTCAGATCCTGACCGGGGAGGACTGGAATTCGGTGATGTATGATGGGATCATGGCTTATGGCGGCCCCTCTTTTCCAGGGATGTTAGTCTGTATTTACTTCATCATCCTCTTCATCTGTGGAAACTATATCCTACTGAATGTGTTCTTGGCCATTGCTGTGGACAACCTGGCTGATGCTGAGAGCCTCACATCTGCCCAAAAGGAGGAGGAAGAGGAGAAGGAGAGAAAGAAGCTGGCCAGGACTGCCAGCCCAGAGAAGAAACAAGAGTTGGTGGAGAAGCCGGCAGTGGGGGAATCCAAGGAGGAGAAGATTGAGCTGAAATCCATCACGGCTGACGGAGAGTCTCCACCCGCCACCAAGATCAACATGGATGACCTCCAGCCCAATGAAAATGAGGATAAGAGCCCCTACCCCAACCCAGAAACTACAGGAGAAGAGGATGAGGAGGAGCCAGAGATGCCTGTCGGCCCTCGCCCACGACCACTCTCTGAGCTTCACCTTAAGGAAAAGGCAGTGCCCATGCCAGAAGCCAGCGCGTTTTTCATCTTCAGCTCTAACAACAGGTTTCGCCTCCAGTGCCACCGCATTGTCAATGACACGATCTTCACCAACCTGATCCTCTTCTTCATTCTGCTCAGCAGCATTTCCCTGGCTGCTGAGGACCCGGTCCAGCACACCTCCTTCAGGAACCATATTCTGTTTTATTTTGATATTGTTTTTACCACCATTTTCACCATTGAAATTGCTCTGAAGATGACTGCTTATGGGGCTTTCTTGCACAAGGGTTCTTTCTGCCGGAACTACTTCAACATCCTGGACCTGCTGGTGGTCAGCGTGTCCCTCATCTCCTTTGGCATCCAGTCCAGTGCAATCAATGTCGTGAAGATCTTGCGAGTCCTGCGAGTACTCAGGCCCCTGAGGGCCATCAACAGGGCCAAGGGGCTAAAGCATGTGGTTCAGTGTGTGTTTGTCGCCATCCGGACCATCGGGAACATCGTGATTGTCACCACCCTGCTGCAGTTCATGTTTGCCTGCATCGGGGTCCAGCTCTTCAAGGGAAAGCTGTACACCTGTTCAGACAGTTCCAAGCAGACAGAGGCGGAATGCAAGGGCAACTACATCACGTACAAAGACGGGGAGGTTGACCACCCCATCATCCAACCCCGCAGCTGGGAGAACAGCAAGTTTGACTTTGACAATGTTCTGGCAGCCATGATGGCCCTCTTCACCGTCTCCACCTTCGAAGGGTGGCCAGAGCTGCTGTACCGCTCCATCGACTCCCACACGGAAGACAAGGGCCCCATCTACAACTACCGTGTGGAGATCTCCATCTTCTTCATCATCTACATCATCATCATCGCCTTCTTCATGATGAACATCTTCGTGGGCTTCGTCATCGTCACCTTTCAGGAGCAGGGGGAGCAGGAGTACAAGAACTGTGAGCTGGACAAGAACCAGCGACAGTGCGTGGAATACGCCCTCAAGGCCCGGCCCCTGCGGAGGTACATCCCCAAGAACCAGCACCAGTACAAAGTGTGGTACGTGGTCAACTCCACCTACTTCGAGTACCTGATGTTCGTCCTCATCCTGCTCAACACCATCTGCCTGGCCATGCAGCACTACGGCCAGAGCTGCCTGTTCAAAATCGCCATGAACATCCTCAACATGCTCTTCACTGGCCTCTTCACCGTGGAGATGATCCTGAAGCTCATTGCCTTCAAACCCAAGCACTATTTCTGTGATGCATGGAATACATTTGACGCCTTGATTGTTGTGGGTAGCATTGTTGATATAGCAATCACCGAGGTAAACCCAGCTGAACATACCCAATGCTCTCCCTCTATGAACGCAGAGGAAAACTCCCGCATCTCCATCACCTTCTTCCGCCTGTTCCGGGTCATGCGTCTGGTGAAGCTGCTGAGCCGTGGGGAGGGCATCCGGACGCTGCTGTGGACCTTCATCAAGTCCTTCCAGGCCCTGCCCTATGTGGCCCTCCTGATCGTGATGCTGTTCTTCATCTACGCGGTGATCGGGATGCAGGTGTTTGGGAAAATTGCCCTGAATGATACCACAGAGATCAACCGGAACAACAACTTTCAGACCTTCCCCCAGGCCGTGCTGCTCCTCTTCAGGTGTGCCACCGGGGAGGCCTGGCAGGACATCATGCTGGCCTGCATGCCAGGCAAGAAGTGTGCCCCAGAGTCCGAGCCCAGCAACAGCACGGAGGGTGAAACACCCTGTGGTAGCAGCTTTGCTGTCTTCTACTTCATCAGCTTCTACATGCTCTGTGCCTTCCTGATCATCAACCTCTTTGTAGCTGTCATCATGGACAACTTTGACTACCTGACAAGGGACTGGTCCATCCTTGGTCCCCACCACCTGGATGAGTTTAAAAGAATCTGGGCAGAGTATGACCCTGAAGCCAAGGGTCGTATCAAACACCTGGATGTGGTGACCCTCCTCCGGCGGATTCAGCCGCCACTAGGTTTTGGGAAGCTGTGCCCTCACCGCGTGGCTTGCAAACGCCTGGTCTCCATGAACATGCCTCTGAACAGCGACGGGACAGTCATGTTCAATGCCACCCTGTTTGCCCTGGTCAGGACGGCCCTGAGGATCAAAACAGAAGGGAACCTAGAACAAGCCAATGAGGAGCTGCGGGCGATCATCAAGAAGATCTGGAAGCGGACCAGCATGAAGCTGCTGGACCAGGTGGTGCCCCCTGCAGGTGATGATGAGGTCACCGTTGGCAAGTTCTACGCCACGTTCCTGATCCAGGAGTACTTCCGGAAGTTCAAGAAGCGCAAAGAGCAGGGCCTTGTGGGCAAGCCCTCCCAGAGGAACGCGCTGTCTCTGCAGGCTGGCTTGCGCACACTGCATGACATCGGGCCTGAGATCCGACGGGCCATCTCTGGAGATCTCACCGCTGAGGAGGAGCTGGACAAGGCCATGAAGGAGGCTGTGTCCGCTGCTTCTGAAGATGACATCTTCAGGAGGGCCGGTGGCCTGTTCGGCAACCACGTCAGCTACTACCAAAGCGACGGCCGGAGCGCCTTCCCCCAGACCTTCACCACTCAGCGCCCGCTGCACATCAACAAGGCGGGCAGCAGCCAGGGCGACACTGAGTCGCCATCCCACGAGAAGCTGGTGGACTCCACCTTCACCCCGAGCAGCTACTCGTCCACCGGCTCCAACGCCAACATCAACAACGCCAACAACACCGCCCTGGGTCGCCTCCCTCGCCCCGCCGGCTACCCCAGCACGGTCAGCACTGTGGAGGGCCACGGGCCCCCCTTGTCCCCTGCCATCCGGGTGCAGGAGGTGGCGTGGAAGCTCAGCTCCAACAGGTGCCACTCCCGGGAGAGCCAGGCAGCCATGGCGGGTCAGGAGGAGACGTCTCAGGATGAGACCTATGAAGTGAAGATGAACCATGACACGGAGGCCTGCAGTGAGCCCAGCCTGCTCTCCACAGAGATGCTCTCCTACCAGGATGACGAAAATCGGCAACTGACGCTCCCAGAGGAGGACAAGAGGGACATCCGGCAATCTCCGAAGAGGGGTTTCCTCCGCTCTGCCTCACTAGGTCGAAGGGCCTCCTTCCACCTGGAATGTCTGAAGCGACAGAAGGACCGAGGGGGAGACATCTCTCAGAAGACAGTCCTGCCCTTGCATCTGGTTCATCATCAGGCATTGGCAGTGGCAGGCCTGAGCCCCCTCCTCCAGAGAAGCCATTCCCCTGCCTCATTCCCTAGGCCTTTTGCCACCCCACCAGCCACACCTGGCAGCCGAGGCTGGCCCCCACAGCCCGTCCCCACCCTGCGGCTTGAGGGGGTCGAGTCCAGTGAGAAACTCAACAGCAGCTTCCCATCCATCCACTGCGGCTCCTGGGCTGAGACCACCCCCGGTGGCGGGGGCAGCAGCGCCGCCCGGAGAGTCCGGCCCGTCTCCCTCATGGTGCCCAGCCAGGCTGGGGCCCCAGGGAGGCAGTTCCACGGCAGTGCCAGCAGCCTGGTGGAAGCGGTCTTGATTTCAGAAGGACTGGGGCAGTTTGCTCAAGATCCCAAGTTCATCGAGGTCACCACCCAGGAGCTGGCCGACGCCTGCGACATGACCATAGAGGAGATGGAGAGCGCGGCCGACAACATCCTCAGCGGGGGCGCCCCACAGAGCCCCAATGGCGCCCTCTTACCCTTTGTGAACTGCAGGGACGCGGGGCAGGACCGAGCCGGGGGCGAAGAGGACGCGGGCTGTGTGCGCGCGCGGGGTCGACCGAGTGAGGAGGAGCTCCAGGACAGCAGGGTCTACGTCAGCAGCCTGTAG";
+
+// ─── Motor: portado 1:1 de core/energy.py + synonymous_sigma_predictor.py ───
+function stackingProfile(seq){
+  seq=seq.toUpperCase().replace(/U/g,'T');
+  const n=seq.length, bonds=new Array(n-1);
+  for(let i=0;i<n-1;i++) bonds[i]=(TURNER[seq.substr(i,2)]!==undefined)?TURNER[seq.substr(i,2)]:0.0;
+  const prof=new Array(n).fill(0);
+  if(n>=2){prof[0]=bonds[0]; prof[n-1]=bonds[n-2];}
+  for(let i=1;i<n-1;i++) prof[i]=(bonds[i-1]+bonds[i])/2;
+  return prof;
+}
+function sigmaSigned(cds,pos1,ref,alt){
+  const p=pos1-1;
+  if(p<0||p>=cds.length||cds[p].toUpperCase()!==ref.toUpperCase()) return null;
+  const h=Math.floor(MODEL.window/2);
+  const start=Math.max(0,p-h), end=Math.min(cds.length,p+h);
+  const wt=cds.slice(start,end);
+  const mut=(cds.slice(0,p)+alt+cds.slice(p+1)).slice(start,end);
+  const c=p-start;
+  const fw=stackingProfile(wt), fm=stackingProfile(mut);
+  const n=Math.min(fw.length,fm.length);
+  const w=MODEL.local_w, lo=Math.max(0,c-w), hi=Math.min(n,c+w+1);
+  let s=0; for(let i=lo;i<hi;i++) s+=(fm[i]-fw[i]);
+  return {sigma:s, fw:fw, fm:fm, c:c, lo:lo, hi:hi};
+}
+function isGtoA(ref,alt){
+  const r=ref.toUpperCase().replace(/T/g,'U'), a=alt.toUpperCase().replace(/T/g,'U');
+  return (r==='G'&&a==='A')?1:0;
+}
+function predict(cds,pos1,ref,alt){
+  const sg=sigmaSigned(cds,pos1,ref,alt);
+  if(sg===null) return null;
+  const g=isGtoA(ref,alt);
+  const x=[sg.sigma,g];
+  const z=[(x[0]-MODEL.mean[0])/MODEL.std[0],(x[1]-MODEL.mean[1])/MODEL.std[1]];
+  const contrib=[MODEL.coef[0]*z[0],MODEL.coef[1]*z[1]];
+  const logit=MODEL.intercept+contrib[0]+contrib[1];
+  const prob=1/(1+Math.exp(-logit));
+  return {prob,logit,x,contrib,sg,intercept:MODEL.intercept};
+}
+
+// ─── UI ───
+function loadDemo(){document.getElementById('cds').value=DEMO_CDS;document.getElementById('hgvs').value='c.213G>A';run();}
+function parseHGVS(s){const m=/c\.(\d+)([ACGTUacgtu])>([ACGTUacgtu])/.exec(s.trim());
+  return m?{pos:parseInt(m[1]),ref:m[2].toUpperCase().replace('U','T'),alt:m[3].toUpperCase().replace('U','T')}:null;}
+
+function run(){
+  const cds=document.getElementById('cds').value.replace(/\s/g,'').toUpperCase().replace(/U/g,'T');
+  const hg=parseHGVS(document.getElementById('hgvs').value);
+  const flags=document.getElementById('flags'); flags.innerHTML='';
+  const res=document.getElementById('result');
+  function err(m){flags.innerHTML='<div class="flag err">'+m+'</div>';res.style.display='block';
+    document.getElementById('prob').textContent='–';document.getElementById('gauge').style.opacity=.3;
+    document.getElementById('contrib').innerHTML='';document.getElementById('chart').innerHTML='';
+    document.getElementById('acmg').textContent='–';document.getElementById('acmg').className='verdict-badge b-ind';
+    document.getElementById('acmgnote').textContent='';document.getElementById('logitline').textContent='';}
+  if(!cds||!/^[ACGT]+$/.test(cds)) return err('La secuencia CDS está vacía o contiene caracteres no válidos (solo A/C/G/T).');
+  if(!hg) return err('Variante no reconocida. Usa el formato <code>c.213G&gt;A</code>.');
+  if(hg.pos<1||hg.pos>cds.length) return err('La posición c.'+hg.pos+' está fuera del CDS (longitud '+cds.length+').');
+  if(cds[hg.pos-1]!==hg.ref) return err('Mismatch: en c.'+hg.pos+' el CDS tiene <code>'+cds[hg.pos-1]+'</code>, no <code>'+hg.ref+'</code>. ¿Transcrito/hebra correctos? (para hebra − usa el complemento o el HGVS c.)');
+
+  document.getElementById('gauge').style.opacity=1;
+  const out=predict(cds,hg.pos,hg.ref,hg.alt);
+
+  // chequeo de sinonimia
+  const ci=Math.floor((hg.pos-1)/3), cs=ci*3;
+  let synMsg='';
+  if(cs+3<=cds.length){
+    const wtC=cds.substr(cs,3), off=(hg.pos-1)-cs;
+    const mutC=wtC.substring(0,off)+hg.alt+wtC.substring(off+1);
+    const aWt=CODON[wtC], aMut=CODON[mutC];
+    if(aWt&&aMut){ if(aWt===aMut) synMsg='<div class="flag ok">✓ Variante <b>sinónima</b> ('+wtC+'→'+mutC+', '+aWt+'). Dominio del modelo.</div>';
+      else synMsg='<div class="flag warn">⚠ Esta variante <b>NO es sinónima</b> ('+wtC+' '+aWt+' → '+mutC+' '+aMut+'). El modelo σ está entrenado para sinónimas; el score no aplica.</div>';}
+  }
+  // applicability flag (P-L1b: proteínas grandes → fiabilidad reducida)
+  const aa=Math.floor(cds.length/3);
+  let appMsg=(aa>2500)?'<div class="flag warn">⚠ Proteína grande (~'+aa+' aa &gt; 2500): fiabilidad reducida (P-L1b).</div>'
+                      :'<div class="flag ok">✓ Longitud dentro del dominio de validez (~'+aa+' aa).</div>';
+  flags.innerHTML=synMsg+appMsg;
+
+  // score + gauge
+  const p=out.prob;
+  document.getElementById('prob').textContent=p.toFixed(3);
+  document.getElementById('mark').style.left=(p*100)+'%';
+  // zona gris 0.35–0.65
+  const gz=document.getElementById('grayzone'); gz.style.left='35%'; gz.style.width='30%';
+
+  // ACMG (umbrales ilustrativos)
+  const badge=document.getElementById('acmg'), note=document.getElementById('acmgnote');
+  if(p>=0.65){badge.textContent='PP3 · apoyo patogénico';badge.className='verdict-badge b-path';}
+  else if(p<=0.35){badge.textContent='BP4 · apoyo benigno';badge.className='verdict-badge b-ben';}
+  else{badge.textContent='Indeterminado · sin evidencia';badge.className='verdict-badge b-ind';}
+  note.textContent=' (umbral ilustrativo 0.35 / 0.65, sin calibrar)';
+
+  // contribuciones
+  const names={sigma_signed:'σ · ΔΔG apilamiento (Turner) local',is_GtoA:'is_GtoA · transición G&gt;A'};
+  const maxAbs=Math.max(Math.abs(out.contrib[0]),Math.abs(out.contrib[1]),0.001);
+  let rows='<tr><th>Observable</th><th>Valor</th><th>Aporte al logit</th><th style="width:130px">peso</th></tr>';
+  for(let i=0;i<2;i++){const cb=out.contrib[i],val=out.x[i];
+    const wpc=Math.abs(cb)/maxAbs*100, side=cb>=0?'left:50%':'right:50%', cls=cb>=0?'pos':'neg';
+    rows+='<tr><td>'+names[MODEL.features[i]]+'</td><td><code>'+(i===0?val.toFixed(2)+' kcal/mol':val)+'</code></td>'
+      +'<td>'+(cb>=0?'+':'')+cb.toFixed(3)+'</td>'
+      +'<td><div class="contrib-bar"><span class="'+cls+'" style="'+side+';width:'+(wpc/2)+'%"></span></div></td></tr>';}
+  document.getElementById('contrib').innerHTML=rows;
+  document.getElementById('logitline').innerHTML='logit = intercepto ('+out.intercept.toFixed(3)+') + Σ contribuciones = <b>'+out.logit.toFixed(3)+'</b> → P = σ(logit) = <b>'+p.toFixed(3)+'</b>';
+
+  drawChart(out.sg);
+  res.style.display='block';
+  res.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function drawChart(sg){
+  const view=32; // ±32 nt alrededor de la variante
+  const c=sg.c, lo=Math.max(0,c-view), hi=Math.min(sg.fw.length,c+view+1);
+  const W=700,H=180,padY=18,padX=10;
+  let all=[]; for(let i=lo;i<hi;i++){all.push(sg.fw[i]);all.push(sg.fm[i]);}
+  let mn=Math.min(...all), mx=Math.max(...all); if(mx-mn<0.01){mx+=0.5;mn-=0.5;}
+  const n=hi-lo;
+  const X=i=>padX+((i-lo)/(n-1))*(W-2*padX);
+  const Y=v=>padY+(1-(v-mn)/(mx-mn))*(H-2*padY);
+  function path(arr){let d='';for(let i=lo;i<hi;i++){d+=(i===lo?'M':'L')+X(i).toFixed(1)+' '+Y(arr[i]).toFixed(1)+' ';}return d;}
+  // banda ventana σ (±10)
+  const bx1=X(Math.max(lo,sg.lo)), bx2=X(Math.min(hi-1,sg.hi-1));
+  let svg='';
+  svg+='<rect x="'+bx1.toFixed(1)+'" y="'+padY+'" width="'+(bx2-bx1).toFixed(1)+'" height="'+(H-2*padY)+'" fill="#0d7d84" opacity="0.10"/>';
+  svg+='<line x1="'+X(c).toFixed(1)+'" y1="6" x2="'+X(c).toFixed(1)+'" y2="'+(H-6)+'" stroke="#b23b3b" stroke-width="1.5" stroke-dasharray="3 3"/>';
+  svg+='<path d="'+path(sg.fw)+'" fill="none" stroke="#12233b" stroke-width="2"/>';
+  svg+='<path d="'+path(sg.fm)+'" fill="none" stroke="#c8952a" stroke-width="2"/>';
+  document.getElementById('chart').innerHTML=svg;
+}
+// ─── Fetch multi-transcrito por símbolo de gen (Ensembl REST, client-side) ───
+const ENSEMBL='https://rest.ensembl.org';
+async function fetchTranscripts(){
+  const gene=document.getElementById('gene').value.trim();
+  const st=document.getElementById('fetchstatus'), sel=document.getElementById('transcript');
+  sel.style.display='none'; sel.innerHTML='';
+  if(!gene){st.textContent='Escribe un símbolo de gen (p. ej. BRCA1).';return;}
+  st.textContent='Buscando transcritos de '+gene+'…';
+  try{
+    const r=await fetch(ENSEMBL+'/lookup/symbol/homo_sapiens/'+encodeURIComponent(gene)+'?expand=1;content-type=application/json');
+    if(!r.ok) throw new Error('HTTP '+r.status+(r.status===400?' (¿gen no encontrado?)':''));
+    const d=await r.json();
+    const ts=(d.Transcript||[]).filter(t=>t.biotype==='protein_coding');
+    if(!ts.length) throw new Error('sin transcritos codificantes');
+    ts.sort((a,b)=>(b.is_canonical||0)-(a.is_canonical||0));
+    for(const t of ts){const o=document.createElement('option');o.value=t.id;
+      o.textContent=t.id+(t.is_canonical?'  ★ canónico':'')+'  ·  '+(t.display_name||'');sel.appendChild(o);}
+    sel.style.display='block';
+    st.innerHTML=ts.length+' transcritos ('+d.display_name+', '+d.assembly_name+'). Selecciona uno para cargar su CDS.';
+    fetchCDS(ts[0].id);
+  }catch(e){st.innerHTML='<span style="color:#b23b3b">No se pudo consultar Ensembl: '+e.message+'. Puedes pegar el CDS a mano.</span>';}
+}
+async function fetchCDS(tid){
+  const st=document.getElementById('fetchstatus');
+  st.innerHTML='Descargando CDS de <code>'+tid+'</code>…';
+  try{
+    const r=await fetch(ENSEMBL+'/sequence/id/'+tid+'?type=cds;content-type=application/json');
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const d=await r.json();
+    if(!d.seq) throw new Error('sin secuencia CDS');
+    document.getElementById('cds').value=d.seq.toUpperCase();
+    document.getElementById('hgvs').value='';
+    st.innerHTML='CDS de <code>'+tid+'</code> cargado ('+d.seq.length+' nt). Introduce la variante <code>c.…</code> y calcula.';
+  }catch(e){st.innerHTML='<span style="color:#b23b3b">No se pudo descargar el CDS: '+e.message+'.</span>';}
+}
+
+// ─── Export del dossier auditable (JSON) — base del argumento SaMD ───
+function fnv1a(s){let h=0x811c9dc5;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,0x01000193);}return('0000000'+(h>>>0).toString(16)).slice(-8);}
+function exportDossier(){
+  const cds=document.getElementById('cds').value.replace(/\s/g,'').toUpperCase().replace(/U/g,'T');
+  const hg=parseHGVS(document.getElementById('hgvs').value);
+  if(!/^[ACGT]+$/.test(cds)||!hg){alert('Calcula primero un resultado válido antes de exportar.');return;}
+  if(hg.pos<1||hg.pos>cds.length||cds[hg.pos-1]!==hg.ref){alert('La variante no casa con el CDS; corrige antes de exportar.');return;}
+  const out=predict(cds,hg.pos,hg.ref,hg.alt); if(!out){alert('No se pudo calcular.');return;}
+  const p=out.prob, z=[(out.x[0]-MODEL.mean[0])/MODEL.std[0],(out.x[1]-MODEL.mean[1])/MODEL.std[1]];
+  // sinonimia
+  const cs=Math.floor((hg.pos-1)/3)*3; let syn=null;
+  if(cs+3<=cds.length){const wtC=cds.substr(cs,3),off=(hg.pos-1)-cs,mutC=wtC.substring(0,off)+hg.alt+wtC.substring(off+1);
+    syn={wt_codon:wtC,mut_codon:mutC,wt_aa:CODON[wtC]||null,mut_aa:CODON[mutC]||null,synonymous:(CODON[wtC]&&CODON[wtC]===CODON[mutC])||false};}
+  const aa=Math.floor(cds.length/3);
+  const acmg=p>=0.65?{code:'PP3',call:'apoyo patogénico'}:p<=0.35?{code:'BP4',call:'apoyo benigno'}:{code:'—',call:'indeterminado'};
+  const dossier={
+    tool:'EF-Synonymous (prototipo)', tool_version:'0.2',
+    generated_utc:new Date().toISOString(),
+    use:'RESEARCH USE ONLY — no es dispositivo médico',
+    model:{name:'synonymous σ+G>A (glass-box logistic)', version:'v2 · 2026-07-17',
+      params:'Turner (RNA) nearest-neighbor', features:MODEL.features,
+      coef:MODEL.coef, intercept:MODEL.intercept, mean:MODEL.mean, std:MODEL.std,
+      window:MODEL.window, local_w:MODEL.local_w,
+      training:'ClinVar synonymous v2 (n=1957; 657P/1300B; 456 genes)',
+      auc:{pooled:0.671, leave_genes_out:0.680}, reference_cnn_auc:0.683,
+      patent:'P202630522 (OEPM)', paper:'Zenodo 10.5281/zenodo.20275792'},
+    input:{gene:document.getElementById('gene').value.trim()||null,
+      transcript:(document.getElementById('transcript').value||null),
+      species:'homo_sapiens', hgvs_c:document.getElementById('hgvs').value.trim(),
+      cds_pos:hg.pos, ref:hg.ref, alt:hg.alt,
+      cds_length:cds.length, cds_fingerprint_fnv1a:fnv1a(cds)},
+    features:{sigma_signed_kcal_mol:out.x[0], is_GtoA:out.x[1]},
+    zscores:{sigma_signed:z[0], is_GtoA:z[1]},
+    contributions_to_logit:{intercept:MODEL.intercept, sigma_signed:out.contrib[0], is_GtoA:out.contrib[1]},
+    logit:out.logit, score_sigma:p,
+    acmg:{code:acmg.code, interpretation:acmg.call,
+      thresholds:{benign_le:0.35, pathogenic_ge:0.65}, calibrated:false,
+      note:'umbrales ilustrativos sin calibrar clínicamente'},
+    synonymy:syn, applicability:{protein_aa:aa, reduced_reliability:aa>2500, basis:'P-L1b length'},
+    disclaimer:'Evidencia computacional de apoyo (AUC ~0.68). No usar para decisiones clínicas.'
+  };
+  const blob=new Blob([JSON.stringify(dossier,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='EF-Synonymous_'+(dossier.input.gene||'variant')+'_c'+hg.pos+hg.ref+'-'+hg.alt+'.json';
+  document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(a.href);
+}
+window.addEventListener('DOMContentLoaded',loadDemo);
+</script>
+</body>
+</html>
