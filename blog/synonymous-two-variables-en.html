@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The synonymous classifier fits in two physical variables — QMetrika Labs Blog</title>
+<meta name="description" content="The CNN that classifies synonymous variants reduces to two interpretable physical observables — the signed stacking ΔΔG (Turner) and the G>A bias — that match it, generalize across genes, and now install with pip install ef-synonymous.">
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<style>
+:root{--bg:#E9E7E0;--panel:#DEDBD1;--ink:#1B1B18;--muted:#57544B;--faint:#7A776C;--rule:#CFCCC2;--accent:#A6542E;--accent-lt:#D98A5E;--dark-fg:#E9E7E0;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',system-ui,sans-serif;font-size:16px;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+::selection{background:var(--accent);color:var(--bg);}
+.wrap{max-width:740px;margin:0 auto;padding:0 32px;}
+.mono{font-family:'IBM Plex Mono',monospace;}
+nav{position:sticky;top:0;left:0;right:0;z-index:100;border-bottom:1px solid var(--rule);background:rgba(233,231,224,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
+nav .inner{max-width:740px;margin:0 auto;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;}
+.logo{display:flex;align-items:center;gap:10px;}
+.logo-mark{width:26px;height:26px;flex-shrink:0;}
+.logo-name{font-weight:600;font-size:15px;color:var(--ink);letter-spacing:-.01em;}
+nav .links{display:flex;gap:20px;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:11.5px;}
+nav .links a{color:var(--muted);}
+nav .links a:hover{color:var(--ink);}
+.lang-switch{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink);border:1px solid var(--rule);padding:3px 9px;}
+.lang-switch:hover{color:var(--accent);border-color:var(--accent);}
+.post-header{padding:104px 0 40px;border-bottom:1px solid var(--rule);}
+.back{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);display:inline-flex;align-items:center;gap:6px;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.post-date{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px;}
+.post-header h1{font-weight:500;font-size:clamp(1.9rem,4vw,2.7rem);color:var(--ink);line-height:1.1;margin-bottom:18px;letter-spacing:-.03em;}
+.post-header h1 em{font-style:normal;color:var(--accent);}
+.post-header .excerpt{font-family:'IBM Plex Mono',monospace;color:var(--muted);font-size:13.5px;line-height:1.7;max-width:60ch;}
+.post-tags{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap;}
+.tag{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;padding:3px 10px;border:1px solid var(--rule);color:var(--muted);}
+.tag.a{color:var(--accent);border-color:var(--accent);}
+.post-body{padding:52px 0 64px;}
+.post-body h2{font-weight:600;font-size:1.4rem;color:var(--ink);margin:52px 0 16px;letter-spacing:-.015em;}
+.post-body h2:first-child{margin-top:0;}
+.post-body p{color:var(--muted);font-size:15.5px;line-height:1.85;margin-bottom:18px;max-width:66ch;}
+.post-body p b{color:var(--ink);font-weight:600;}
+.post-body p em{color:var(--accent);font-style:normal;}
+.post-body ul{color:var(--muted);font-size:15.5px;line-height:1.8;margin:0 0 18px 22px;max-width:66ch;}
+.post-body li{margin-bottom:9px;}
+.post-body li b{color:var(--ink);}
+.pullquote{font-family:'Space Grotesk',sans-serif;font-size:1.35rem;font-weight:500;color:var(--ink);line-height:1.4;border-left:2px solid var(--accent);padding:6px 0 6px 24px;margin:40px 0;max-width:58ch;letter-spacing:-.01em;}
+.pullquote b{color:var(--accent);font-weight:600;}
+.stat-row{display:flex;gap:1px;background:var(--rule);border:1px solid var(--rule);margin:32px 0;flex-wrap:wrap;}
+.stat-row .stat{flex:1;min-width:120px;background:var(--bg);padding:22px 20px;font-family:'IBM Plex Mono',monospace;}
+.stat-row .stat .v{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.7rem;color:var(--accent);line-height:1;}
+.stat-row .stat .l{font-size:10px;color:var(--faint);text-transform:uppercase;letter-spacing:.05em;margin-top:8px;}
+.cta-box{border:1px solid var(--rule);background:var(--panel);padding:28px;text-align:center;margin:44px 0;}
+.cta-box p{font-family:'IBM Plex Mono',monospace;color:var(--muted);font-size:12.5px;margin-bottom:18px;max-width:none;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;margin:4px;transition:all .2s;}
+.btn-teal{background:var(--ink);color:var(--dark-fg);}
+.btn-teal:hover{background:var(--accent);}
+.btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--ink);}
+.btn-ghost:hover{background:var(--ink);color:var(--dark-fg);}
+.codeblock{background:var(--ink);color:var(--dark-fg);font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.8;padding:20px 22px;margin:26px 0;overflow-x:auto;border-radius:2px;}
+.codeblock .c{color:var(--accent-lt);}
+footer{padding:28px 0 48px;border-top:1px solid var(--rule);}
+footer p{color:var(--faint);font-family:'IBM Plex Mono',monospace;font-size:11px;}
+footer a{color:var(--accent);}
+@media(max-width:600px){nav .links a:not(.lang-switch){display:none;}.post-header{padding-top:88px;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="inner">
+    <a href="../en.html" class="logo"><svg class="logo-mark" width="26" height="26" viewBox="6 6 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="28" cy="28" r="18" stroke="#1B1B18" stroke-width="4.5"/><circle cx="41" cy="41" r="9.6" fill="#E9E7E0"/><circle cx="41" cy="41" r="7.4" fill="#1B1B18"/><circle cx="41" cy="41" r="5.4" fill="#A6542E"/></svg><span class="logo-name">QMetrika Labs</span></a>
+    <div class="links"><a href="../en.html">Home</a><a href="en.html">Blog</a><a href="../en.html#contact">Contact</a><a href="synonymous-two-variables.html" class="lang-switch">ES</a></div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <div class="post-header">
+    <a href="en.html" class="back">&larr; Blog</a>
+    <div class="post-date">July 2026</div>
+    <h1>The synonymous classifier fits in <em>two physical variables</em></h1>
+    <p class="excerpt">The CNN that classifies synonymous variants was not a necessary black box. It reduces to two interpretable physical observables — the signed stacking ΔΔG (Turner) and the G>A bias — that match it, generalize across genes, and now install with a single <code>pip install</code>.</p>
+    <div class="post-tags">
+      <span class="tag a">bio-ia</span>
+      <span class="tag">glass-box</span>
+      <span class="tag">tool</span>
+    </div>
+  </div>
+
+  <div class="post-body">
+
+    <h2>The question Paper 1 left open</h2>
+
+    <p>The first study showed that a CNN classifies synonymous variants using mRNA thermodynamics alone (AUC 0.683), with no evolutionary signal. A good result — but it left an uncomfortable question: <b>what exactly does that network learn?</b> A black box that gets it right explains nothing, and in a clinical context that is a problem.</p>
+
+    <p>The answer turned out to be simpler —and more useful— than expected: the network does not learn some unfathomable hidden grammar. It learns to aggregate <em>two physical numbers</em>.</p>
+
+    <h2>The two observables</h2>
+
+    <ul>
+      <li><b>σ — signed stacking ΔΔG (Turner):</b> how much the variant destabilizes the mRNA's nearest-neighbor stacking in its local neighborhood (±10 nt). Signed: the direction (destabilization) matters, not just the magnitude.</li>
+      <li><b>G>A bias:</b> the G→A transition, 2.60× enriched in pathogenic variants via CpG constraint.</li>
+    </ul>
+
+    <p>A logistic regression over <b>those two variables</b> —no deep network, no GPU, numpy-only inference— reaches:</p>
+
+    <div class="stat-row">
+      <div class="stat"><div class="v">0.671</div><div class="l">AUC pooled (2 features)</div></div>
+      <div class="stat"><div class="v">0.680</div><div class="l">AUC leave-genes-out</div></div>
+      <div class="stat"><div class="v">0.683</div><div class="l">Dedicated CNN (reference)</div></div>
+    </div>
+
+    <div class="pullquote">Two interpretable physical observables reproduce the dedicated deep network — and generalize to genes they never saw. The black box was not necessary.</div>
+
+    <h2>The right physics: stacking, not base-pairing</h2>
+
+    <p>An equally important negative result: we tested whether the signal lived in the mRNA's <b>secondary structure</b> (base-pairing probability, via ViennaRNA). It did not. The BPPM was <em>null</em> for pathogenicity, in both missense and synonymous variants. The signal carrier is the <b>stacking free-energy field</b> (nearest-neighbor ΔG, Turner RNA parameters) — a different dimension entirely. That pinned down the right observable and the engine's default parameter set.</p>
+
+    <h2>The signal sharpens with label quality</h2>
+
+    <p>The proof that this is biology and not an artifact of how ClinVar is assembled: the model is <b>more</b> predictive where labels are more reliable. On high-confidence variants (≥2★, expert panel) σ+G>A rises to <b>AUC 0.712</b>; on low-confidence ones it falls to 0.574. An ascertainment feature would do the opposite.</p>
+
+    <h2>From science to product</h2>
+
+    <p>A 2-variable model matching the deep network is not only elegant — it is <b>deployable</b>. No GPU, no API, no data leaving your machine, and a prediction that is <em>auditable variant by variant</em> (you see each observable's contribution). It is the glass-box argument a clinical lab and a regulator want.</p>
+
+    <p>So we packaged it as a real, free product:</p>
+
+    <div class="codeblock"><span class="c"># score a synonymous variant from your terminal</span><br>pip install ef-synonymous<br>ef-syn score --transcript ENST00000399655 --hgvs c.213G&gt;A</div>
+
+    <p>And a <b>glass-box web tool</b> that runs entirely in the browser: paste a CDS (or fetch a gene from Ensembl), enter the variant, and see the score, the breakdown, the ΔG profile, and an exportable report (JSON or PDF). No signup, no server.</p>
+
+    <div class="cta-box">
+      <p>Try it free or read the full paper.</p>
+      <a href="../tools/ef-synonymous-en.html" target="_blank" class="btn btn-teal">Web tool</a>
+      <a href="https://pypi.org/project/ef-synonymous/" target="_blank" class="btn btn-ghost">PyPI</a>
+      <a href="https://doi.org/10.5281/zenodo.20275791" target="_blank" class="btn btn-ghost">Paper (Zenodo)</a>
+    </div>
+
+    <p class="mono" style="font-size:12.5px;color:var(--faint);max-width:66ch;">Honest framing: AUC ~0.68 is supporting computational evidence, not a verdict; ACMG (PP3/BP4) thresholds are illustrative and not clinically calibrated.</p>
+
+  </div>
+
+  <footer>
+    <p><a href="en.html">&larr; Back to the blog</a> · <a href="../en.html">QMetrika Labs</a> · 2026</p>
+  </footer>
+
+</div>
+</body>
+</html>
