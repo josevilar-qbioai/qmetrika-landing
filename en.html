@@ -236,6 +236,22 @@ footer{padding:40px;border-top:1px solid var(--rule);display:flex;justify-conten
       pip install ef-synonymous<br>
       ef-syn score --transcript ENST00000399655 --hgvs c.213G&gt;A
     </div>
+
+    <!-- energorna: second tool (library, repeat-expansion disorders) -->
+    <div style="margin-top:46px;border-top:1px solid rgba(0,0,0,.12);padding-top:36px;max-width:660px;">
+      <div class="kick">New · energoRNA</div>
+      <h3 style="margin:6px 0 10px;font-size:22px;">…and now, repeat-expansion disorders</h3>
+      <p class="sub" style="margin-bottom:26px;">The same physics, from point RNA to <b>structured RNA</b>: the local periodicity loss of the stacking profile predicts age at onset in myotonic dystrophy (DM1), Huntington and SCA1 — <b>better than counting repeats</b>. A glass-box, numpy-only library, validated across three diseases.</p>
+      <div class="btn-row" style="margin-bottom:26px">
+        <a href="https://pypi.org/project/energorna/" target="_blank" class="btn btn-line">view_on_pypi →</a>
+        <a href="https://github.com/josevilar-qbioai/energorna" target="_blank" class="btn btn-line">code_on_github →</a>
+      </div>
+      <div class="mono" style="background:var(--ink);color:var(--bg);padding:22px 24px;border-radius:3px;font-size:13px;line-height:1.85;overflow-x:auto;">
+        <span style="color:var(--faint)"># score a repeat allele</span><br>
+        pip install energorna<br>
+        energorna score --repeat CTG --n 40
+      </div>
+    </div>
   </section>
 
 
@@ -258,7 +274,7 @@ footer{padding:40px;border-top:1px solid var(--rule);display:flex;justify-conten
       </div>
       <div class="contact-card">
         <h3>Open science</h3>
-        <p>Four preprints with DOI, open-source code and a free synonymous-variant scoring tool — glass-box, no signup.</p>
+        <p>Preprints with DOI, open-source code and two PyPI packages — <b>ef-synonymous</b> (synonymous variants) and <b>energorna</b> (repeat-expansion disorders). Glass-box, no signup.</p>
         <a href="tools/ef-synonymous-en.html" target="_blank" class="btn btn-line">try_ef-synonymous →</a>
       </div>
     </div>

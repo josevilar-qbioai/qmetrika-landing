@@ -236,6 +236,22 @@ footer{padding:40px;border-top:1px solid var(--rule);display:flex;justify-conten
       pip install ef-synonymous<br>
       ef-syn score --transcript ENST00000399655 --hgvs c.213G&gt;A
     </div>
+
+    <!-- energorna: segundo tool (librería, enfermedades de expansión) -->
+    <div style="margin-top:46px;border-top:1px solid rgba(0,0,0,.12);padding-top:36px;max-width:660px;">
+      <div class="kick">Nuevo · energoRNA</div>
+      <h3 style="margin:6px 0 10px;font-size:22px;">…y ahora, enfermedades de expansión de repeticiones</h3>
+      <p class="sub" style="margin-bottom:26px;">La misma física, del ARN puntual al <b>ARN estructural</b>: la ruptura de periodicidad local del apilamiento predice la edad de inicio en distrofia miotónica (DM1), Huntington y SCA1 — <b>mejor que contar repeticiones</b>. Librería glass-box, numpy-only, validada en tres enfermedades.</p>
+      <div class="btn-row" style="margin-bottom:26px">
+        <a href="https://pypi.org/project/energorna/" target="_blank" class="btn btn-line">ver_en_pypi →</a>
+        <a href="https://github.com/josevilar-qbioai/energorna" target="_blank" class="btn btn-line">código_en_github →</a>
+      </div>
+      <div class="mono" style="background:var(--ink);color:var(--bg);padding:22px 24px;border-radius:3px;font-size:13px;line-height:1.85;overflow-x:auto;">
+        <span style="color:var(--faint)"># puntúa un alelo de repetición</span><br>
+        pip install energorna<br>
+        energorna score --repeat CTG --n 40
+      </div>
+    </div>
   </section>
 
 
@@ -258,7 +274,7 @@ footer{padding:40px;border-top:1px solid var(--rule);display:flex;justify-conten
       </div>
       <div class="contact-card">
         <h3>Ciencia abierta</h3>
-        <p>Cuatro preprints con DOI, código open-source y una herramienta gratuita de scoring de variantes sinónimas — glass-box, sin registro.</p>
+        <p>Preprints con DOI, código open-source y dos paquetes en PyPI — <b>ef-synonymous</b> (variantes sinónimas) y <b>energorna</b> (enfermedades de expansión de repeticiones). Glass-box, sin registro.</p>
         <a href="tools/ef-synonymous.html" target="_blank" class="btn btn-line">probar_ef-synonymous →</a>
       </div>
     </div>
