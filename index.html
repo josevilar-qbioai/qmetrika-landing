@@ -151,7 +151,7 @@ footer{padding:40px;border-top:1px solid var(--rule);display:flex;justify-conten
     <div class="nav-links">
       <a href="#bio-ia">bio-ia</a>
       <a href="#publicaciones">papers</a>
-      <a href="#pruebalo" class="nav-cta">pruébalo</a>
+      <a href="#pruebalo" class="nav-cta">herramientas</a>
       <a href="blog/">blog</a>
       <a href="en.html" class="nav-lang">es<span style="color:var(--accent);">/</span>en</a>
       <a href="#contacto" class="nav-cta">contacto →</a>
@@ -165,7 +165,7 @@ footer{padding:40px;border-top:1px solid var(--rule);display:flex;justify-conten
     <p class="lede">IA, biocomputación y ciencia de datos aplicadas al <b>mRNA</b>: clasificación de variantes y diseño terapéutico a partir de su factor de forma termodinámico — el eje físico que ningún predictor usa. Los datos sensibles nunca salen de tu infraestructura.</p>
     <div class="btn-row">
       <a href="#bio-ia" class="btn btn-solid">explorar_bio-ia →</a>
-      <a href="#pruebalo" class="btn btn-line">probar_ef-synonymous →</a>
+      <a href="#pruebalo" class="btn btn-line">herramientas →</a>
     </div>
   </header>
 
@@ -221,36 +221,39 @@ footer{padding:40px;border-top:1px solid var(--rule);display:flex;justify-conten
     </div>
   </section>
 
-  <!-- PRUÉBALO -->
+  <!-- HERRAMIENTAS -->
   <section id="pruebalo">
-    <div class="kick">Pruébalo · Try it</div>
-    <h2>Puntúa una variante sinónima en segundos</h2>
-    <p class="sub">Glass-box, gratis, sin registro. La señal termodinámica (<b>σ + G&gt;A</b>) que iguala a la red profunda, corriendo entera en tu navegador o en tu terminal. Ningún dato sale de tu equipo.</p>
-    <div class="btn-row" style="margin-bottom:38px">
-      <a href="tools/ef-synonymous.html" target="_blank" class="btn btn-solid">▶ abrir_la_herramienta_web →</a>
-      <a href="https://pypi.org/project/ef-synonymous/" target="_blank" class="btn btn-line">ver_en_pypi →</a>
-      <a href="https://github.com/josevilar-qbioai/ef-synonymous" target="_blank" class="btn btn-line">código_en_github →</a>
-    </div>
-    <div class="mono" style="background:var(--ink);color:var(--bg);padding:22px 24px;border-radius:3px;font-size:13px;line-height:1.85;overflow-x:auto;max-width:660px;">
-      <span style="color:var(--faint)"># instálalo e intégralo en tu pipeline</span><br>
-      pip install ef-synonymous<br>
-      ef-syn score --transcript ENST00000399655 --hgvs c.213G&gt;A
-    </div>
+    <div class="kick">Herramientas · Tools</div>
+    <h2>Herramientas abiertas de las líneas de investigación</h2>
+    <p class="sub">Glass-box, gratis, sin registro. Cada línea destila un observable físico interpretable en una herramienta que corre entera en tu equipo — sin GPU, sin que los datos salgan de ahí.</p>
 
-    <!-- energorna: segundo tool (librería, enfermedades de expansión) -->
-    <div style="margin-top:46px;border-top:1px solid rgba(0,0,0,.12);padding-top:36px;max-width:660px;">
-      <div class="kick">Nuevo · energoRNA</div>
-      <h3 style="margin:6px 0 10px;font-size:22px;">…y ahora, enfermedades de expansión de repeticiones</h3>
-      <p class="sub" style="margin-bottom:26px;">La misma física, del ARN puntual al <b>ARN estructural</b>: la ruptura de periodicidad local del apilamiento predice la edad de inicio en distrofia miotónica (DM1), Huntington y SCA1 — <b>mejor que contar repeticiones</b>. Librería glass-box, numpy-only, validada en tres enfermedades.</p>
-      <div class="btn-row" style="margin-bottom:26px">
-        <a href="https://pypi.org/project/energorna/" target="_blank" class="btn btn-line">ver_en_pypi →</a>
-        <a href="https://github.com/josevilar-qbioai/energorna" target="_blank" class="btn btn-line">código_en_github →</a>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px;margin-top:38px;">
+
+      <!-- ef-synonymous -->
+      <div style="border:1px solid var(--rule);background:var(--panel,#DEDBD1);padding:28px;display:flex;flex-direction:column;">
+        <div class="kick" style="margin-bottom:8px;">Variantes sinónimas</div>
+        <h3 class="mono" style="font-size:20px;letter-spacing:-.01em;margin-bottom:10px;">ef-synonymous</h3>
+        <p style="color:var(--muted,#57544B);font-size:14.5px;line-height:1.7;margin-bottom:20px;flex:1;">La señal termodinámica <b>σ + G&gt;A</b> que iguala a la red profunda. Herramienta web, CLI y plugin VEP.</p>
+        <div class="mono" style="background:var(--ink);color:var(--bg);padding:13px 16px;border-radius:3px;font-size:12.5px;margin-bottom:18px;overflow-x:auto;">pip install ef-synonymous</div>
+        <div class="btn-row">
+          <a href="tools/ef-synonymous.html" target="_blank" class="btn btn-solid">▶ web</a>
+          <a href="https://pypi.org/project/ef-synonymous/" target="_blank" class="btn btn-line">pypi</a>
+          <a href="https://github.com/josevilar-qbioai/ef-synonymous" target="_blank" class="btn btn-line">github</a>
+        </div>
       </div>
-      <div class="mono" style="background:var(--ink);color:var(--bg);padding:22px 24px;border-radius:3px;font-size:13px;line-height:1.85;overflow-x:auto;">
-        <span style="color:var(--faint)"># puntúa un alelo de repetición</span><br>
-        pip install energorna<br>
-        energorna score --repeat CTG --n 40
+
+      <!-- energorna -->
+      <div style="border:1px solid var(--rule);background:var(--panel,#DEDBD1);padding:28px;display:flex;flex-direction:column;">
+        <div class="kick" style="margin-bottom:8px;">Expansión de repeticiones</div>
+        <h3 class="mono" style="font-size:20px;letter-spacing:-.01em;margin-bottom:10px;">energorna</h3>
+        <p style="color:var(--muted,#57544B);font-size:14.5px;line-height:1.7;margin-bottom:20px;flex:1;">La ruptura de periodicidad del apilamiento predice la edad de inicio en DM1, Huntington y SCA1 — <b>mejor que contar repeticiones</b>. Validada en tres enfermedades.</p>
+        <div class="mono" style="background:var(--ink);color:var(--bg);padding:13px 16px;border-radius:3px;font-size:12.5px;margin-bottom:18px;overflow-x:auto;">pip install energorna</div>
+        <div class="btn-row">
+          <a href="https://pypi.org/project/energorna/" target="_blank" class="btn btn-line">pypi</a>
+          <a href="https://github.com/josevilar-qbioai/energorna" target="_blank" class="btn btn-line">github</a>
+        </div>
       </div>
+
     </div>
   </section>
 

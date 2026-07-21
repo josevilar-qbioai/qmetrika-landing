@@ -151,7 +151,7 @@ footer{padding:40px;border-top:1px solid var(--rule);display:flex;justify-conten
     <div class="nav-links">
       <a href="#bio-ai">bio-ai</a>
       <a href="#publications">papers</a>
-      <a href="#try-it" class="nav-cta">try it</a>
+      <a href="#try-it" class="nav-cta">tools</a>
       <a href="blog/en.html">blog</a>
       <a href="index.html" class="nav-lang">en<span style="color:var(--accent);">/</span>es</a>
       <a href="#contact" class="nav-cta">contact →</a>
@@ -165,7 +165,7 @@ footer{padding:40px;border-top:1px solid var(--rule);display:flex;justify-conten
     <p class="lede">AI, biocomputation and data science applied to the <b>mRNA</b>: variant classification and therapeutic design from its thermodynamic form factor — the physical axis no predictor uses. Sensitive data never leaves your infrastructure.</p>
     <div class="btn-row">
       <a href="#bio-ai" class="btn btn-solid">explore_bio-ai →</a>
-      <a href="#try-it" class="btn btn-line">try_ef-synonymous →</a>
+      <a href="#try-it" class="btn btn-line">tools →</a>
     </div>
   </header>
 
@@ -221,36 +221,39 @@ footer{padding:40px;border-top:1px solid var(--rule);display:flex;justify-conten
     </div>
   </section>
 
-  <!-- TRY IT -->
+  <!-- TOOLS -->
   <section id="try-it">
-    <div class="kick">Try it · Pruébalo</div>
-    <h2>Score a synonymous variant in seconds</h2>
-    <p class="sub">Glass-box, free, no signup. The thermodynamic signal (<b>σ + G&gt;A</b>) that matches the deep network, running entirely in your browser or your terminal. No data leaves your machine.</p>
-    <div class="btn-row" style="margin-bottom:38px">
-      <a href="tools/ef-synonymous-en.html" target="_blank" class="btn btn-solid">▶ open_the_web_tool →</a>
-      <a href="https://pypi.org/project/ef-synonymous/" target="_blank" class="btn btn-line">view_on_pypi →</a>
-      <a href="https://github.com/josevilar-qbioai/ef-synonymous" target="_blank" class="btn btn-line">code_on_github →</a>
-    </div>
-    <div class="mono" style="background:var(--ink);color:var(--bg);padding:22px 24px;border-radius:3px;font-size:13px;line-height:1.85;overflow-x:auto;max-width:660px;">
-      <span style="color:var(--faint)"># install and drop it into your pipeline</span><br>
-      pip install ef-synonymous<br>
-      ef-syn score --transcript ENST00000399655 --hgvs c.213G&gt;A
-    </div>
+    <div class="kick">Tools · Herramientas</div>
+    <h2>Open tools from the research lines</h2>
+    <p class="sub">Glass-box, free, no signup. Each line distills an interpretable physical observable into a tool that runs entirely on your machine — no GPU, no data leaving it.</p>
 
-    <!-- energorna: second tool (library, repeat-expansion disorders) -->
-    <div style="margin-top:46px;border-top:1px solid rgba(0,0,0,.12);padding-top:36px;max-width:660px;">
-      <div class="kick">New · energoRNA</div>
-      <h3 style="margin:6px 0 10px;font-size:22px;">…and now, repeat-expansion disorders</h3>
-      <p class="sub" style="margin-bottom:26px;">The same physics, from point RNA to <b>structured RNA</b>: the local periodicity loss of the stacking profile predicts age at onset in myotonic dystrophy (DM1), Huntington and SCA1 — <b>better than counting repeats</b>. A glass-box, numpy-only library, validated across three diseases.</p>
-      <div class="btn-row" style="margin-bottom:26px">
-        <a href="https://pypi.org/project/energorna/" target="_blank" class="btn btn-line">view_on_pypi →</a>
-        <a href="https://github.com/josevilar-qbioai/energorna" target="_blank" class="btn btn-line">code_on_github →</a>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px;margin-top:38px;">
+
+      <!-- ef-synonymous -->
+      <div style="border:1px solid var(--rule);background:var(--panel,#DEDBD1);padding:28px;display:flex;flex-direction:column;">
+        <div class="kick" style="margin-bottom:8px;">Synonymous variants</div>
+        <h3 class="mono" style="font-size:20px;letter-spacing:-.01em;margin-bottom:10px;">ef-synonymous</h3>
+        <p style="color:var(--muted,#57544B);font-size:14.5px;line-height:1.7;margin-bottom:20px;flex:1;">The thermodynamic signal <b>σ + G&gt;A</b> that matches the deep network. Web tool, CLI and VEP plugin.</p>
+        <div class="mono" style="background:var(--ink);color:var(--bg);padding:13px 16px;border-radius:3px;font-size:12.5px;margin-bottom:18px;overflow-x:auto;">pip install ef-synonymous</div>
+        <div class="btn-row">
+          <a href="tools/ef-synonymous-en.html" target="_blank" class="btn btn-solid">▶ web</a>
+          <a href="https://pypi.org/project/ef-synonymous/" target="_blank" class="btn btn-line">pypi</a>
+          <a href="https://github.com/josevilar-qbioai/ef-synonymous" target="_blank" class="btn btn-line">github</a>
+        </div>
       </div>
-      <div class="mono" style="background:var(--ink);color:var(--bg);padding:22px 24px;border-radius:3px;font-size:13px;line-height:1.85;overflow-x:auto;">
-        <span style="color:var(--faint)"># score a repeat allele</span><br>
-        pip install energorna<br>
-        energorna score --repeat CTG --n 40
+
+      <!-- energorna -->
+      <div style="border:1px solid var(--rule);background:var(--panel,#DEDBD1);padding:28px;display:flex;flex-direction:column;">
+        <div class="kick" style="margin-bottom:8px;">Repeat expansion</div>
+        <h3 class="mono" style="font-size:20px;letter-spacing:-.01em;margin-bottom:10px;">energorna</h3>
+        <p style="color:var(--muted,#57544B);font-size:14.5px;line-height:1.7;margin-bottom:20px;flex:1;">The periodicity loss of the stacking profile predicts age at onset in DM1, Huntington and SCA1 — <b>better than counting repeats</b>. Validated across three diseases.</p>
+        <div class="mono" style="background:var(--ink);color:var(--bg);padding:13px 16px;border-radius:3px;font-size:12.5px;margin-bottom:18px;overflow-x:auto;">pip install energorna</div>
+        <div class="btn-row">
+          <a href="https://pypi.org/project/energorna/" target="_blank" class="btn btn-line">pypi</a>
+          <a href="https://github.com/josevilar-qbioai/energorna" target="_blank" class="btn btn-line">github</a>
+        </div>
       </div>
+
     </div>
   </section>
 
