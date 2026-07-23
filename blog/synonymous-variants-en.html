@@ -1,261 +1,150 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pathogenic synonymous variants — QMetrika Labs Blog</title>
 <meta name="description" content="First CNN predictor with pure thermodynamic signal for synonymous variants. AUC 0.683. Conceptual framework Λ = S ⊗ Φ.">
-<link rel="preconnect" href="https://fonts.googleapis.com/">
-<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
-<style>
-:root{
-  --bg:#E9E7E0;--panel:#DEDBD1;--ink:#1B1B18;--muted:#57544B;--faint:#7A776C;
-  --rule:#CFCCC2;--accent:#A6542E;--accent-lt:#D98A5E;--dark-fg:#E9E7E0;
-  --teal:#A6542E;--gold:#A6542E;--plum:#A6542E;--white:#1B1B18;--text:#1B1B18;
-  --soft:#7A776C;--border:#CFCCC2;--border-light:#BEBAAE;--card:#DEDBD1;--surface:#DEDBD1;
-}
-*{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',system-ui,sans-serif;font-size:16px;-webkit-font-smoothing:antialiased;}
-a{color:inherit;text-decoration:none;}
-::selection{background:var(--accent);color:var(--bg);}
-.wrap{max-width:740px;margin:0 auto;padding:0 32px;}
-.mono{font-family:'IBM Plex Mono',monospace;}
+<link rel="stylesheet" href="../styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap">
+</head><body><div class="wrap">
+  <header class="nav nav--site">
+    <span class="nav-brand"><span class="brand-dot"></span>QMetrika Labs</span>
+    <a href="../en.html">home</a><a href="./en.html">blog</a>
+    <a href="../en.html#contact">contact</a>
+    <a class="lang" href="synonymous-variants.html">en/es</a>
+  </header>
+  <div class="article">
+    <a class="lang" href="./en.html">← blog</a>
+    <div class="article-head">
+      <div class="kicker kicker--accent">May 2026</div>
+      <h1 class="article-title">Pathogenic synonymous variants: the signal that <em>REVEL can't see</em></h1>
+      <p class="article-lede">Synonymous variants don't change the protein, but they do alter the mRNA thermodynamic profile. First CNN predictor with pure thermodynamic signal: AUC 0.683. Conceptual framework Λ = S ⊗ Φ. Paper 1 of a trilogy.</p>
+      <div class="meta-row">
+        <span class="tag tag-accent mono">bio-ia</span>
+        <span class="tag tag-accent mono">paper</span>
+        <span class="tag tag-accent mono">trilogy · paper 1</span>
+      </div>
+    </div>
 
-/* NAV */
-nav{position:sticky;top:0;left:0;right:0;z-index:100;border-bottom:1px solid var(--rule);background:rgba(233,231,224,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:0;}
-nav .inner{max-width:740px;margin:0 auto;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;}
-.logo{display:flex;align-items:center;gap:10px;}
-.logo-mark{width:26px;height:26px;flex-shrink:0;}
-.logo-name{font-weight:600;font-size:15px;color:var(--ink);letter-spacing:-.01em;}
-nav .links{display:flex;gap:20px;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:11.5px;}
-nav .links a{color:var(--muted);}
-nav .links a:hover{color:var(--ink);}
-nav .links a.active{color:var(--accent);}
-.lang-switch{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink);border:1px solid var(--rule);padding:3px 9px;}
-.lang-switch:hover{color:var(--accent);border-color:var(--accent);}
+    <hr class="hr" style="margin:40px 0;">
 
-/* HEADER */
-.post-header{padding:104px 0 40px;border-bottom:1px solid var(--rule);}
-.back{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);display:inline-flex;align-items:center;gap:6px;margin-bottom:22px;}
-.back:hover{text-decoration:underline;}
-.post-date{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px;}
-.post-header h1{font-weight:500;font-size:clamp(1.9rem,4vw,2.7rem);color:var(--ink);line-height:1.1;margin-bottom:18px;letter-spacing:-.03em;}
-.post-header h1 em{font-style:normal;color:var(--accent);}
-.post-header .excerpt{font-family:'IBM Plex Mono',monospace;color:var(--muted);font-size:13.5px;line-height:1.7;max-width:60ch;}
-.post-tags{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap;}
-.tag{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;padding:3px 10px;border:1px solid var(--rule);color:var(--muted);border-radius:0;font-weight:400;}
-.tag.t,.tag.g,.tag.p{color:var(--accent);border-color:var(--accent);}
+    <article class="prose">
+      <h2>Genomics' blind spot</h2>
 
-/* BODY */
-.post-body{padding:52px 0 64px;}
-.post-body h2{font-weight:600;font-size:1.4rem;color:var(--ink);margin:52px 0 16px;letter-spacing:-.015em;}
-.post-body h2:first-child{margin-top:0;}
-.post-body p{color:var(--muted);font-size:15.5px;line-height:1.85;margin-bottom:18px;max-width:66ch;}
-.post-body p b{color:var(--ink);font-weight:600;}
-.post-body p em{color:var(--accent);font-style:normal;}
-.post-body ul,.post-body ol{color:var(--muted);font-size:15.5px;line-height:1.85;margin:0 0 18px 22px;max-width:66ch;}
-.post-body li{margin-bottom:8px;}
-.post-body li b{color:var(--ink);}
+      <p>A synonymous variant is a DNA mutation that <strong>does not change</strong> the encoded amino acid. The codon changes, but the resulting protein is identical. For decades, synonymous variants were considered "silent" — with no functional effect.</p>
 
-/* PULLQUOTE */
-.pullquote{font-family:'Space Grotesk',sans-serif;font-size:1.35rem;font-weight:500;color:var(--ink);line-height:1.4;border-left:2px solid var(--accent);padding:6px 0 6px 24px;margin:40px 0;max-width:58ch;letter-spacing:-.01em;}
-.pullquote b{color:var(--accent);font-weight:600;}
+      <p>We know that is false. Synonymous variants cause cystic fibrosis, cancer, and dozens of diseases. But the most powerful genomics predictors — <strong>REVEL</strong>, <strong>AlphaMissense</strong>, <strong>CADD</strong> — are fundamentally blind to them. They operate at the protein level: if the protein doesn't change, they have no signal to measure.</p>
 
-/* STAT ROW */
-.stat-row{display:flex;gap:1px;background:var(--rule);border:1px solid var(--rule);margin:32px 0;flex-wrap:wrap;}
-.stat-row .stat{flex:1;min-width:120px;background:var(--bg);padding:22px 20px;font-family:'IBM Plex Mono',monospace;}
-.stat-row .stat .v{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.7rem;color:var(--accent);line-height:1;}
-.stat-row .stat .l{font-size:10px;color:var(--faint);text-transform:uppercase;letter-spacing:.05em;margin-top:8px;}
+      <p>This is where QMetrika's two research lines converge.</p>
 
-/* PRINCIPLES */
-.principle-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);margin:32px 0;}
-.pcard{background:var(--panel);padding:22px;}
-.pcard .pid{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);font-weight:600;}
-.pcard h4{font-weight:600;font-size:.98rem;color:var(--ink);margin:6px 0 7px;}
-.pcard p{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--faint);line-height:1.65;margin:0;max-width:none;}
+      <blockquote style="border-left:3px solid var(--color-accent);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">If the protein doesn't change but the patient becomes ill, the pathology is in the <strong>mRNA</strong>, not in the protein. And the mRNA has its own physics that a synonymous mutation can alter.</blockquote>
 
-/* FORMULA */
-.formula{border:1px solid var(--rule);background:var(--panel);padding:32px 28px;margin:32px 0;text-align:center;}
-.formula .f{font-family:'IBM Plex Mono',monospace;font-size:2rem;color:var(--ink);letter-spacing:.05em;margin-bottom:14px;}
-.formula .f .sym{color:var(--accent);font-weight:600;}
-.formula .f .op{color:var(--faint);margin:0 8px;}
-.formula .desc{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--faint);line-height:1.7;max-width:56ch;margin:0 auto;}
+      <h2>The framework: Λ = S ⊗ Φ</h2>
 
-/* CTA */
-.cta-box{border:1px solid var(--rule);background:var(--panel);padding:28px;text-align:center;margin:44px 0;}
-.cta-box p{font-family:'IBM Plex Mono',monospace;color:var(--muted);font-size:12.5px;margin-bottom:18px;max-width:none;}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:400;margin:4px;transition:all .2s;}
-.btn-teal{background:var(--ink);color:var(--dark-fg);}
-.btn-teal:hover{background:var(--accent);}
-.btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--ink);}
-.btn-ghost:hover{background:var(--ink);color:var(--dark-fg);}
+      <div style="background:var(--color-accent-2-100);border-radius:22px;padding:32px 28px;margin:0 0 26px;text-align:center;">
+        <div style="font-family:var(--font-heading);font-size:44px;line-height:1;color:var(--color-accent-2-700);margin-bottom:16px;">Λ = S ⊗ Φ</div>
+        <div style="font-family:var(--font-mono);font-size:13px;line-height:1.9;color:var(--color-accent-2-900);">
+          Λ — biological viability of the transcript<br>
+          S — genetic code (protein sequence) · semantic identity<br>
+          Φ — biophysical constraints (mRNA thermodynamic form factor)<br>
+          ⊗ — systemic dependency between both axes
+        </div>
+      </div>
 
-/* TABLE */
-.table-wrap{overflow-x:auto;margin:32px 0;border:1px solid var(--rule);}
-table{border-collapse:collapse;width:100%;min-width:500px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;}
-th,td{text-align:left;padding:12px 16px;border-bottom:1px solid var(--rule);}
-thead th{background:var(--panel);color:var(--ink);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;}
-tbody td{color:var(--muted);}
-tbody td b{color:var(--ink);}
-tbody tr:last-child td{border-bottom:none;}
-tr.highlight-row td{background:rgba(166,84,46,.08);color:var(--ink);}
-tr.highlight-row td b{color:var(--accent);}
+      <p>Every mRNA transcript has two layers of information. <strong>S</strong> is the digital message: the amino acid sequence it encodes. <strong>Φ</strong> is the analog channel: the mRNA thermodynamics that determine how efficiently that message is translated — local stability, translation speed, cotranslational folding.</p>
 
-/* FOOTER */
-footer{padding:28px 0 48px;border-top:1px solid var(--rule);}
-footer p{color:var(--faint);font-family:'IBM Plex Mono',monospace;font-size:11px;}
-footer a{color:var(--accent);}
+      <p>In a missense variant, both axes change: ΔS ≠ 0, ΔΦ ≠ 0. In a synonymous variant, the argument is elegant: <strong>ΔS = 0, ΔΦ ≠ 0</strong>. The protein doesn't change, but the mRNA form factor does. If that causes disease, the pathology is purely thermodynamic.</p>
 
-@media(max-width:600px){
-  .principle-grid{grid-template-columns:1fr;}
-  nav .links a:not(.lang-switch):not(.active){display:none;}
-  .post-header{padding-top:88px;}
-}
-</style>
-</head>
-<body>
+      <p>This framework is presented in Paper 1 as a qualitative conceptual framework — not as formal algebra. Paper 2 makes it concrete in the opposite, stronger direction: the signal decomposes into two interpretable physical observables (signed stacking ΔΔG + G>A) that reproduce the deep classifier.</p>
 
-<nav>
-  <div class="inner">
-    <a href="../en.html" class="logo"><svg class="logo-mark" width="26" height="26" viewBox="6 6 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="28" cy="28" r="18" stroke="#1B1B18" stroke-width="4.5"/><circle cx="41" cy="41" r="9.6" fill="#E9E7E0"/><circle cx="41" cy="41" r="7.4" fill="#1B1B18"/><circle cx="41" cy="41" r="5.4" fill="#A6542E"/></svg><span class="logo-name">QMetrika Labs</span></a>
-    <div class="links"><a href="../en.html">Home</a><a href="en.html">Blog</a><a href="../en.html#contact">Contact</a><a href="synonymous-variants.html" class="lang-switch">ES</a></div>
-  </div>
-</nav>
+      <h2>Pathogenic mechanisms</h2>
 
-<div class="wrap">
+      <p>How can a variant that doesn't change the protein cause disease? Four mechanisms that the ΔG profile can capture:</p>
 
-  <div class="post-header">
-    <a href="en.html" class="back">&larr; Blog</a>
-    <div class="post-date">May 2026</div>
-    <h1>Pathogenic synonymous variants: the signal that <em>REVEL can't see</em></h1>
-    <p class="excerpt">Synonymous variants don't change the protein, but they do alter the mRNA thermodynamic profile. First CNN predictor with pure thermodynamic signal: AUC 0.683. Conceptual framework Λ = S ⊗ Φ. Paper 1 of a trilogy.</p>
-    <div class="post-tags">
-      <span class="tag p">bio-ia</span>
-      <span class="tag t">paper</span>
-      <span class="tag g">trilogy · paper 1</span>
+      <div class="statcards-2">
+        <div class="statcard statcard--muted">
+          <h4 style="font-size:18px;margin:0 0 8px;">mRNA destabilization</h4>
+          <p style="font-family:var(--font-mono);font-size:12.5px;line-height:1.6;margin:0;color:color-mix(in srgb, var(--color-text) 68%, transparent);">Alteration of local stacking that reduces thermodynamic stability → accelerated mRNA degradation → less protein produced.</p>
+        </div>
+        <div class="statcard statcard--muted">
+          <h4 style="font-size:18px;margin:0 0 8px;">Aberrant splicing</h4>
+          <p style="font-family:var(--font-mono);font-size:12.5px;line-height:1.6;margin:0;color:color-mix(in srgb, var(--color-text) 68%, transparent);">Local secondary structure change that alters splice sites or disrupts exonic enhancers/silencers (ESE/ESS).</p>
+        </div>
+        <div class="statcard statcard--muted">
+          <h4 style="font-size:18px;margin:0 0 8px;">Translation speed</h4>
+          <p style="font-family:var(--font-mono);font-size:12.5px;line-height:1.6;margin:0;color:color-mix(in srgb, var(--color-text) 68%, transparent);">Rare codons or stacking changes that slow the ribosome → cotranslational misfolding of the protein.</p>
+        </div>
+        <div class="statcard statcard--muted">
+          <h4 style="font-size:18px;margin:0 0 8px;">Cis regulation</h4>
+          <p style="font-family:var(--font-mono);font-size:12.5px;line-height:1.6;margin:0;color:color-mix(in srgb, var(--color-text) 68%, transparent);">Disruption of regulatory elements that depend on the nucleotide sequence, not the protein sequence.</p>
+        </div>
+      </div>
+
+      <h2>Results</h2>
+
+      <div class="statcards-3">
+        <div class="statcard statcard--accent"><div class="v t-accent">0.683</div><div class="l l-accent">Dedicated AUC</div></div>
+        <div class="statcard statcard--accent"><div class="v t-accent">0.625</div><div class="l l-accent">LOGO AUC</div></div>
+        <div class="statcard statcard--accent"><div class="v t-accent">2.60×</div><div class="l l-accent">G>A enrichment</div></div>
+      </div>
+
+      <p><strong>Dedicated CNN:</strong> AUC 0.683 using only mRNA thermodynamic signal (ΔG channels). No evolutionary information, no conservation, no 3D structure. Pure nucleotide physics.</p>
+
+      <p><strong>LOGO (Leave-One-Gene-Out):</strong> AUC 0.625 — the signal generalizes across genes; it is not an artifact of a particular gene.</p>
+
+      <p><strong>Mechanistic finding — G>A enrichment:</strong> Pathogenic synonymous variants are 2.60× enriched in G>A transitions. This has a direct thermodynamic explanation: G>A reduces stacking (guanine stacks more strongly than adenine), and this effect is captured by the ΔG profile.</p>
+
+      <p><strong>CDS length effect:</strong> Genes with longer CDS have stronger thermodynamic signal. This is consistent with the model: longer mRNAs have more opportunities for a local perturbation to propagate.</p>
+
+      <h2>What this implies</h2>
+
+      <p>An AUC of 0.683 does not compete with the best missense predictors (which reach 0.99). But it doesn't have to. The question is not "Is it better than AlphaMissense?" but <strong>"Does a thermodynamic signal exist in synonymous variants?"</strong> And the answer is yes.</p>
+
+      <p>This opens a niche that no published predictor covers. REVEL, AlphaMissense, CADD — all are blind to synonymous variants because they operate at the protein level. EnergyFingerprint operates at the nucleotide level. The biophysical channel already works for synonymous variants without modification.</p>
+
+      <blockquote style="border-left:3px solid var(--color-accent);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">EnergyFingerprint is not competing with AlphaMissense on its turf. It opens new ground where <strong>nobody can operate</strong> — because nobody else looks at the physics of the mRNA.</blockquote>
+
+      <h2>The trilogy</h2>
+
+      <p>This paper is the first of three that progressively unfold the Λ = S ⊗ Φ framework:</p>
+
+      <div style="background:var(--color-surface);border-radius:28px;padding:34px;margin:0 0 22px;">
+        <h3 style="font-size:22px;margin:0 0 20px;">Three papers, one escalating question</h3>
+        <div style="display:flex;gap:18px;margin-bottom:18px;">
+          <div style="font-family:var(--font-heading);font-size:32px;line-height:1;color:var(--color-accent-700);flex:none;">1</div>
+          <p style="font-size:15px;line-height:1.6;margin:0;color:color-mix(in srgb, var(--color-text) 85%, transparent);"><strong>"The signal exists"</strong> (this paper) — A dedicated CNN demonstrates that the thermodynamic signal discriminates pathogenic synonymous variants from benign ones. The Λ = S ⊗ Φ framework is presented as a qualitative conceptual framework.</p>
+        </div>
+        <div style="display:flex;gap:18px;margin-bottom:18px;">
+          <div style="font-family:var(--font-heading);font-size:32px;line-height:1;color:var(--color-accent-700);flex:none;">2</div>
+          <p style="font-size:15px;line-height:1.6;margin:0;color:color-mix(in srgb, var(--color-text) 85%, transparent);"><strong>"The signal is interpretable"</strong> (horizon 2027) — The dedicated CNN reduces to two physical observables: the <em>signed</em> nearest-neighbor stacking ΔΔG (Turner parameters) plus the G>A mutational bias. A two-feature model matches the deep network and generalizes across genes — full interpretability of the σ operator, decisive for clinical adoption.</p>
+        </div>
+        <div style="display:flex;gap:18px;">
+          <div style="font-family:var(--font-heading);font-size:32px;line-height:1;color:var(--color-accent-700);flex:none;">3</div>
+          <p style="font-size:15px;line-height:1.6;margin:0;color:color-mix(in srgb, var(--color-text) 85%, transparent);"><strong>"The predicted physics occurs in the cell"</strong> (horizon 2027-2028) — Direct experimental validation. DMS-MaPseq measures in vivo accessibility. Reporter assays measure expression. Does predicted ΔΦ = actual structural change?</p>
+        </div>
+      </div>
+
+      <h2>L1 × L2 convergence</h2>
+
+      <p>This work is the natural convergence of QMetrika's two research lines. <strong>L1</strong> (EnergyFingerprint) provides the CNN and the transferability gradient. <strong>L2</strong> (mRNA Design) demonstrates that the ΔG profile is a useful and orthogonal dimension.</p>
+
+      <p>Together they predict exactly this result: if ΔG is informative for missense and orthogonal to MFE, it should also be informative for synonymous variants — where it is the <strong>only</strong> available signal, because the protein doesn't change.</p>
+
+      <p>The natural extension is the evolutionary channel. ESM-1v operates at the protein level — for synonymous variants it does not directly apply. But a masked marginal at the DNA level (not protein) could capture evolutionary pressure on the nucleotide sequence. That is the subject of Paper 2.</p>
+    </article>
+
+    <div class="cta">
+      <div>
+        <h3>Read it in the open</h3>
+        <p>Preprint with dedicated CNN, LOGO analysis, mechanistic findings and the Λ = S ⊗ Φ framework.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-primary btn--mono" href="https://doi.org/10.5281/zenodo.20275792" target="_blank">Zenodo · DOI 10.5281/zenodo.20275792</a>
+        <a class="btn btn-secondary btn--mono" href="https://github.com/josevilar-qbioai/synonymous-thermodynamic-classification" target="_blank">GitHub</a>
+      </div>
     </div>
   </div>
 
-  <div class="post-body">
-
-    <h2>Genomics' blind spot</h2>
-
-    <p>A synonymous variant is a DNA mutation that <b>does not change</b> the encoded amino acid. The codon changes, but the resulting protein is identical. For decades, synonymous variants were considered "silent" — with no functional effect.</p>
-
-    <p>We know that is false. Synonymous variants cause cystic fibrosis, cancer, and dozens of diseases. But the most powerful genomics predictors — <b>REVEL</b>, <b>AlphaMissense</b>, <b>CADD</b> — are fundamentally blind to them. They operate at the protein level: if the protein doesn't change, they have no signal to measure.</p>
-
-    <p>This is where QMetrika's two research lines converge.</p>
-
-    <div class="pullquote">If the protein doesn't change but the patient becomes ill, the pathology is in the <b>mRNA</b>, not in the protein. And the mRNA has its own physics that a synonymous mutation can alter.</div>
-
-    <h2>The framework: Λ = S ⊗ Φ</h2>
-
-    <div class="formula">
-      <div class="f"><span class="sym">Λ</span> <span class="op">=</span> S <span class="op">⊗</span> <span class="sym">Φ</span></div>
-      <div class="desc">
-        Λ — biological viability of the transcript<br>
-        S — genetic code (protein sequence) · semantic identity<br>
-        Φ — biophysical constraints (mRNA thermodynamic form factor)<br>
-        ⊗ — systemic dependency between both axes
-      </div>
-    </div>
-
-    <p>Every mRNA transcript has two layers of information. <b>S</b> is the digital message: the amino acid sequence it encodes. <b>Φ</b> is the analog channel: the mRNA thermodynamics that determine how efficiently that message is translated — local stability, translation speed, cotranslational folding.</p>
-
-    <p>In a missense variant, both axes change: ΔS ≠ 0, ΔΦ ≠ 0. In a synonymous variant, the argument is elegant: <b>ΔS = 0, ΔΦ ≠ 0</b>. The protein doesn't change, but the mRNA form factor does. If that causes disease, the pathology is purely thermodynamic.</p>
-
-    <p>This framework is presented in Paper 1 as a qualitative conceptual framework — not as formal algebra. Paper 2 makes it concrete in the opposite, stronger direction: the signal decomposes into two interpretable physical observables (signed stacking ΔΔG + G>A) that reproduce the deep classifier.</p>
-
-    <h2>Pathogenic mechanisms</h2>
-
-    <p>How can a variant that doesn't change the protein cause disease? Four mechanisms that the ΔG profile can capture:</p>
-
-    <div class="mechanism-grid">
-      <div class="mcard">
-        <h4>mRNA destabilization</h4>
-        <p>Alteration of local stacking that reduces thermodynamic stability → accelerated mRNA degradation → less protein produced.</p>
-      </div>
-      <div class="mcard">
-        <h4>Aberrant splicing</h4>
-        <p>Local secondary structure change that alters splice sites or disrupts exonic enhancers/silencers (ESE/ESS).</p>
-      </div>
-      <div class="mcard">
-        <h4>Translation speed</h4>
-        <p>Rare codons or stacking changes that slow the ribosome → cotranslational misfolding of the protein.</p>
-      </div>
-      <div class="mcard">
-        <h4>Cis regulation</h4>
-        <p>Disruption of regulatory elements that depend on the nucleotide sequence, not the protein sequence.</p>
-      </div>
-    </div>
-
-    <h2>Results</h2>
-
-    <div class="stat-row">
-      <div class="stat"><div class="v plum">0.683</div><div class="l">Dedicated AUC</div></div>
-      <div class="stat"><div class="v teal">0.625</div><div class="l">LOGO AUC</div></div>
-      <div class="stat"><div class="v gold">2.60×</div><div class="l">G>A enrichment</div></div>
-    </div>
-
-    <p><b>Dedicated CNN:</b> AUC 0.683 using only mRNA thermodynamic signal (ΔG channels). No evolutionary information, no conservation, no 3D structure. Pure nucleotide physics.</p>
-
-    <p><b>LOGO (Leave-One-Gene-Out):</b> AUC 0.625 — the signal generalizes across genes; it is not an artifact of a particular gene.</p>
-
-    <p><b>Mechanistic finding — G>A enrichment:</b> Pathogenic synonymous variants are 2.60× enriched in G>A transitions. This has a direct thermodynamic explanation: G>A reduces stacking (guanine stacks more strongly than adenine), and this effect is captured by the ΔG profile.</p>
-
-    <p><b>CDS length effect:</b> Genes with longer CDS have stronger thermodynamic signal. This is consistent with the model: longer mRNAs have more opportunities for a local perturbation to propagate.</p>
-
-    <h2>What this implies</h2>
-
-    <p>An AUC of 0.683 does not compete with the best missense predictors (which reach 0.99). But it doesn't have to. The question is not "Is it better than AlphaMissense?" but <b>"Does a thermodynamic signal exist in synonymous variants?"</b> And the answer is yes.</p>
-
-    <p>This opens a niche that no published predictor covers. REVEL, AlphaMissense, CADD — all are blind to synonymous variants because they operate at the protein level. EnergyFingerprint operates at the nucleotide level. The biophysical channel already works for synonymous variants without modification.</p>
-
-    <div class="pullquote">EnergyFingerprint is not competing with AlphaMissense on its turf. It opens new ground where <b>nobody can operate</b> — because nobody else looks at the physics of the mRNA.</div>
-
-    <h2>The trilogy</h2>
-
-    <p>This paper is the first of three that progressively unfold the Λ = S ⊗ Φ framework:</p>
-
-    <div class="trilogy">
-      <h3>Three papers, one escalating question</h3>
-      <div class="trilogy-item">
-        <div class="trilogy-num">1</div>
-        <p><b>"The signal exists"</b> (this paper) — A dedicated CNN demonstrates that the thermodynamic signal discriminates pathogenic synonymous variants from benign ones. The Λ = S ⊗ Φ framework is presented as a qualitative conceptual framework.</p>
-      </div>
-      <div class="trilogy-item">
-        <div class="trilogy-num">2</div>
-        <p><b>"The signal is interpretable"</b> (horizon 2027) — The dedicated CNN reduces to two physical observables: the <em>signed</em> nearest-neighbor stacking ΔΔG (Turner parameters) plus the G>A mutational bias. A two-feature model matches the deep network and generalizes across genes — full interpretability of the σ operator, decisive for clinical adoption.</p>
-      </div>
-      <div class="trilogy-item">
-        <div class="trilogy-num">3</div>
-        <p><b>"The predicted physics occurs in the cell"</b> (horizon 2027-2028) — Direct experimental validation. DMS-MaPseq measures in vivo accessibility. Reporter assays measure expression. Does predicted ΔΦ = actual structural change?</p>
-      </div>
-    </div>
-
-    <h2>L1 × L2 convergence</h2>
-
-    <p>This work is the natural convergence of QMetrika's two research lines. <b>L1</b> (EnergyFingerprint) provides the CNN and the transferability gradient. <b>L2</b> (mRNA Design) demonstrates that the ΔG profile is a useful and orthogonal dimension.</p>
-
-    <p>Together they predict exactly this result: if ΔG is informative for missense and orthogonal to MFE, it should also be informative for synonymous variants — where it is the <b>only</b> available signal, because the protein doesn't change.</p>
-
-    <p>The natural extension is the evolutionary channel. ESM-1v operates at the protein level — for synonymous variants it does not directly apply. But a masked marginal at the DNA level (not protein) could capture evolutionary pressure on the nucleotide sequence. That is the subject of Paper 2.</p>
-
-    <div class="cta-box">
-      <p>Preprint with dedicated CNN, LOGO analysis, mechanistic findings and the Λ = S ⊗ Φ framework.</p>
-      <a href="https://doi.org/10.5281/zenodo.20275792" target="_blank" class="btn btn-teal">Zenodo · DOI 10.5281/zenodo.20275792</a>
-      <a href="https://github.com/josevilar-qbioai/synonymous-thermodynamic-classification" target="_blank" class="btn btn-ghost">GitHub</a>
-    </div>
-
-  </div>
-
-  <footer>
-    <p><a href="en.html">&larr; Back to blog</a> · <a href="../en.html">QMetrika Labs</a> · 2026</p>
+  <footer class="site-footer article-footer">
+    <a href="./en.html">← back to blog</a><a href="../en.html">qmetrika_labs</a><span class="push">2026</span>
   </footer>
-
-</div>
-</body>
-</html>
+</div></body></html>

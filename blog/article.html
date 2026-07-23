@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La interrupción que rompe el patrón — QMetrika Labs Blog</title>
+<meta name="description" content="energoRNA extiende el motor termodinámico de QMetrika del ARN puntual al ARN estructural: la pérdida de periodicidad local del apilamiento predice la edad de inicio en enfermedades de expansión de repeticiones (DM1, Huntington, SCA1, X-frágil) mejor que contar repeticiones. Glass-box, pip install energorna.">
+<link rel="stylesheet" href="../styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap">
+</head>
+<body>
+<div class="wrap">
+  <header class="nav nav--site">
+    <span class="nav-brand"><span class="brand-dot"></span>QMetrika Labs</span>
+    <a href="../index.html">home</a>
+    <a href="./index.html">blog</a>
+    <a href="../index.html#contacto">contacto</a>
+    <a class="lang" href="article-en.html">es/en</a>
+  </header>
+
+  <div class="article">
+    <a class="lang" href="./index.html">← blog</a>
+
+    <div class="article-head">
+      <div class="kicker kicker--accent">Julio 2026</div>
+      <h1 class="article-title">La interrupción que <em>rompe el patrón</em></h1>
+      <p class="article-lede">En las enfermedades de expansión de repeticiones, la edad de inicio no la fija solo cuántas repeticiones hay, sino si el tracto está interrumpido. energoRNA lo mide con un único observable físico — la pérdida de periodicidad del apilamiento — que predice el inicio mejor que contar. Glass-box, <span class="ic">pip install energorna</span>.</p>
+      <div class="meta-row">
+        <span class="tag tag-accent mono">bio-ia</span>
+        <span class="tag tag-accent mono">glass-box</span>
+        <span class="tag tag-accent mono">ARN estructural</span>
+      </div>
+    </div>
+
+    <hr class="hr" style="margin:40px 0;">
+
+    <article class="prose">
+      <h2>De la variante puntual al ARN estructural</h2>
+      <p>El motor termodinámico de QMetrika nació para variantes puntuales: el perfil de energía de apilamiento nearest-neighbor del mRNA. Ahí demostramos que la señal de patogenicidad sinónima vive en el apilamiento <em>local</em>, no en la estructura secundaria. Esa distinción es justo la bisagra hacia las enfermedades de expansión de repeticiones: en una variante puntual, perturbar la estructura global es ruido; en una <strong>expansión</strong>, la estructura periódica de la repetición <em>es</em> la entidad relevante. La misma física local, en un régimen nuevo.</p>
+
+      <h2>Contar repeticiones no basta</h2>
+      <p>La distrofia miotónica (DM1), el Huntington y la ataxia SCA1 comparten un mismo hecho clínico: la edad de inicio correlaciona con la longitud de la repetición, pero de forma débil. El verdadero modificador son las <strong>interrupciones</strong> — unidades variantes embebidas en el tracto (CCG en el CTG de DM1, la CAA en el CAG de Huntington, CAT en SCA1). Reducen la inestabilidad somática y <strong>retrasan el inicio</strong>. El problema: el observable clínico sigue siendo un escalar, un conteo, ciego al patrón.</p>
+
+      <h2>El observable: pérdida de periodicidad</h2>
+      <p>Una repetición pura produce un perfil de apilamiento <strong>periódico</strong>. Una interrupción rompe ese patrón localmente. energoRNA lo cuantifica con un solo número — la pérdida de autocorrelación (al periodo del motivo) del perfil Turner:</p>
+      <pre class="code"><span class="comment"># periodicity_loss = 1 − ACF_periodo(Φ)</span>
+pip install energorna
+energorna score --repeat CTG --n 40</pre>
+      <p>Auto-calibra el periodo por motivo (3 en trinucleótidos, 4 en el tetranucleótido CCTG de DM2) y, a diferencia de contar, es sensible al <strong>tipo</strong> de interrupción (CCG desestabiliza el patrón mucho más que CTC) y a su <strong>posición</strong> en el tracto.</p>
+
+      <h2>Supera al conteo, en cuatro enfermedades</h2>
+      <p>En DM1, la pérdida de periodicidad predice el residuo de inicio mucho mejor que contar interrupciones:</p>
+      <div class="statcards-2">
+        <div class="statcard statcard--accent"><div class="v t-accent">+0.81</div><div class="l l-accent">periodicidad vs inicio (DM1)</div></div>
+        <div class="statcard statcard--muted"><div class="v t-muted">+0.53</div><div class="l l-muted">conteo de interrupciones</div></div>
+      </div>
+      <p>En <strong>Huntington</strong>, las tres arquitecturas canónicas se ordenan por pérdida de periodicidad exactamente como por su inicio publicado. En <strong>SCA1</strong>, con datos individuales reales y abiertos (Menon 2013, n=35), el tramo ininterrumpido —el eje del observable— predice el inicio muy por encima del tamaño total. Y en <strong>X-frágil</strong> el mismo observable ordena las arquitecturas AGG por su <strong>riesgo de expansión</strong> publicado — un motivo, una interrupción y un endpoint nuevos:</p>
+      <div class="statcards-3">
+        <div class="statcard statcard--sage"><div class="v t-sage">0.64</div><div class="l l-sage">R² tramo ininterrumpido (SCA1)</div></div>
+        <div class="statcard statcard--muted"><div class="v t-muted">0.24</div><div class="l l-muted">R² tamaño total</div></div>
+        <div class="statcard statcard--sage"><div class="v t-sage">n=35</div><div class="l l-sage">reproduce un paper peer-reviewed</div></div>
+      </div>
+      <p>No es cuántas repeticiones hay, es la <strong>ruptura del patrón periódico</strong> del campo de energía. El mismo observable físico, en DM1, Huntington, SCA1 y X-frágil.</p>
+
+      <h2>¿Y no es solo re-derivar la métrica clínica?</h2>
+      <p>La crítica obvia: en SCA1/HD/X-frágil el predictor establecido ya es el <strong>tramo ininterrumpido más largo</strong>. La respuesta, cuantificada: la pérdida de periodicidad <strong>contiene</strong> ese eje pero <strong>añade dos dimensiones que un escalar de longitud no puede representar</strong> — el <strong>tipo</strong> de interrupción (a igual tramo ininterrumpido, CCG/CTC/GGC dan valores 0.02–0.26) y su <strong>posición</strong> (un bloque idéntico en 5' vs 3' da el mismo tramo, pero el observable 3'-ponderado los separa 15×). Y en DM1 real, sobre el residuo de inicio que la longitud no explica, el escalar clínico da <strong>r=+0.09</strong> mientras el tipo (+0.81) y la posición (+0.84) lo capturan: energoRNA no compite con la longitud, captura el <strong>modificador de interrupción</strong> que la longitud es ciega a ver.</p>
+
+      <h2>Correlato, no causa — y listo para usar</h2>
+      <p>La pérdida de periodicidad es un <strong>correlato biológicamente motivado</strong> —la periodicidad del apilamiento es un proxy del sustrato slipped-strand contiguo sobre el que la maquinaria de reparación (MMR) dirige la expansión somática— no una causa demostrada. Genera predicciones falsables (correlación con la inestabilidad somática medida, UV melting, unión de MSH3). Y como es un escalar físico sin red profunda, está <strong>listo para usar</strong>: numpy-only, sin GPU, auditable.</p>
+    </article>
+
+    <div class="cta">
+      <div>
+        <h3>Instálalo o léelo en abierto</h3>
+        <p>numpy-only, sin GPU, glass-box.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-primary btn--mono" href="https://pypi.org/project/energorna/">PyPI</a>
+        <a class="btn btn-secondary btn--mono" href="https://github.com/josevilar-qbioai/energorna">GitHub</a>
+      </div>
+    </div>
+
+    <div class="note">
+      <p><strong style="color:var(--color-text);">Nota de cautela:</strong> la validación con potencia está en SCA1 (n=35); DM1 (n=7) es sugerente pero de potencia limitada, y Huntington se valida por direcciones de efecto publicadas. Mejor predictor que el conteo en los datos disponibles, biológicamente motivado — no un veredicto clínico.</p>
+    </div>
+  </div>
+
+  <footer class="site-footer article-footer">
+    <a href="./index.html">← volver al blog</a>
+    <a href="../index.html">qmetrika_labs</a>
+    <span class="push">2026</span>
+  </footer>
+</div>
+</body>
+</html>

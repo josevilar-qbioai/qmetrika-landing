@@ -1,133 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Blog — QMetrika Labs</title>
-<meta name="description" content="Articles on biocomputation, artificial intelligence, Capital Q and computational science.">
-<link rel="preconnect" href="https://fonts.googleapis.com/">
-<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
-<style>
-:root{--bg:#E9E7E0;--panel:#DEDBD1;--ink:#1B1B18;--muted:#57544B;--faint:#7A776C;--rule:#CFCCC2;--accent:#A6542E;}
-*{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',system-ui,sans-serif;font-size:16px;-webkit-font-smoothing:antialiased;}
-a{color:inherit;text-decoration:none;}
-::selection{background:var(--accent);color:var(--bg);}
-.wrap{max-width:860px;margin:0 auto;padding:0 40px;}
-nav{position:sticky;top:0;z-index:50;border-bottom:1px solid var(--rule);background:rgba(233,231,224,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
-nav .inner{max-width:860px;margin:0 auto;padding:16px 40px;display:flex;align-items:center;justify-content:space-between;}
-.brand{display:flex;align-items:center;gap:10px;}
-.brand-mark{width:26px;height:26px;flex-shrink:0;}
-.brand-name{font-weight:600;font-size:15px;letter-spacing:-.01em;}
-.links{display:flex;align-items:center;gap:20px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--muted);}
-.links a:hover{color:var(--ink);}
-.links a.active{color:var(--accent);}
-.links .lang{color:var(--ink);}
-.blog-head{padding:104px 0 40px;border-bottom:1px solid var(--rule);}
-.blog-head .kick{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--accent);margin-bottom:14px;}
-.blog-head h1{font-weight:500;font-size:2.6rem;letter-spacing:-.03em;margin-bottom:10px;}
-.blog-head p{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--muted);}
-.post-list{padding:8px 0 80px;}
-.post{display:block;padding:32px 0;border-bottom:1px solid var(--rule);transition:padding-left .2s;}
-.post:hover{padding-left:12px;}
-.post:hover .post-title{color:var(--accent);}
-.post-date{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;}
-.post-title{font-weight:600;font-size:1.35rem;letter-spacing:-.015em;margin:8px 0 10px;line-height:1.25;transition:color .2s;}
-.post-excerpt{font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.7;color:var(--faint);max-width:64ch;}
-.post-tags{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;}
-.tag{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;padding:3px 10px;border:1px solid var(--rule);color:var(--muted);}
-.tag.a{color:var(--accent);border-color:var(--accent);}
-footer{padding:28px 0 48px;border-top:1px solid var(--rule);font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--faint);}
-footer a{color:var(--accent);}
-@media(max-width:600px){.wrap,nav .inner{padding-left:22px;padding-right:22px;}.links a:not(.lang):not(.active){display:none;}.blog-head{padding-top:88px;}}
-</style>
+<meta name="description" content="Articles on biocomputation, artificial intelligence, Q Capital and computational science.">
+<link rel="stylesheet" href="../styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap">
 </head>
 <body>
-
-<nav>
-  <div class="inner">
-    <a href="../en.html" class="brand"><svg class="brand-mark" width="26" height="26" viewBox="6 6 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="28" cy="28" r="18" stroke="#1B1B18" stroke-width="4.5"/><circle cx="41" cy="41" r="9.6" fill="#E9E7E0"/><circle cx="41" cy="41" r="7.4" fill="#1B1B18"/><circle cx="41" cy="41" r="5.4" fill="#A6542E"/></svg><span class="brand-name">QMetrika Labs</span></a>
-    <div class="links">
-      <a href="../en.html">[ home ]</a>
-      <a href="./en.html" class="active">[ blog ]</a>
-      <a href="../en.html#bio-ai">[ bio-ai ]</a>
-      <a href="../en.html#contact">[ contact ]</a>
-      <a href="index.html" class="lang">en<span style="color:var(--accent);">/</span>es</a>
-    </div>
-  </div>
-</nav>
-
 <div class="wrap">
-  <div class="blog-head">
-    <div class="kick">// lab_notes</div>
+  <header class="nav nav--site">
+    <span class="nav-brand"><span class="brand-dot"></span>QMetrika Labs</span>
+    <a href="../en.html">home</a>
+    <a href="./en.html" aria-current="page">blog</a>
+    <a href="../en.html#bioia">bio-ai</a>
+    <a class="lang" href="index.html">en/es</a>
+    <a class="btn btn-primary" href="mailto:qmetrika@proton.me">contact</a>
+  </header>
+
+  <section class="blog-hero">
+    <div class="kicker kicker--accent">// lab_notes</div>
     <h1>Blog</h1>
-    <p>Biocomputation, AI and Capital Q.</p>
-  </div>
+    <p>Biocomputation, AI and Q Capital.</p>
+  </section>
 
-  <div class="post-list">
-    <a href="energorna-en.html" class="post">
-      <div class="post-date">July 2026</div>
-      <div class="post-title">The interruption that breaks the pattern</div>
-      <div class="post-excerpt">energoRNA takes the thermodynamic engine from point RNA to structured RNA: the local periodicity loss of the stacking profile predicts age at onset in repeat-expansion disorders (DM1, Huntington, SCA1) better than counting repeats. Validated across three diseases, glass-box, pip install energorna.</div>
-      <div class="post-tags"><span class="tag a">bio-ia</span><span class="tag">glass-box</span><span class="tag">structured RNA</span></div>
-    </a>
-    <a href="synonymous-two-variables-en.html" class="post">
-      <div class="post-date">July 2026</div>
-      <div class="post-title">The synonymous classifier fits in two physical variables</div>
-      <div class="post-excerpt">The synonymous CNN reduces to two interpretable physical observables — the signed stacking ΔΔG (Turner) + the G>A bias — that match it (AUC 0.68) and generalize across genes. Glass-box, deployable as pip install ef-synonymous + a free web tool.</div>
-      <div class="post-tags"><span class="tag a">bio-ia</span><span class="tag">glass-box</span><span class="tag">tool</span></div>
-    </a>
-    <a href="benchmark-predictors-en.html" class="post">
-      <div class="post-date">July 2026</div>
-      <div class="post-title">Benchmark: EnergyFingerprint vs CADD, REVEL, AlphaMissense</div>
-      <div class="post-excerpt">Formal comparison across 7 genes with stratified meta-analysis. EF reaches ΔAUC of -0.024 to -0.040 against massive predictors — and outperforms CADD on the sodium channel SCN1A (0.913 vs 0.832). Orthogonal signal confirmed.</div>
-      <div class="post-tags"><span class="tag a">bio-ai</span><span class="tag">benchmark</span><span class="tag">TECH-2</span></div>
-    </a>
-    <a href="energyfingerprint-en.html" class="post">
-      <div class="post-date">June 2026</div>
-      <div class="post-title">EnergyFingerprint: missense variant classification with thermodynamic profiles</div>
-      <div class="post-excerpt">Multichannel 1D CNN combining mRNA stacking free energy with ESMC-300M evolutionary signal. 42 validated genes, AUC up to 0.99, zero-shot transferability across protein families.</div>
-      <div class="post-tags"><span class="tag a">bio-ia</span><span class="tag">paper</span></div>
-    </a>
-    <a href="mrna-optimization-en.html" class="post">
-      <div class="post-date">May 2026</div>
-      <div class="post-title">Therapeutic mRNA optimization: the thermodynamic axis that LinearDesign doesn't use</div>
-      <div class="post-excerpt">The stacking ΔG profile provides an orthogonal dimension to secondary structure (R²=0.144). A dual optimizer that outperforms BNT162b2 and mRNA-1273 in both ΔG and MFE simultaneously.</div>
-      <div class="post-tags"><span class="tag a">bio-ia</span><span class="tag">paper</span></div>
-    </a>
-    <a href="synonymous-variants-en.html" class="post">
-      <div class="post-date">May 2026</div>
-      <div class="post-title">Pathogenic synonymous variants: the thermodynamic signal that REVEL can't see</div>
-      <div class="post-excerpt">Synonymous variants don't change the protein but do alter the mRNA thermodynamic profile. First CNN predictor with pure thermodynamic signal: AUC 0.683. Conceptual framework Λ = S ⊗ Φ.</div>
-      <div class="post-tags"><span class="tag a">bio-ia</span><span class="tag">paper</span><span class="tag">trilogy</span></div>
-    </a>
-
-    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--accent);text-transform:uppercase;padding:40px 0 6px;">// collateral lines · lab exploration</div>
-
-    <a href="capital-q-en.html" class="post">
-      <div class="post-date">July 2026 · collateral</div>
-      <div class="post-title">Capital Q: the energy that transforms into knowledge</div>
-      <div class="post-excerpt">A company model where the unit of capital is not labor hours or physical assets, but the token: inference compute that, when governed and captured, compounds as proprietary and defensible knowledge.</div>
-      <div class="post-tags"><span class="tag a">collateral</span><span class="tag">capital_q</span></div>
-    </a>
-    <a href="agent-board-en.html" class="post">
-      <div class="post-date">July 2026 · collateral</div>
-      <div class="post-title">Agent Board: fail-closed governance for AI agents</div>
-      <div class="post-excerpt">A Kanban board where several agents collaborate under human supervision: fail-closed approval broker, hash-chain audit, RBAC and a multi-LLM adapter. Born as the test bed for the lab's pipelines.</div>
-      <div class="post-tags"><span class="tag a">collateral</span><span class="tag">agent-board</span><span class="tag">governance</span></div>
-    </a>
-    <a href="agent-canvas-model-en.html" class="post">
-      <div class="post-date">July 2026 · collateral</div>
-      <div class="post-title">Agent Canvas Model: design the agent before you code it</div>
-      <div class="post-excerpt">An adaptation of the Business Model Canvas into nine blocks to force the expensive decisions —segment, autonomy, KPIs, integrations, costs, risks— before writing a line of code.</div>
-      <div class="post-tags"><span class="tag a">collateral</span><span class="tag">agent-canvas</span><span class="tag">design</span></div>
+  <!-- featured -->
+  <div class="featured-wrap">
+    <a class="card-link" href="article-en.html">
+      <div class="featured">
+        <div>
+          <div class="meta-row" style="margin-bottom:18px;">
+            <span class="meta-date" style="color:var(--color-accent-800);">July 2026</span>
+            <span class="tag tag-accent mono">bio-ai</span>
+            <span class="tag tag-accent mono">glass-box</span>
+            <span class="tag tag-accent mono">structural RNA</span>
+          </div>
+          <h2>The interruption that breaks the pattern</h2>
+          <p>energoRNA carries the thermodynamic RNA engine from the point variant to structural RNA: the local loss of stacking periodicity predicts age of onset in repeat-expansion diseases (DM1, Huntington, SCA1, Fragile X) better than counting repeats. Validated across four diseases, glass-box, pip install energorna.</p>
+          <span class="btn btn-primary btn--mono">read →</span>
+        </div>
+        <div class="blob"><span class="blob-glyph">Λ ⊗ Φ</span></div>
+      </div>
     </a>
   </div>
 
-  <footer><p><a href="../en.html">← qmetrika_labs</a> · 2026</p></footer>
+  <!-- lab notes -->
+  <section class="notes-grid">
+    <a class="card-link" href="./synonymous-two-variables-en.html">
+      <article class="post-card">
+        <div class="meta-row"><span class="meta-date">July 2026</span><span class="tag tag-accent mono">bio-ai</span><span class="tag tag-accent mono">glass-box</span><span class="tag tag-accent mono">tool</span></div>
+        <h3>The synonymous classifier fits in two physical variables</h3>
+        <p>The synonymous CNN reduces to two interpretable physical observables — the signed stacking ΔΔG (Turner) + the G&gt;A bias — that match it (AUC 0.68) and generalize across genes. Glass-box, deployable as pip install ef-synonymous + a free web tool.</p>
+        <span class="readmore">read →</span>
+      </article>
+    </a>
+    <a class="card-link" href="./benchmark-predictors-en.html">
+      <article class="post-card">
+        <div class="meta-row"><span class="meta-date">July 2026</span><span class="tag tag-accent mono">bio-ai</span><span class="tag tag-accent mono">benchmark</span><span class="tag tag-accent mono">TECH-2</span></div>
+        <h3>Benchmark: EnergyFingerprint vs CADD, REVEL, AlphaMissense</h3>
+        <p>Formal comparison across 7 genes with a stratified meta-analysis. EF reaches ΔAUC of -0.024 to -0.040 against massive predictors — and beats CADD in the sodium channel SCN1A (0.913 vs 0.832). Orthogonal signal confirmed.</p>
+        <span class="readmore">read →</span>
+      </article>
+    </a>
+    <a class="card-link" href="./energyfingerprint-en.html">
+      <article class="post-card">
+        <div class="meta-row"><span class="meta-date">June 2026</span><span class="tag tag-accent mono">bio-ai</span><span class="tag tag-accent mono">paper</span></div>
+        <h3>EnergyFingerprint: missense variant classification with thermodynamic profiles</h3>
+        <p>A multichannel 1D CNN that combines the mRNA stacking free energy with evolutionary signal from ESMC-300M. 42 validated genes, AUC up to 0.99, zero-shot transferability across protein families.</p>
+        <span class="readmore">read →</span>
+      </article>
+    </a>
+    <a class="card-link" href="./mrna-optimization-en.html">
+      <article class="post-card">
+        <div class="meta-row"><span class="meta-date">May 2026</span><span class="tag tag-accent mono">bio-ai</span><span class="tag tag-accent mono">paper</span></div>
+        <h3>Therapeutic mRNA optimization: the thermodynamic axis LinearDesign doesn't use</h3>
+        <p>The stacking ΔG profile adds a dimension orthogonal to secondary structure (R²=0.144). A dual optimizer that beats BNT162b2 and mRNA-1273 in ΔG and MFE simultaneously.</p>
+        <span class="readmore">read →</span>
+      </article>
+    </a>
+    <a class="card-link" href="./synonymous-variants-en.html">
+      <article class="post-card">
+        <div class="meta-row"><span class="meta-date">May 2026</span><span class="tag tag-accent mono">bio-ai</span><span class="tag tag-accent mono">paper</span><span class="tag tag-accent mono">trilogy</span></div>
+        <h3>Pathogenic synonymous variants: the thermodynamic signal REVEL can't see</h3>
+        <p>Synonymous variants don't change the protein but do change the mRNA's thermodynamic profile. The first CNN predictor with pure thermodynamic signal: AUC 0.683. Conceptual framework Λ = S ⊗ Φ.</p>
+        <span class="readmore">read →</span>
+      </article>
+    </a>
+  </section>
+
+  <!-- collateral -->
+  <div class="colateral-head"><div class="kicker kicker--sage">// collateral lines · lab exploration</div></div>
+  <section class="colateral-grid">
+    <a class="card-link" href="./capital-q-en.html">
+      <article class="colateral-card">
+        <span class="meta-date meta-date--sage">July 2026 · collateral</span>
+        <div class="meta-row"><span class="tag tag-accent-2 mono">collateral</span><span class="tag tag-accent-2 mono">q_capital</span></div>
+        <h3>Q Capital: energy turned into knowledge</h3>
+        <p>A model of the firm where the unit of capital is neither the work hour nor the physical asset, but the token: the inference compute that, governed and captured, accrues as proprietary, defensible knowledge.</p>
+        <span class="readmore readmore--sage">read →</span>
+      </article>
+    </a>
+    <a class="card-link" href="./agent-board-en.html">
+      <article class="colateral-card">
+        <span class="meta-date meta-date--sage">July 2026 · collateral</span>
+        <div class="meta-row"><span class="tag tag-accent-2 mono">collateral</span><span class="tag tag-accent-2 mono">agent-board</span><span class="tag tag-accent-2 mono">governance</span></div>
+        <h3>Agent Board: fail-closed governance for AI agents</h3>
+        <p>A Kanban board where several agents collaborate under human supervision: fail-closed approval broker, hash-chain audit, RBAC and a multi-LLM adapter. Born as the testbed for the lab's pipelines.</p>
+        <span class="readmore readmore--sage">read →</span>
+      </article>
+    </a>
+    <a class="card-link" href="./agent-canvas-model-en.html">
+      <article class="colateral-card">
+        <span class="meta-date meta-date--sage">July 2026 · collateral</span>
+        <div class="meta-row"><span class="tag tag-accent-2 mono">collateral</span><span class="tag tag-accent-2 mono">agent-canvas</span><span class="tag tag-accent-2 mono">design</span></div>
+        <h3>Agent Canvas Model: design the agent before you code it</h3>
+        <p>An adaptation of the Business Model Canvas into nine blocks to force the expensive decisions — segment, autonomy, KPIs, integrations, costs, risks — before writing a single line of code.</p>
+        <span class="readmore readmore--sage">read →</span>
+      </article>
+    </a>
+    <a class="card-link" href="./micro-paradigm-en.html">
+      <article class="colateral-card">
+        <span class="meta-date meta-date--sage">July 2026 · collateral</span>
+        <div class="meta-row"><span class="tag tag-accent-2 mono">collateral</span><span class="tag tag-accent-2 mono">micro-paradigm</span><span class="tag tag-accent-2 mono">agents</span></div>
+        <h3>The Micro Paradigm: one founder and an orchestra of agents</h3>
+        <p>How to do deep-tech research with local models, specialized agents and selective access to foundational models — projects that once required a full team, now within reach of one person. QMetrika as a real case.</p>
+        <span class="readmore readmore--sage">read →</span>
+      </article>
+    </a>
+  </section>
+
+  <footer class="site-footer">
+    <a href="../en.html">← qmetrika_labs</a>
+    <span class="push">2026</span>
+  </footer>
 </div>
 </body>
 </html>

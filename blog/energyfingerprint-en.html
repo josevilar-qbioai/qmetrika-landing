@@ -1,223 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EnergyFingerprint: missense variant classification — QMetrika Labs Blog</title>
 <meta name="description" content="Multichannel 1D CNN classifying missense variants using mRNA stacking thermodynamic profiles and ESMC-300M evolutionary signal. 42 validated genes.">
-<link rel="preconnect" href="https://fonts.googleapis.com/">
-<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
-<style>
-:root{
-  --bg:#E9E7E0;--panel:#DEDBD1;--ink:#1B1B18;--muted:#57544B;--faint:#7A776C;
-  --rule:#CFCCC2;--accent:#A6542E;--accent-lt:#D98A5E;--dark-fg:#E9E7E0;
-  --teal:#A6542E;--gold:#A6542E;--plum:#A6542E;--white:#1B1B18;--text:#1B1B18;
-  --soft:#7A776C;--border:#CFCCC2;--border-light:#BEBAAE;--card:#DEDBD1;--surface:#DEDBD1;
-}
-*{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',system-ui,sans-serif;font-size:16px;-webkit-font-smoothing:antialiased;}
-a{color:inherit;text-decoration:none;}
-::selection{background:var(--accent);color:var(--bg);}
-.wrap{max-width:740px;margin:0 auto;padding:0 32px;}
-.mono{font-family:'IBM Plex Mono',monospace;}
-
-/* NAV */
-nav{position:sticky;top:0;left:0;right:0;z-index:100;border-bottom:1px solid var(--rule);background:rgba(233,231,224,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:0;}
-nav .inner{max-width:740px;margin:0 auto;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;}
-.logo{display:flex;align-items:center;gap:10px;}
-.logo-mark{width:26px;height:26px;flex-shrink:0;}
-.logo-name{font-weight:600;font-size:15px;color:var(--ink);letter-spacing:-.01em;}
-nav .links{display:flex;gap:20px;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:11.5px;}
-nav .links a{color:var(--muted);}
-nav .links a:hover{color:var(--ink);}
-nav .links a.active{color:var(--accent);}
-.lang-switch{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink);border:1px solid var(--rule);padding:3px 9px;}
-.lang-switch:hover{color:var(--accent);border-color:var(--accent);}
-
-/* HEADER */
-.post-header{padding:104px 0 40px;border-bottom:1px solid var(--rule);}
-.back{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);display:inline-flex;align-items:center;gap:6px;margin-bottom:22px;}
-.back:hover{text-decoration:underline;}
-.post-date{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px;}
-.post-header h1{font-weight:500;font-size:clamp(1.9rem,4vw,2.7rem);color:var(--ink);line-height:1.1;margin-bottom:18px;letter-spacing:-.03em;}
-.post-header h1 em{font-style:normal;color:var(--accent);}
-.post-header .excerpt{font-family:'IBM Plex Mono',monospace;color:var(--muted);font-size:13.5px;line-height:1.7;max-width:60ch;}
-.post-tags{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap;}
-.tag{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;padding:3px 10px;border:1px solid var(--rule);color:var(--muted);border-radius:0;font-weight:400;}
-.tag.t,.tag.g,.tag.p{color:var(--accent);border-color:var(--accent);}
-
-/* BODY */
-.post-body{padding:52px 0 64px;}
-.post-body h2{font-weight:600;font-size:1.4rem;color:var(--ink);margin:52px 0 16px;letter-spacing:-.015em;}
-.post-body h2:first-child{margin-top:0;}
-.post-body p{color:var(--muted);font-size:15.5px;line-height:1.85;margin-bottom:18px;max-width:66ch;}
-.post-body p b{color:var(--ink);font-weight:600;}
-.post-body p em{color:var(--accent);font-style:normal;}
-.post-body ul,.post-body ol{color:var(--muted);font-size:15.5px;line-height:1.85;margin:0 0 18px 22px;max-width:66ch;}
-.post-body li{margin-bottom:8px;}
-.post-body li b{color:var(--ink);}
-
-/* PULLQUOTE */
-.pullquote{font-family:'Space Grotesk',sans-serif;font-size:1.35rem;font-weight:500;color:var(--ink);line-height:1.4;border-left:2px solid var(--accent);padding:6px 0 6px 24px;margin:40px 0;max-width:58ch;letter-spacing:-.01em;}
-.pullquote b{color:var(--accent);font-weight:600;}
-
-/* STAT ROW */
-.stat-row{display:flex;gap:1px;background:var(--rule);border:1px solid var(--rule);margin:32px 0;flex-wrap:wrap;}
-.stat-row .stat{flex:1;min-width:120px;background:var(--bg);padding:22px 20px;font-family:'IBM Plex Mono',monospace;}
-.stat-row .stat .v{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.7rem;color:var(--accent);line-height:1;}
-.stat-row .stat .l{font-size:10px;color:var(--faint);text-transform:uppercase;letter-spacing:.05em;margin-top:8px;}
-
-/* PRINCIPLES */
-.principle-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);margin:32px 0;}
-.pcard{background:var(--panel);padding:22px;}
-.pcard .pid{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);font-weight:600;}
-.pcard h4{font-weight:600;font-size:.98rem;color:var(--ink);margin:6px 0 7px;}
-.pcard p{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--faint);line-height:1.65;margin:0;max-width:none;}
-
-/* FORMULA */
-.formula{border:1px solid var(--rule);background:var(--panel);padding:32px 28px;margin:32px 0;text-align:center;}
-.formula .f{font-family:'IBM Plex Mono',monospace;font-size:2rem;color:var(--ink);letter-spacing:.05em;margin-bottom:14px;}
-.formula .f .sym{color:var(--accent);font-weight:600;}
-.formula .f .op{color:var(--faint);margin:0 8px;}
-.formula .desc{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--faint);line-height:1.7;max-width:56ch;margin:0 auto;}
-
-/* CTA */
-.cta-box{border:1px solid var(--rule);background:var(--panel);padding:28px;text-align:center;margin:44px 0;}
-.cta-box p{font-family:'IBM Plex Mono',monospace;color:var(--muted);font-size:12.5px;margin-bottom:18px;max-width:none;}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:400;margin:4px;transition:all .2s;}
-.btn-teal{background:var(--ink);color:var(--dark-fg);}
-.btn-teal:hover{background:var(--accent);}
-.btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--ink);}
-.btn-ghost:hover{background:var(--ink);color:var(--dark-fg);}
-
-/* TABLE */
-.table-wrap{overflow-x:auto;margin:32px 0;border:1px solid var(--rule);}
-table{border-collapse:collapse;width:100%;min-width:500px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;}
-th,td{text-align:left;padding:12px 16px;border-bottom:1px solid var(--rule);}
-thead th{background:var(--panel);color:var(--ink);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;}
-tbody td{color:var(--muted);}
-tbody td b{color:var(--ink);}
-tbody tr:last-child td{border-bottom:none;}
-tr.highlight-row td{background:rgba(166,84,46,.08);color:var(--ink);}
-tr.highlight-row td b{color:var(--accent);}
-
-/* FOOTER */
-footer{padding:28px 0 48px;border-top:1px solid var(--rule);}
-footer p{color:var(--faint);font-family:'IBM Plex Mono',monospace;font-size:11px;}
-footer a{color:var(--accent);}
-
-@media(max-width:600px){
-  .principle-grid{grid-template-columns:1fr;}
-  nav .links a:not(.lang-switch):not(.active){display:none;}
-  .post-header{padding-top:88px;}
-}
-</style>
+<link rel="stylesheet" href="../styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap">
 </head>
 <body>
-
-<nav>
-  <div class="inner">
-    <a href="../en.html" class="logo"><svg class="logo-mark" width="26" height="26" viewBox="6 6 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="28" cy="28" r="18" stroke="#1B1B18" stroke-width="4.5"/><circle cx="41" cy="41" r="9.6" fill="#E9E7E0"/><circle cx="41" cy="41" r="7.4" fill="#1B1B18"/><circle cx="41" cy="41" r="5.4" fill="#A6542E"/></svg><span class="logo-name">QMetrika Labs</span></a>
-    <div class="links"><a href="../en.html">Home</a><a href="en.html">Blog</a><a href="../en.html#contact">Contact</a><a href="energyfingerprint.html" class="lang-switch">ES</a></div>
-  </div>
-</nav>
-
 <div class="wrap">
+  <header class="nav nav--site">
+    <span class="nav-brand"><span class="brand-dot"></span>QMetrika Labs</span>
+    <a href="../en.html">home</a>
+    <a href="./en.html">blog</a>
+    <a href="../en.html#contact">contact</a>
+    <a class="lang" href="energyfingerprint.html">en/es</a>
+  </header>
 
-  <div class="post-header">
-    <a href="en.html" class="back">&larr; Blog</a>
-    <div class="post-date">June 2026</div>
-    <h1>EnergyFingerprint: missense variant classification with <em>thermodynamic profiles</em></h1>
-    <p class="excerpt">Multichannel 1D CNN (~228K parameters) that classifies missense variants as pathogenic or benign by combining mRNA stacking free energy with ESMC-300M evolutionary signal. 42 validated genes, AUC up to 0.994, zero-shot transferability across protein families.</p>
-    <div class="post-tags">
-      <span class="tag p">bio-ia</span>
-      <span class="tag t">paper</span>
-      <span class="tag g">line 1</span>
-    </div>
-  </div>
+  <div class="article">
+    <a class="lang" href="./en.html">← blog</a>
 
-  <div class="post-body">
-
-    <h2>The problem</h2>
-
-    <p>Every human genome contains thousands of missense variants — single nucleotide substitutions that change an amino acid in the protein. Most are benign, but some cause serious disease. Genetic diagnostic laboratories need to classify them quickly and accurately, and existing predictors (CADD, REVEL, AlphaMissense) operate exclusively at the <b>protein</b> level: evolutionary conservation, 3D structure, physicochemical properties of the amino acid.</p>
-
-    <p>None of them looks at what lies beneath: the <b>mRNA</b> that encodes that protein. And the mRNA has its own physics — stacking energy between adjacent nucleotides, secondary structure, local stability — that a mutation can alter even when the amino acid change seems innocuous.</p>
-
-    <h2>The idea: two orthogonal axes</h2>
-
-    <p>EnergyFingerprint combines two signals into a single <b>11-channel × 128-nucleotide</b> tensor per variant:</p>
-
-    <p><b>Biophysical axis (channels 1-4):</b> mRNA stacking thermodynamic profiles computed with nearest-neighbor parameters (SantaLucia 1998, Turner 2004). They capture the <em>Gibbs free energy</em> (ΔG) between adjacent dinucleotides — local context information that simple metrics like GC3 cannot capture.</p>
-
-    <p><b>Evolutionary axis (channels 5-11):</b> ESMC-300M protein language model (EvolutionaryScale, successor to ESM-1v). Masked marginal scoring: the mutated position is masked, and the log-likelihood ratio between the native and mutant amino acid is measured. It captures the evolutionary pressure that has acted on that position for millions of years.</p>
-
-    <div class="pullquote">The key is not that each axis is better than competitors on its own — it is that the two axes are <b>orthogonal</b>. One operates at the nucleotide level, the other at the protein level. Together they see what neither can see alone.</div>
-
-    <h2>Results: 42 validated genes</h2>
-
-    <div class="stat-row">
-      <div class="stat"><div class="v">42</div><div class="l">Genes</div></div>
-      <div class="stat"><div class="v">0.994</div><div class="l">Max AUC (PTEN)</div></div>
-      <div class="stat"><div class="v">~228K</div><div class="l">CNN parameters</div></div>
-      <div class="stat"><div class="v">11</div><div class="l">Channels</div></div>
+    <div class="article-head">
+      <div class="kicker kicker--accent">June 2026</div>
+      <h1 class="article-title">EnergyFingerprint: missense variant classification with <em>thermodynamic profiles</em></h1>
+      <p class="article-lede">Multichannel 1D CNN (~228K parameters) that classifies missense variants as pathogenic or benign by combining mRNA stacking free energy with ESMC-300M evolutionary signal. 42 validated genes, AUC up to 0.994, zero-shot transferability across protein families.</p>
+      <div class="meta-row">
+        <span class="tag tag-accent mono">bio-ia</span>
+        <span class="tag tag-accent mono">paper</span>
+        <span class="tag tag-accent mono">line 1</span>
+      </div>
     </div>
 
-    <div class="table-wrap">
-      <table>
+    <hr class="hr" style="margin:40px 0;">
+
+    <article class="prose">
+      <h2>The problem</h2>
+
+      <p>Every human genome contains thousands of missense variants — single nucleotide substitutions that change an amino acid in the protein. Most are benign, but some cause serious disease. Genetic diagnostic laboratories need to classify them quickly and accurately, and existing predictors (CADD, REVEL, AlphaMissense) operate exclusively at the <strong>protein</strong> level: evolutionary conservation, 3D structure, physicochemical properties of the amino acid.</p>
+
+      <p>None of them looks at what lies beneath: the <strong>mRNA</strong> that encodes that protein. And the mRNA has its own physics — stacking energy between adjacent nucleotides, secondary structure, local stability — that a mutation can alter even when the amino acid change seems innocuous.</p>
+
+      <h2>The idea: two orthogonal axes</h2>
+
+      <p>EnergyFingerprint combines two signals into a single <strong>11-channel × 128-nucleotide</strong> tensor per variant:</p>
+
+      <p><strong>Biophysical axis (channels 1-4):</strong> mRNA stacking thermodynamic profiles computed with nearest-neighbor parameters (SantaLucia 1998, Turner 2004). They capture the <em>Gibbs free energy</em> (ΔG) between adjacent dinucleotides — local context information that simple metrics like GC3 cannot capture.</p>
+
+      <p><strong>Evolutionary axis (channels 5-11):</strong> ESMC-300M protein language model (EvolutionaryScale, successor to ESM-1v). Masked marginal scoring: the mutated position is masked, and the log-likelihood ratio between the native and mutant amino acid is measured. It captures the evolutionary pressure that has acted on that position for millions of years.</p>
+
+      <blockquote style="border-left:3px solid var(--color-accent);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">The key is not that each axis is better than competitors on its own — it is that the two axes are <strong>orthogonal</strong>. One operates at the nucleotide level, the other at the protein level. Together they see what neither can see alone.</blockquote>
+
+      <h2>Results: 42 validated genes</h2>
+
+      <div class="statcards-2">
+        <div class="statcard statcard--accent"><div class="v t-accent">42</div><div class="l l-accent">Genes</div></div>
+        <div class="statcard statcard--accent"><div class="v t-accent">0.994</div><div class="l l-accent">Max AUC (PTEN)</div></div>
+        <div class="statcard statcard--accent"><div class="v t-accent">~228K</div><div class="l l-accent">CNN parameters</div></div>
+        <div class="statcard statcard--accent"><div class="v t-accent">11</div><div class="l l-accent">Channels</div></div>
+      </div>
+
+      <table class="table">
         <thead><tr><th>Gene</th><th>Type</th><th>Intra-gene AUC</th><th>Zero-shot AUC</th></tr></thead>
         <tbody>
-          <tr><td><b>BRCA1</b></td><td>Cancer (breast/ovarian)</td><td><b>0.943</b></td><td>— (training gene)</td></tr>
-          <tr><td><b>TP53</b></td><td>Cancer (tumor suppressor)</td><td><b>0.907</b></td><td>0.854</td></tr>
-          <tr><td><b>PTEN</b></td><td>Cancer (tumor suppressor)</td><td><b>0.994</b></td><td>0.975</td></tr>
-          <tr><td><b>PALB2</b></td><td>Cancer (DNA repair)</td><td><b>0.950</b></td><td>0.954</td></tr>
-          <tr><td><b>CFTR</b></td><td>Cystic fibrosis (ABC channel)</td><td><b>0.979</b></td><td>0.777</td></tr>
-          <tr><td><b>HBB</b></td><td>Sickle cell disease (globin)</td><td><b>0.721</b></td><td>0.707</td></tr>
-          <tr><td><b>MECP2</b></td><td>Rett syndrome (IDR)</td><td><b>0.911</b></td><td>0.430</td></tr>
-          <tr><td><b>SCN1A</b></td><td>Epilepsy (TM ion channel)</td><td><b>0.913</b></td><td>0.637</td></tr>
+          <tr><td><strong>BRCA1</strong></td><td>Cancer (breast/ovarian)</td><td><strong>0.943</strong></td><td>— (training gene)</td></tr>
+          <tr><td><strong>TP53</strong></td><td>Cancer (tumor suppressor)</td><td><strong>0.907</strong></td><td>0.854</td></tr>
+          <tr><td><strong>PTEN</strong></td><td>Cancer (tumor suppressor)</td><td><strong>0.994</strong></td><td>0.975</td></tr>
+          <tr><td><strong>PALB2</strong></td><td>Cancer (DNA repair)</td><td><strong>0.950</strong></td><td>0.954</td></tr>
+          <tr><td><strong>CFTR</strong></td><td>Cystic fibrosis (ABC channel)</td><td><strong>0.979</strong></td><td>0.777</td></tr>
+          <tr><td><strong>HBB</strong></td><td>Sickle cell disease (globin)</td><td><strong>0.721</strong></td><td>0.707</td></tr>
+          <tr><td><strong>MECP2</strong></td><td>Rett syndrome (IDR)</td><td><strong>0.911</strong></td><td>0.430</td></tr>
+          <tr><td><strong>SCN1A</strong></td><td>Epilepsy (TM ion channel)</td><td><strong>0.913</strong></td><td>0.637</td></tr>
         </tbody>
       </table>
+
+      <p><strong>July 2026 update:</strong> The panel has expanded from 8 to <strong>42 genes</strong> (12 trainable + 30 zero-shot only), with a mean zero-shot AUC of 0.876 across 41 evaluable genes. The evolutionary model has been migrated from ESM-1v to ESMC-300M (CNN AUC 0.961 on BRCA1). Full results in the <a href="https://doi.org/10.5281/zenodo.21309529">TECH-2 technical report</a>.</p>
+
+      <h2>The transferability gradient</h2>
+
+      <p>The most revealing finding is not the absolute AUCs, but the pattern that emerges when training on BRCA1 and predicting on the remaining genes <strong>without retraining</strong> (zero-shot):</p>
+
+      <p><strong>Cancer ~0.9 > ABC channel ~0.78 > Globin ~0.71 > TM membrane ~0.64 > IDR ~0.43</strong></p>
+
+      <p>This gradient is not noise — it reflects the <strong>thermodynamic grammar</strong> of each protein family. Globular proteins (BRCA1, TP53, PTEN) have informative ΔG profiles because the selective pressure on mRNA stability is strong. Proteins with intrinsically disordered regions (MECP2) have flat ΔG profiles — the thermodynamic signal is weak because there is no selective pressure on the mRNA physics.</p>
+
+      <p>This connects directly to the E1 hypothesis in the roadmap: the transferability gradient could be a <strong>functional protein classifier</strong> based exclusively on mRNA physics.</p>
+
+      <h2>Technical architecture</h2>
+
+      <p>The CNN is deliberately small (~228K parameters) to avoid overfitting on genetic datasets where samples are scarce. It uses <strong>CrossEntropyLoss</strong> with 2 outputs (not BCEWithLogitsLoss with 1), class weights <strong>[1.0, n_neg/n_pos]</strong> for imbalanced datasets, and GradCAM1D for explainability — the model indicates which mRNA regions contributed to its prediction.</p>
+
+      <p>The shared engine (<em>energy.py</em>) computes the nearest-neighbor ΔG profiles. For proteins longer than 1022 amino acids, ESMC-300M requires windowing.</p>
+
+      <h2>Competitors and differentiation</h2>
+
+      <p><strong>CADD</strong> integrates multiple genomic annotations into a single score. <strong>REVEL</strong> ensembles 13 predictors. <strong>AlphaMissense</strong> uses AlphaFold2 representations. All operate at the protein level.</p>
+
+      <p>EnergyFingerprint is the first to combine mRNA thermodynamic signal with evolutionary signal from a protein language model. The orthogonality of the axes suggests that the information it contributes is <strong>complementary</strong>, not redundant — and that opens the door to ensembles where EF adds value to any existing predictor.</p>
+    </article>
+
+    <div class="cta">
+      <div>
+        <h3>Preprint with all results, figures and supplementary data.</h3>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-primary btn--mono" href="https://doi.org/10.5281/zenodo.19831154" target="_blank">Zenodo · DOI 10.5281/zenodo.19831154</a>
+        <a class="btn btn-secondary btn--mono" href="https://github.com/josevilar-qbioai/energyfingerprint" target="_blank">GitHub</a>
+      </div>
     </div>
-
-    <p><b>July 2026 update:</b> The panel has expanded from 8 to <b>42 genes</b> (12 trainable + 30 zero-shot only), with a mean zero-shot AUC of 0.876 across 41 evaluable genes. The evolutionary model has been migrated from ESM-1v to ESMC-300M (CNN AUC 0.961 on BRCA1). Full results in the <a class="tlink" href="https://doi.org/10.5281/zenodo.21309529">TECH-2 technical report</a>.</p>
-
-    <h2>The transferability gradient</h2>
-
-    <p>The most revealing finding is not the absolute AUCs, but the pattern that emerges when training on BRCA1 and predicting on the remaining genes <b>without retraining</b> (zero-shot):</p>
-
-    <p><b>Cancer ~0.9 > ABC channel ~0.78 > Globin ~0.71 > TM membrane ~0.64 > IDR ~0.43</b></p>
-
-    <p>This gradient is not noise — it reflects the <b>thermodynamic grammar</b> of each protein family. Globular proteins (BRCA1, TP53, PTEN) have informative ΔG profiles because the selective pressure on mRNA stability is strong. Proteins with intrinsically disordered regions (MECP2) have flat ΔG profiles — the thermodynamic signal is weak because there is no selective pressure on the mRNA physics.</p>
-
-    <p>This connects directly to the E1 hypothesis in the roadmap: the transferability gradient could be a <b>functional protein classifier</b> based exclusively on mRNA physics.</p>
-
-    <h2>Technical architecture</h2>
-
-    <p>The CNN is deliberately small (~228K parameters) to avoid overfitting on genetic datasets where samples are scarce. It uses <b>CrossEntropyLoss</b> with 2 outputs (not BCEWithLogitsLoss with 1), class weights <b>[1.0, n_neg/n_pos]</b> for imbalanced datasets, and GradCAM1D for explainability — the model indicates which mRNA regions contributed to its prediction.</p>
-
-    <p>The shared engine (<em>energy.py</em>) computes the nearest-neighbor ΔG profiles. For proteins longer than 1022 amino acids, ESMC-300M requires windowing.</p>
-
-    <h2>Competitors and differentiation</h2>
-
-    <p><b>CADD</b> integrates multiple genomic annotations into a single score. <b>REVEL</b> ensembles 13 predictors. <b>AlphaMissense</b> uses AlphaFold2 representations. All operate at the protein level.</p>
-
-    <p>EnergyFingerprint is the first to combine mRNA thermodynamic signal with evolutionary signal from a protein language model. The orthogonality of the axes suggests that the information it contributes is <b>complementary</b>, not redundant — and that opens the door to ensembles where EF adds value to any existing predictor.</p>
-
-    <div class="cta-box">
-      <p>Preprint with all results, figures and supplementary data.</p>
-      <a href="https://doi.org/10.5281/zenodo.19831154" target="_blank" class="btn btn-teal">Zenodo · DOI 10.5281/zenodo.19831154</a>
-      <a href="https://github.com/josevilar-qbioai/energyfingerprint" target="_blank" class="btn btn-ghost">GitHub</a>
-    </div>
-
   </div>
 
-  <footer>
-    <p><a href="en.html">&larr; Back to blog</a> · <a href="../en.html">QMetrika Labs</a> · 2026</p>
+  <footer class="site-footer article-footer">
+    <a href="./en.html">← back to blog</a>
+    <a href="../en.html">qmetrika_labs</a>
+    <span class="push">2026</span>
   </footer>
-
 </div>
 </body>
 </html>

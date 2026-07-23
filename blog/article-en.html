@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The interruption that breaks the pattern — QMetrika Labs Blog</title>
+<meta name="description" content="energoRNA extends QMetrika's thermodynamic engine from point variants to structural RNA: the local loss of stacking periodicity predicts age of onset in repeat-expansion diseases (DM1, Huntington, SCA1, Fragile X) better than counting repeats. Glass-box, pip install energorna.">
+<link rel="stylesheet" href="../styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap">
+</head>
+<body>
+<div class="wrap">
+  <header class="nav nav--site">
+    <span class="nav-brand"><span class="brand-dot"></span>QMetrika Labs</span>
+    <a href="../en.html">home</a>
+    <a href="./en.html">blog</a>
+    <a href="../en.html#contact">contact</a>
+    <a class="lang" href="article.html">en/es</a>
+  </header>
+
+  <div class="article">
+    <a class="lang" href="./en.html">← blog</a>
+
+    <div class="article-head">
+      <div class="kicker kicker--accent">July 2026</div>
+      <h1 class="article-title">The interruption that <em>breaks the pattern</em></h1>
+      <p class="article-lede">In repeat-expansion diseases, age of onset is set not only by how many repeats there are, but by whether the tract is interrupted. energoRNA measures this with a single physical observable — the loss of stacking periodicity — that predicts onset better than counting. Glass-box, <span class="ic">pip install energorna</span>.</p>
+      <div class="meta-row">
+        <span class="tag tag-accent mono">bio-ai</span>
+        <span class="tag tag-accent mono">glass-box</span>
+        <span class="tag tag-accent mono">structural RNA</span>
+      </div>
+    </div>
+
+    <hr class="hr" style="margin:40px 0;">
+
+    <article class="prose">
+      <h2>From the point variant to structural RNA</h2>
+      <p>QMetrika's thermodynamic engine was born for point variants: the nearest-neighbor stacking energy profile of the mRNA. There we showed that the synonymous pathogenicity signal lives in <em>local</em> stacking, not in secondary structure. That distinction is exactly the hinge toward repeat-expansion diseases: in a point variant, perturbing the global structure is noise; in an <strong>expansion</strong>, the periodic structure of the repeat <em>is</em> the relevant entity. The same local physics, in a new regime.</p>
+
+      <h2>Counting repeats isn't enough</h2>
+      <p>Myotonic dystrophy (DM1), Huntington's and the ataxia SCA1 share one clinical fact: age of onset correlates with repeat length, but weakly. The real modifier is <strong>interruptions</strong> — variant units embedded in the tract (CCG in DM1's CTG, the CAA in Huntington's CAG, CAT in SCA1). They reduce somatic instability and <strong>delay onset</strong>. The problem: the clinical observable is still a scalar, a count, blind to the pattern.</p>
+
+      <h2>The observable: loss of periodicity</h2>
+      <p>A pure repeat produces a <strong>periodic</strong> stacking profile. An interruption breaks that pattern locally. energoRNA quantifies it with a single number — the loss of autocorrelation (at the motif's period) of the Turner profile:</p>
+      <pre class="code"><span class="comment"># periodicity_loss = 1 − ACF_period(Φ)</span>
+pip install energorna
+energorna score --repeat CTG --n 40</pre>
+      <p>It auto-calibrates the period per motif (3 for trinucleotides, 4 for DM2's CCTG tetranucleotide) and, unlike counting, it is sensitive to the <strong>type</strong> of interruption (CCG destabilizes the pattern far more than CTC) and to its <strong>position</strong> in the tract.</p>
+
+      <h2>It beats counting, across four diseases</h2>
+      <p>In DM1, the loss of periodicity predicts the onset residual far better than counting interruptions:</p>
+      <div class="statcards-2">
+        <div class="statcard statcard--accent"><div class="v t-accent">+0.81</div><div class="l l-accent">periodicity vs onset (DM1)</div></div>
+        <div class="statcard statcard--muted"><div class="v t-muted">+0.53</div><div class="l l-muted">interruption count</div></div>
+      </div>
+      <p>In <strong>Huntington's</strong>, the three canonical architectures rank by loss of periodicity exactly as by their published onset. In <strong>SCA1</strong>, with real, open, individual data (Menon 2013, n=35), the uninterrupted stretch — the observable's axis — predicts onset far above total size. And in <strong>Fragile X</strong> the same observable ranks the AGG architectures by their published <strong>expansion risk</strong> — a new motif, a new interruption and a new endpoint:</p>
+      <div class="statcards-3">
+        <div class="statcard statcard--sage"><div class="v t-sage">0.64</div><div class="l l-sage">R² uninterrupted stretch (SCA1)</div></div>
+        <div class="statcard statcard--muted"><div class="v t-muted">0.24</div><div class="l l-muted">R² total size</div></div>
+        <div class="statcard statcard--sage"><div class="v t-sage">n=35</div><div class="l l-sage">reproduces a peer-reviewed paper</div></div>
+      </div>
+      <p>It's not how many repeats there are, it's the <strong>break in the periodic pattern</strong> of the energy field. The same physical observable, in DM1, Huntington's, SCA1 and Fragile X.</p>
+
+      <h2>Isn't this just re-deriving the clinical metric?</h2>
+      <p>The obvious critique: in SCA1/HD/Fragile X the established predictor is already the <strong>longest uninterrupted stretch</strong>. The answer, quantified: the loss of periodicity <strong>contains</strong> that axis but <strong>adds two dimensions a length scalar cannot represent</strong> — the <strong>type</strong> of interruption (at equal uninterrupted stretch, CCG/CTC/GGC give values 0.02–0.26) and its <strong>position</strong> (an identical block at 5' vs 3' gives the same stretch, but the 3'-weighted observable separates them 15×). And in real DM1, over the onset residual that length does not explain, the clinical scalar gives <strong>r=+0.09</strong> while type (+0.81) and position (+0.84) capture it: energoRNA does not compete with length, it captures the <strong>interruption modifier</strong> that length is blind to.</p>
+
+      <h2>Correlate, not cause — and ready to use</h2>
+      <p>The loss of periodicity is a <strong>biologically motivated correlate</strong> — the periodicity of stacking is a proxy for the contiguous slipped-strand substrate on which the repair machinery (MMR) drives somatic expansion — not a demonstrated cause. It generates falsifiable predictions (correlation with measured somatic instability, UV melting, MSH3 binding). And because it's a physical scalar with no deep network, it's <strong>ready to use</strong>: numpy-only, no GPU, auditable.</p>
+    </article>
+
+    <div class="cta">
+      <div>
+        <h3>Install it or read it in the open</h3>
+        <p>numpy-only, no GPU, glass-box.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-primary btn--mono" href="https://pypi.org/project/energorna/">PyPI</a>
+        <a class="btn btn-secondary btn--mono" href="https://github.com/josevilar-qbioai/energorna">GitHub</a>
+      </div>
+    </div>
+
+    <div class="note">
+      <p><strong style="color:var(--color-text);">Caution:</strong> the powered validation is in SCA1 (n=35); DM1 (n=7) is suggestive but of limited power, and Huntington's is validated via published effect directions. A better predictor than counting on the available data, biologically motivated — not a clinical verdict.</p>
+    </div>
+  </div>
+
+  <footer class="site-footer article-footer">
+    <a href="./en.html">← back to blog</a>
+    <a href="../en.html">qmetrika_labs</a>
+    <span class="push">2026</span>
+  </footer>
+</div>
+</body>
+</html>

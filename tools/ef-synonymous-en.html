@@ -9,11 +9,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    /* Paleta de marca QMetrika — modo oscuro (instrumento) */
-    --navy:#F0EDE4; --teal:#C2673B; --teal-dark:#A6542E; --mint:#2A2823;
-    --ink:#E9E6DD; --muted:#948F84; --line:#34322B; --bg:#171614; --card:#201F1B;
-    --amber:#D9AE63; --amber-bg:#2C2718; --red:#D9584B; --green:#58A97E; --gold:#C2673B;
-    --faint:#6C6960; --accent-lt:#E0946A; --field:#1A1915;
+    /* QMetrika brand palette — light mode (instrument · Organic system) */
+    --navy:#201e1d; --teal:#c67139; --teal-dark:#a6542e; --mint:#ebddc5;
+    --ink:#201e1d; --muted:#645c50; --line:#d9d2c4; --bg:#f5ead8; --card:#fbf7f0;
+    --amber:#8a5a12; --amber-bg:#f7efd8; --red:#b2402e; --green:#3d6b4a; --gold:#c67139;
+    --faint:#82796a; --accent-lt:#b2622d; --field:#fbf7f0;
   }
   *{box-sizing:border-box;}
   body{margin:0;background:var(--bg);color:var(--ink);
@@ -21,7 +21,7 @@
     line-height:1.55;font-size:15px;}
   .wrap{max-width:900px;margin:0 auto;padding:0 20px 70px;}
   nav.qm{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
-    padding:15px 24px;background:rgba(23,22,20,.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    padding:15px 24px;background:rgba(245,234,216,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
     border-bottom:1px solid var(--line);}
   nav.qm .brand{display:flex;align-items:center;}
   nav.qm .brand img{height:25px;width:auto;display:block;}
@@ -30,12 +30,12 @@
   nav.qm a:hover{color:var(--ink);}
   nav.qm .lang{color:var(--ink);}
   nav.qm .back{color:var(--accent-lt);}
-  header.hero{background:linear-gradient(180deg,#25231D 0%,var(--bg) 100%);
-    color:#F5F3EC;padding:34px 24px 28px;border-bottom:1px solid var(--line);}
+  header.hero{background:linear-gradient(180deg,#ebddc5 0%,var(--bg) 100%);
+    color:var(--ink);padding:34px 24px 28px;border-bottom:1px solid var(--line);}
   header .inner{max-width:900px;margin:0 auto;}
   .kicker{font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.14em;font-size:11px;font-weight:500;color:var(--accent-lt);margin:0 0 8px;}
-  header h1{margin:0 0 6px;font-size:26px;font-weight:800;color:#F5F3EC;}
-  header p{margin:0;font-size:14px;color:#B7B2A6;}
+  header h1{margin:0 0 6px;font-size:26px;font-weight:800;color:var(--ink);}
+  header p{margin:0;font-size:14px;color:var(--muted);}
   .ribbon{background:var(--amber-bg);border-bottom:1px solid var(--line);color:var(--amber);
     font-size:12.5px;padding:8px 20px;text-align:center;}
   .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
@@ -56,21 +56,21 @@
   .scorebar{display:flex;align-items:center;gap:16px;margin:6px 0 4px;}
   .gauge{flex:1;height:16px;border-radius:10px;position:relative;
     background:linear-gradient(90deg,#3aa06b 0%,#e6c34a 50%,#d9584b 100%);}
-  .gauge .mark{position:absolute;top:-5px;width:3px;height:26px;background:#F0EDE4;border-radius:2px;transform:translateX(-50%);box-shadow:0 0 0 1px rgba(0,0,0,.4);}
-  .gauge .gray{position:absolute;top:0;height:100%;background:rgba(23,22,20,.55);}
+  .gauge .mark{position:absolute;top:-5px;width:3px;height:26px;background:#201e1d;border-radius:2px;transform:translateX(-50%);box-shadow:0 0 0 1px rgba(255,255,255,.6);}
+  .gauge .gray{position:absolute;top:0;height:100%;background:rgba(245,234,216,.72);}
   .bignum{font-size:34px;font-weight:800;color:var(--navy);min-width:96px;text-align:right;}
   .verdict-badge{display:inline-block;font-size:13px;font-weight:700;padding:5px 14px;border-radius:20px;color:#fff;}
   .b-path{background:var(--red);} .b-ben{background:var(--green);} .b-ind{background:var(--muted);}
   table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13.5px;}
   th,td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--line);}
   th{background:var(--mint);color:var(--navy);}
-  .contrib-bar{height:9px;border-radius:5px;background:#2E2C26;overflow:hidden;position:relative;min-width:90px;}
+  .contrib-bar{height:9px;border-radius:5px;background:#e5ddcf;overflow:hidden;position:relative;min-width:90px;}
   .contrib-bar>span{position:absolute;top:0;height:100%;}
   .pos{background:var(--red);} .neg{background:var(--green);}
-  code{background:#2A2823;padding:1px 5px;border-radius:4px;font-family:'IBM Plex Mono',"SF Mono",Menlo,monospace;font-size:12.5px;color:var(--accent-lt);}
+  code{background:#fff2eb;padding:1px 5px;border-radius:4px;font-family:'IBM Plex Mono',"SF Mono",Menlo,monospace;font-size:12.5px;color:var(--accent-lt);}
   .flag{font-size:13px;padding:8px 12px;border-radius:8px;margin:8px 0;}
-  .flag.ok{background:#1B2A22;color:#7FCFA0;} .flag.warn{background:var(--amber-bg);color:var(--amber);}
-  .flag.err{background:#2C1B19;color:#E8968A;}
+  .flag.ok{background:#eaf3ec;color:#2f6b4a;} .flag.warn{background:var(--amber-bg);color:var(--amber);}
+  .flag.err{background:#fdecea;color:#a6392b;}
   svg.chart{width:100%;height:180px;background:var(--field);border:1px solid var(--line);border-radius:8px;}
   .legend{font-size:12px;color:var(--muted);margin-top:4px;}
   .legend span{display:inline-block;margin-right:14px;}
@@ -81,7 +81,7 @@
 </head>
 <body>
 <nav class="qm">
-  <a href="../en.html" class="brand"><img src="../assets/logo-qmetrika-negativo.svg" alt="QMetrika Labs"></a>
+  <a href="../en.html" class="brand"><img src="../assets/logo-qmetrika.svg" alt="QMetrika Labs"></a>
   <div class="links">
     <a href="../en.html" class="back">← qmetrika.xyz</a>
     <a href="ef-synonymous.html" class="lang">es<span style="color:var(--accent-lt)">/</span>en</a>
@@ -138,7 +138,7 @@
     <h2 style="margin-top:22px;">ΔG stacking profile (Turner) around the variant</h2>
     <svg class="chart" id="chart" viewBox="0 0 700 180" preserveAspectRatio="none"></svg>
     <div class="legend">
-      <span><span class="sw" style="background:#E9E6DD"></span>Φ native (WT)</span>
+      <span><span class="sw" style="background:#645c50"></span>Φ native (WT)</span>
       <span><span class="sw" style="background:#C2673B"></span>Φ mutant</span>
       <span><span class="sw" style="background:#C2673B;height:9px;width:9px;border-radius:2px;opacity:.3"></span>±10 nt window (σ)</span>
       <span>vertical line = variant position</span>
@@ -306,8 +306,8 @@ function drawChart(sg){
   const bx1=X(Math.max(lo,sg.lo)), bx2=X(Math.min(hi-1,sg.hi-1));
   let svg='';
   svg+='<rect x="'+bx1.toFixed(1)+'" y="'+padY+'" width="'+(bx2-bx1).toFixed(1)+'" height="'+(H-2*padY)+'" fill="#C2673B" opacity="0.16"/>';
-  svg+='<line x1="'+X(c).toFixed(1)+'" y1="6" x2="'+X(c).toFixed(1)+'" y2="'+(H-6)+'" stroke="#D9584B" stroke-width="1.5" stroke-dasharray="3 3"/>';
-  svg+='<path d="'+path(sg.fw)+'" fill="none" stroke="#E9E6DD" stroke-width="2"/>';
+  svg+='<line x1="'+X(c).toFixed(1)+'" y1="6" x2="'+X(c).toFixed(1)+'" y2="'+(H-6)+'" stroke="#b2402e" stroke-width="1.5" stroke-dasharray="3 3"/>';
+  svg+='<path d="'+path(sg.fw)+'" fill="none" stroke="#645c50" stroke-width="2"/>';
   svg+='<path d="'+path(sg.fm)+'" fill="none" stroke="#C2673B" stroke-width="2"/>';
   document.getElementById('chart').innerHTML=svg;
 }

@@ -1,139 +1,88 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Agent Canvas Model: diseñar el agente antes de programarlo — QMetrika Labs Blog</title>
 <meta name="description" content="Una adaptación del Business Model Canvas a nueve bloques para diseñar agentes de IA antes de escribir código: segmento, autonomía, KPIs, integraciones, costes y riesgos. Línea colateral del laboratorio QMetrika.">
-<link rel="preconnect" href="https://fonts.googleapis.com/">
-<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
-<style>
-:root{
-  --bg:#E9E7E0;--panel:#DEDBD1;--ink:#1B1B18;--muted:#57544B;--faint:#7A776C;
-  --rule:#CFCCC2;--accent:#A6542E;--accent-lt:#D98A5E;--dark-fg:#E9E7E0;
-}
-*{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',system-ui,sans-serif;font-size:16px;-webkit-font-smoothing:antialiased;}
-a{color:inherit;text-decoration:none;}
-::selection{background:var(--accent);color:var(--bg);}
-.wrap{max-width:740px;margin:0 auto;padding:0 32px;}
-.mono{font-family:'IBM Plex Mono',monospace;}
-nav{position:sticky;top:0;left:0;right:0;z-index:100;border-bottom:1px solid var(--rule);background:rgba(233,231,224,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
-nav .inner{max-width:740px;margin:0 auto;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;}
-.logo{display:flex;align-items:center;gap:10px;}
-.logo-mark{width:26px;height:26px;flex-shrink:0;}
-.logo-name{font-weight:600;font-size:15px;color:var(--ink);letter-spacing:-.01em;}
-nav .links{display:flex;gap:20px;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:11.5px;}
-nav .links a{color:var(--muted);}
-nav .links a:hover{color:var(--ink);}
-.lang-switch{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink);border:1px solid var(--rule);padding:3px 9px;}
-.lang-switch:hover{color:var(--accent);border-color:var(--accent);}
-.post-header{padding:104px 0 40px;border-bottom:1px solid var(--rule);}
-.back{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);display:inline-flex;align-items:center;gap:6px;margin-bottom:22px;}
-.back:hover{text-decoration:underline;}
-.post-date{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px;}
-.post-header h1{font-weight:500;font-size:clamp(1.9rem,4vw,2.7rem);color:var(--ink);line-height:1.1;margin-bottom:18px;letter-spacing:-.03em;}
-.post-header h1 em{font-style:normal;color:var(--accent);}
-.post-header .excerpt{font-family:'IBM Plex Mono',monospace;color:var(--muted);font-size:13.5px;line-height:1.7;max-width:60ch;}
-.post-tags{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap;}
-.tag{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;padding:3px 10px;border:1px solid var(--rule);color:var(--muted);}
-.tag.a{color:var(--accent);border-color:var(--accent);}
-.callout{border:1px solid var(--rule);background:var(--panel);padding:18px 22px;margin:30px 0;font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.7;color:var(--muted);}
-.callout b{color:var(--ink);}
-.post-body{padding:52px 0 64px;}
-.post-body h2{font-weight:600;font-size:1.4rem;color:var(--ink);margin:52px 0 16px;letter-spacing:-.015em;}
-.post-body h2:first-child{margin-top:0;}
-.post-body p{color:var(--muted);font-size:15.5px;line-height:1.85;margin-bottom:18px;max-width:66ch;}
-.post-body p b{color:var(--ink);font-weight:600;}
-.post-body p em{color:var(--accent);font-style:normal;}
-.canvas-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);margin:32px 0;}
-.ccard{background:var(--panel);padding:18px 20px;}
-.ccard .cid{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);font-weight:600;}
-.ccard h4{font-weight:600;font-size:.98rem;color:var(--ink);margin:5px 0 6px;}
-.ccard p{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--faint);line-height:1.6;margin:0;max-width:none;}
-.pullquote{font-family:'Space Grotesk',sans-serif;font-size:1.35rem;font-weight:500;color:var(--ink);line-height:1.4;border-left:2px solid var(--accent);padding:6px 0 6px 24px;margin:40px 0;max-width:58ch;letter-spacing:-.01em;}
-.pullquote b{color:var(--accent);font-weight:600;}
-.cta-box{border:1px solid var(--rule);background:var(--panel);padding:28px;text-align:center;margin:44px 0;}
-.cta-box p{font-family:'IBM Plex Mono',monospace;color:var(--muted);font-size:12.5px;margin-bottom:18px;max-width:none;}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;margin:4px;transition:all .2s;}
-.btn-teal{background:var(--ink);color:var(--dark-fg);}
-.btn-teal:hover{background:var(--accent);}
-.btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--ink);}
-.btn-ghost:hover{background:var(--ink);color:var(--dark-fg);}
-footer{padding:28px 0 48px;border-top:1px solid var(--rule);}
-footer p{color:var(--faint);font-family:'IBM Plex Mono',monospace;font-size:11px;}
-footer a{color:var(--accent);}
-@media(max-width:600px){.canvas-grid{grid-template-columns:1fr;}nav .links a:not(.lang-switch){display:none;}.post-header{padding-top:88px;}}
-</style>
+<link rel="stylesheet" href="../styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap">
 </head>
 <body>
-
-<nav>
-  <div class="inner">
-    <a href="../" class="logo"><svg class="logo-mark" width="26" height="26" viewBox="6 6 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="28" cy="28" r="18" stroke="#1B1B18" stroke-width="4.5"/><circle cx="41" cy="41" r="9.6" fill="#E9E7E0"/><circle cx="41" cy="41" r="7.4" fill="#1B1B18"/><circle cx="41" cy="41" r="5.4" fill="#A6542E"/></svg><span class="logo-name">QMetrika Labs</span></a>
-    <div class="links"><a href="../">Home</a><a href="./">Blog</a><a href="../#contacto">Contacto</a><a href="agent-canvas-model-en.html" class="lang-switch">EN</a></div>
-  </div>
-</nav>
-
 <div class="wrap">
+  <header class="nav nav--site">
+    <span class="nav-brand"><span class="brand-dot"></span>QMetrika Labs</span>
+    <a href="../index.html">home</a>
+    <a href="./index.html">blog</a>
+    <a href="../index.html#contacto">contacto</a>
+    <a class="lang" href="agent-canvas-model-en.html">es/en</a>
+  </header>
 
-  <div class="post-header">
-    <a href="./" class="back">&larr; Blog</a>
-    <div class="post-date">Julio 2026 · línea colateral</div>
-    <h1>Agent Canvas Model: <em>diseñar el agente</em> antes de programarlo</h1>
-    <p class="excerpt">Una adaptación del Business Model Canvas a nueve bloques para forzar las decisiones caras —segmento, autonomía, KPIs, integraciones, costes, riesgos— antes de escribir una sola línea de código del agente.</p>
-    <div class="post-tags">
-      <span class="tag a">colateral</span>
-      <span class="tag">agent-canvas</span>
-      <span class="tag">diseño</span>
+  <div class="article">
+    <a class="lang" href="./index.html">← blog</a>
+
+    <div class="article-head">
+      <div class="kicker kicker--sage">Julio 2026 · línea colateral</div>
+      <h1 class="article-title">Agent Canvas Model: <em>diseñar el agente</em> antes de programarlo</h1>
+      <p class="article-lede">Una adaptación del Business Model Canvas a nueve bloques para forzar las decisiones caras —segmento, autonomía, KPIs, integraciones, costes, riesgos— antes de escribir una sola línea de código del agente.</p>
+      <div class="meta-row">
+        <span class="tag tag-accent-2 mono">colateral</span>
+        <span class="tag tag-accent-2 mono">agent-canvas</span>
+        <span class="tag tag-accent-2 mono">diseño</span>
+      </div>
+    </div>
+
+    <hr class="hr" style="margin:40px 0;">
+
+    <div class="note">
+      <p><strong style="color:var(--color-text);">Nota:</strong> Agent Canvas Model es una <strong style="color:var(--color-text);">línea colateral</strong> de QMetrika Labs. El core es la biocomputación. Este framework es una herramienta de laboratorio para no quemar tokens en agentes mal planificados — la contamos aquí como pieza reutilizable.</p>
+    </div>
+
+    <article class="prose">
+      <h2>El problema: agentes que se programan sin pensarse</h2>
+
+      <p>Es fácil abrir un editor y empezar a encadenar llamadas a un LLM. Es mucho más difícil parar antes y contestar las preguntas que de verdad determinan si el agente va a funcionar y cuánto va a costar: ¿para quién es? ¿qué grado de autonomía tiene? ¿cómo sabrás si acierta? ¿con qué se integra? ¿qué pasa cuando se equivoca? Saltarse esas preguntas es la vía rápida a <strong>quemar tokens</strong> en un agente que nadie usa.</p>
+
+      <blockquote style="border-left:3px solid var(--color-accent-2);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">Igual que el Business Model Canvas obliga a pensar un negocio en una hoja antes de montarlo, el <strong style="color:var(--color-accent-2-700);">Agent Canvas</strong> obliga a diseñar el agente antes de programarlo.</blockquote>
+
+      <h2>Los nueve bloques</h2>
+
+      <ul>
+        <li><strong>01 · Segmento / usuario</strong> — para quién trabaja el agente y qué trabajo le quita de encima</li>
+        <li><strong>02 · Propuesta de valor</strong> — qué hace mejor, más barato o más rápido que la alternativa</li>
+        <li><strong>03 · Autonomía</strong> — dónde decide solo y dónde se detiene a pedir aprobación humana</li>
+        <li><strong>04 · Tono / persona</strong> — cómo se comunica y qué registro usa con el usuario</li>
+        <li><strong>05 · KPIs</strong> — qué se mide para saber si acierta; cómo se evalúa</li>
+        <li><strong>06 · Integraciones</strong> — qué herramientas, APIs y fuentes de datos necesita</li>
+        <li><strong>07 · Modelos</strong> — qué LLM por tarea: frontera, especializado o local</li>
+        <li><strong>08 · Costes</strong> — presupuesto de tokens, coste por tarea, ratio alquilado/propio</li>
+        <li><strong>09 · Riesgos</strong> — qué puede salir mal, y qué barreras y gates lo contienen</li>
+      </ul>
+
+      <h2>Por qué importa antes de programar</h2>
+
+      <p>Cada bloque que dejas en blanco es una decisión que tomarás igualmente —pero por defecto, a mitad del desarrollo, y normalmente mal. Rellenar el canvas primero convierte esas decisiones implícitas en explícitas: el bloque de <strong>autonomía</strong> te dice dónde poner los gates humanos, el de <strong>modelos</strong> y <strong>costes</strong> te evita usar un modelo frontera para tareas que un modelo local haría gratis, y el de <strong>riesgos</strong> te obliga a diseñar las barreras antes de necesitarlas.</p>
+
+      <p>Es el paso previo natural a llevar el agente a un tablero gobernado como <a href="agent-board.html">Agent Board</a>: primero diseñas el agente en el canvas, luego lo gobiernas en producción.</p>
+    </article>
+
+    <div class="cta">
+      <div>
+        <h3>Demo interactiva del canvas para diseñar tu propio agente.</h3>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-primary btn--mono" href="https://josevilar-qbioai.github.io/agent-canvas-model/" target="_blank">Demo interactiva</a>
+        <a class="btn btn-secondary btn--mono" href="https://github.com/josevilar-qbioai/agent-canvas-model" target="_blank">GitHub</a>
+      </div>
     </div>
   </div>
 
-  <div class="post-body">
-
-    <div class="callout"><b>Nota:</b> Agent Canvas Model es una <b>línea colateral</b> de QMetrika Labs. El core es la biocomputación. Este framework es una herramienta de laboratorio para no quemar tokens en agentes mal planificados — la contamos aquí como pieza reutilizable.</div>
-
-    <h2>El problema: agentes que se programan sin pensarse</h2>
-
-    <p>Es fácil abrir un editor y empezar a encadenar llamadas a un LLM. Es mucho más difícil parar antes y contestar las preguntas que de verdad determinan si el agente va a funcionar y cuánto va a costar: ¿para quién es? ¿qué grado de autonomía tiene? ¿cómo sabrás si acierta? ¿con qué se integra? ¿qué pasa cuando se equivoca? Saltarse esas preguntas es la vía rápida a <b>quemar tokens</b> en un agente que nadie usa.</p>
-
-    <div class="pullquote">Igual que el Business Model Canvas obliga a pensar un negocio en una hoja antes de montarlo, el <b>Agent Canvas</b> obliga a diseñar el agente antes de programarlo.</div>
-
-    <h2>Los nueve bloques</h2>
-
-    <div class="canvas-grid">
-      <div class="ccard"><div class="cid">01</div><h4>Segmento / usuario</h4><p>para quién trabaja el agente y qué trabajo le quita de encima</p></div>
-      <div class="ccard"><div class="cid">02</div><h4>Propuesta de valor</h4><p>qué hace mejor, más barato o más rápido que la alternativa</p></div>
-      <div class="ccard"><div class="cid">03</div><h4>Autonomía</h4><p>dónde decide solo y dónde se detiene a pedir aprobación humana</p></div>
-      <div class="ccard"><div class="cid">04</div><h4>Tono / persona</h4><p>cómo se comunica y qué registro usa con el usuario</p></div>
-      <div class="ccard"><div class="cid">05</div><h4>KPIs</h4><p>qué se mide para saber si acierta; cómo se evalúa</p></div>
-      <div class="ccard"><div class="cid">06</div><h4>Integraciones</h4><p>qué herramientas, APIs y fuentes de datos necesita</p></div>
-      <div class="ccard"><div class="cid">07</div><h4>Modelos</h4><p>qué LLM por tarea: frontera, especializado o local</p></div>
-      <div class="ccard"><div class="cid">08</div><h4>Costes</h4><p>presupuesto de tokens, coste por tarea, ratio alquilado/propio</p></div>
-      <div class="ccard"><div class="cid">09</div><h4>Riesgos</h4><p>qué puede salir mal, y qué barreras y gates lo contienen</p></div>
-    </div>
-
-    <h2>Por qué importa antes de programar</h2>
-
-    <p>Cada bloque que dejas en blanco es una decisión que tomarás igualmente —pero por defecto, a mitad del desarrollo, y normalmente mal. Rellenar el canvas primero convierte esas decisiones implícitas en explícitas: el bloque de <b>autonomía</b> te dice dónde poner los gates humanos, el de <b>modelos</b> y <b>costes</b> te evita usar un modelo frontera para tareas que un modelo local haría gratis, y el de <b>riesgos</b> te obliga a diseñar las barreras antes de necesitarlas.</p>
-
-    <p>Es el paso previo natural a llevar el agente a un tablero gobernado como <a class="tlink" href="agent-board.html" style="color:var(--accent)">Agent Board</a>: primero diseñas el agente en el canvas, luego lo gobiernas en producción.</p>
-
-    <div class="cta-box">
-      <p>Demo interactiva del canvas para diseñar tu propio agente.</p>
-      <a href="https://josevilar-qbioai.github.io/agent-canvas-model/" target="_blank" class="btn btn-teal">Demo interactiva</a>
-      <a href="https://github.com/josevilar-qbioai/agent-canvas-model" target="_blank" class="btn btn-ghost">GitHub</a>
-    </div>
-
-  </div>
-
-  <footer>
-    <p><a href="./">&larr; Volver al blog</a> · <a href="../">QMetrika Labs</a> · 2026</p>
+  <footer class="site-footer article-footer">
+    <a href="./index.html">← volver al blog</a>
+    <a href="../index.html">qmetrika_labs</a>
+    <span class="push">2026</span>
   </footer>
-
 </div>
 </body>
 </html>

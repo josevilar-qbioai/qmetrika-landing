@@ -1,141 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Agent Board: fail-closed governance for AI agents — QMetrika Labs Blog</title>
 <meta name="description" content="A governed Kanban for multi-agent pipelines: fail-closed approval broker, hash-chain audit, RBAC and a multi-LLM adapter. A collateral line from the QMetrika lab.">
-<link rel="preconnect" href="https://fonts.googleapis.com/">
-<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
-<style>
-:root{
-  --bg:#E9E7E0;--panel:#DEDBD1;--ink:#1B1B18;--muted:#57544B;--faint:#7A776C;
-  --rule:#CFCCC2;--accent:#A6542E;--accent-lt:#D98A5E;--dark-fg:#E9E7E0;
-}
-*{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',system-ui,sans-serif;font-size:16px;-webkit-font-smoothing:antialiased;}
-a{color:inherit;text-decoration:none;}
-::selection{background:var(--accent);color:var(--bg);}
-.wrap{max-width:740px;margin:0 auto;padding:0 32px;}
-.mono{font-family:'IBM Plex Mono',monospace;}
-nav{position:sticky;top:0;left:0;right:0;z-index:100;border-bottom:1px solid var(--rule);background:rgba(233,231,224,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
-nav .inner{max-width:740px;margin:0 auto;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;}
-.logo{display:flex;align-items:center;gap:10px;}
-.logo-mark{width:26px;height:26px;flex-shrink:0;}
-.logo-name{font-weight:600;font-size:15px;color:var(--ink);letter-spacing:-.01em;}
-nav .links{display:flex;gap:20px;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:11.5px;}
-nav .links a{color:var(--muted);}
-nav .links a:hover{color:var(--ink);}
-.lang-switch{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink);border:1px solid var(--rule);padding:3px 9px;}
-.lang-switch:hover{color:var(--accent);border-color:var(--accent);}
-.post-header{padding:104px 0 40px;border-bottom:1px solid var(--rule);}
-.back{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);display:inline-flex;align-items:center;gap:6px;margin-bottom:22px;}
-.back:hover{text-decoration:underline;}
-.post-date{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px;}
-.post-header h1{font-weight:500;font-size:clamp(1.9rem,4vw,2.7rem);color:var(--ink);line-height:1.1;margin-bottom:18px;letter-spacing:-.03em;}
-.post-header h1 em{font-style:normal;color:var(--accent);}
-.post-header .excerpt{font-family:'IBM Plex Mono',monospace;color:var(--muted);font-size:13.5px;line-height:1.7;max-width:60ch;}
-.post-tags{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap;}
-.tag{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;padding:3px 10px;border:1px solid var(--rule);color:var(--muted);}
-.tag.a{color:var(--accent);border-color:var(--accent);}
-.callout{border:1px solid var(--rule);background:var(--panel);padding:18px 22px;margin:30px 0;font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.7;color:var(--muted);}
-.callout b{color:var(--ink);}
-.post-body{padding:52px 0 64px;}
-.post-body h2{font-weight:600;font-size:1.4rem;color:var(--ink);margin:52px 0 16px;letter-spacing:-.015em;}
-.post-body h2:first-child{margin-top:0;}
-.post-body p{color:var(--muted);font-size:15.5px;line-height:1.85;margin-bottom:18px;max-width:66ch;}
-.post-body p b{color:var(--ink);font-weight:600;}
-.post-body p em{color:var(--accent);font-style:normal;}
-.post-body ul{color:var(--muted);font-size:15.5px;line-height:1.8;margin:0 0 18px 22px;max-width:66ch;}
-.post-body li{margin-bottom:9px;}
-.post-body li b{color:var(--ink);}
-.pullquote{font-family:'Space Grotesk',sans-serif;font-size:1.35rem;font-weight:500;color:var(--ink);line-height:1.4;border-left:2px solid var(--accent);padding:6px 0 6px 24px;margin:40px 0;max-width:58ch;letter-spacing:-.01em;}
-.pullquote b{color:var(--accent);font-weight:600;}
-.cta-box{border:1px solid var(--rule);background:var(--panel);padding:28px;text-align:center;margin:44px 0;}
-.cta-box p{font-family:'IBM Plex Mono',monospace;color:var(--muted);font-size:12.5px;margin-bottom:18px;max-width:none;}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;margin:4px;transition:all .2s;}
-.btn-teal{background:var(--ink);color:var(--dark-fg);}
-.btn-teal:hover{background:var(--accent);}
-.btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--ink);}
-.btn-ghost:hover{background:var(--ink);color:var(--dark-fg);}
-footer{padding:28px 0 48px;border-top:1px solid var(--rule);}
-footer p{color:var(--faint);font-family:'IBM Plex Mono',monospace;font-size:11px;}
-footer a{color:var(--accent);}
-@media(max-width:600px){nav .links a:not(.lang-switch){display:none;}.post-header{padding-top:88px;}}
-</style>
+<link rel="stylesheet" href="../styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap">
 </head>
 <body>
-
-<nav>
-  <div class="inner">
-    <a href="../" class="logo"><svg class="logo-mark" width="26" height="26" viewBox="6 6 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="28" cy="28" r="18" stroke="#1B1B18" stroke-width="4.5"/><circle cx="41" cy="41" r="9.6" fill="#E9E7E0"/><circle cx="41" cy="41" r="7.4" fill="#1B1B18"/><circle cx="41" cy="41" r="5.4" fill="#A6542E"/></svg><span class="logo-name">QMetrika Labs</span></a>
-    <div class="links"><a href="../en.html">Home</a><a href="en.html">Blog</a><a href="../en.html#contact">Contact</a><a href="agent-board.html" class="lang-switch">ES</a></div>
-  </div>
-</nav>
-
 <div class="wrap">
+  <header class="nav nav--site">
+    <span class="nav-brand"><span class="brand-dot"></span>QMetrika Labs</span>
+    <a href="../en.html">home</a>
+    <a href="./en.html">blog</a>
+    <a href="../en.html#contact">contact</a>
+    <a class="lang" href="agent-board.html">en/es</a>
+  </header>
 
-  <div class="post-header">
-    <a href="en.html" class="back">&larr; Blog</a>
-    <div class="post-date">July 2026 · collateral line</div>
-    <h1>Agent Board: <em>fail-closed governance</em> for AI agents</h1>
-    <p class="excerpt">A Kanban board where several AI agents collaborate under human supervision: fail-closed approval broker, hash-chain audit, RBAC and a multi-LLM adapter. It was born as the test bed for the lab's pipelines.</p>
-    <div class="post-tags">
-      <span class="tag a">collateral</span>
-      <span class="tag">agent-board</span>
-      <span class="tag">governance</span>
+  <div class="article">
+    <a class="lang" href="./en.html">← blog</a>
+
+    <div class="article-head">
+      <div class="kicker kicker--sage">July 2026 · collateral</div>
+      <h1 class="article-title">Agent Board: <em>fail-closed governance</em> for AI agents</h1>
+      <p class="article-lede">A Kanban board where several AI agents collaborate under human supervision: fail-closed approval broker, hash-chain audit, RBAC and a multi-LLM adapter. It was born as the test bed for the lab's pipelines.</p>
+      <div class="meta-row">
+        <span class="tag tag-accent-2 mono">collateral</span>
+        <span class="tag tag-accent-2 mono">agent-board</span>
+        <span class="tag tag-accent-2 mono">governance</span>
+      </div>
+    </div>
+
+    <hr class="hr" style="margin:40px 0;">
+
+    <article class="prose">
+      <div class="note"><p><strong style="color:var(--color-text);">Note:</strong> Agent Board is a <strong>collateral line</strong> of QMetrika Labs, not the core. The core is biocomputation (ΔG engine, EnergyFingerprint). Agent Board was born as the infrastructure that <em>governs</em> those scientific pipelines, and here we tell it as a reusable exploration piece.</p></div>
+
+      <h2>The problem</h2>
+
+      <p>When the cost of producing a text, an analysis or a decision with AI falls to near zero, four problems appear that no LLM API solves on its own: <strong>ungoverned spend</strong> (agents burn tokens with no limit or per-task cost visibility), <strong>no audit trail</strong> (no verifiable record of who approved what, when and over which payload), <strong>vendor lock-in</strong>, and <strong>data leakage</strong> (sensitive data leaves toward a cloud API).</p>
+
+      <p>In a regulated domain —patient genomic data, with traceability and sovereignty requirements— those four problems stop being nuisances and become blockers.</p>
+
+      <h2>The idea: the human decides, the system proposes</h2>
+
+      <p>Agent Board is a five-column Kanban (Queued → Working → Needs Input → Review → Done) where each agent does its part and the pipeline <strong>stops at a gate until a human authorizes</strong>. It is not decoration: the broker is <em>fail-closed</em> — if nobody approves, nothing advances.</p>
+
+      <blockquote style="border-left:3px solid var(--color-accent-2);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">A token spent and forgotten is expense. A token spent, <strong style="color:var(--color-accent-2-700);">governed and captured</strong>, is infrastructure.</blockquote>
+
+      <h2>The pieces</h2>
+
+      <ul>
+        <li><strong>Fail-closed approval broker:</strong> the flow stops at each gate; the human decision is cryptographically bound to the payload.</li>
+        <li><strong>Hash-chain audit</strong> (tamper-evident): who, when, which payload, which hash. Verifiable with one command — the basis of a regulatory dossier.</li>
+        <li><strong>Declarative RBAC</strong> (<span class="mono">policy.json</span>) + an MCP Gate with a <span class="mono">@gated</span> decorator.</li>
+        <li><strong>Universal multi-LLM adapter</strong> (~60 lines): each agent uses the optimal model —frontier, specialized or local— without vendor lock-in.</li>
+        <li><strong>Dual cost panel</strong> (multi-LLM vs all-Opus): makes the savings per task and per model visible.</li>
+      </ul>
+
+      <h2>Why it was born here</h2>
+
+      <p>It was not designed in the abstract. Agent Board is the layer that orchestrates QMetrika's variant-classification pipelines: a <strong>Genomic Auditor</strong> (cheap model) downloads and filters, a local <strong>Biophysical Engine</strong> computes ΔG profiles without data leaving the server, a <strong>Predictor</strong> scores, and a <strong>gate</strong> halts everything until the geneticist reviews. That is the most demanding use case there is —patient data, compliance, human-in-the-loop— and it is the one that validated the approach.</p>
+
+      <h2>Where it fits</h2>
+
+      <p>As a product, Agent Board is the governance layer for teams deploying agents over sensitive data or in regulated domains (health, legal, finance). Today it has the product built —broker, MCP Gate, RBAC, audit, 12 ADRs, a threat model with 15 threats— and a solid internal use case, but <strong>no external customers yet</strong>: it is an exploration line, not a market-validated one.</p>
+    </article>
+
+    <div class="cta">
+      <div>
+        <h3>Interactive board demo and open-source code (MIT).</h3>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-primary btn--mono" href="https://josevilar-qbioai.github.io/agent-board/demos/board-demo.html?profile=claude-science" target="_blank">Interactive demo</a>
+        <a class="btn btn-secondary btn--mono" href="https://github.com/josevilar-qbioai/agent-board" target="_blank">GitHub</a>
+      </div>
     </div>
   </div>
 
-  <div class="post-body">
-
-    <div class="callout"><b>Note:</b> Agent Board is a <b>collateral line</b> of QMetrika Labs, not the core. The core is biocomputation (ΔG engine, EnergyFingerprint). Agent Board was born as the infrastructure that <em>governs</em> those scientific pipelines, and here we tell it as a reusable exploration piece.</div>
-
-    <h2>The problem</h2>
-
-    <p>When the cost of producing a text, an analysis or a decision with AI falls to near zero, four problems appear that no LLM API solves on its own: <b>ungoverned spend</b> (agents burn tokens with no limit or per-task cost visibility), <b>no audit trail</b> (no verifiable record of who approved what, when and over which payload), <b>vendor lock-in</b>, and <b>data leakage</b> (sensitive data leaves toward a cloud API).</p>
-
-    <p>In a regulated domain —patient genomic data, with traceability and sovereignty requirements— those four problems stop being nuisances and become blockers.</p>
-
-    <h2>The idea: the human decides, the system proposes</h2>
-
-    <p>Agent Board is a five-column Kanban (Queued → Working → Needs Input → Review → Done) where each agent does its part and the pipeline <b>stops at a gate until a human authorizes</b>. It is not decoration: the broker is <em>fail-closed</em> — if nobody approves, nothing advances.</p>
-
-    <div class="pullquote">A token spent and forgotten is expense. A token spent, <b>governed and captured</b>, is infrastructure.</div>
-
-    <h2>The pieces</h2>
-
-    <ul>
-      <li><b>Fail-closed approval broker:</b> the flow stops at each gate; the human decision is cryptographically bound to the payload.</li>
-      <li><b>Hash-chain audit</b> (tamper-evident): who, when, which payload, which hash. Verifiable with one command — the basis of a regulatory dossier.</li>
-      <li><b>Declarative RBAC</b> (<span class="mono">policy.json</span>) + an MCP Gate with a <span class="mono">@gated</span> decorator.</li>
-      <li><b>Universal multi-LLM adapter</b> (~60 lines): each agent uses the optimal model —frontier, specialized or local— without vendor lock-in.</li>
-      <li><b>Dual cost panel</b> (multi-LLM vs all-Opus): makes the savings per task and per model visible.</li>
-    </ul>
-
-    <h2>Why it was born here</h2>
-
-    <p>It was not designed in the abstract. Agent Board is the layer that orchestrates QMetrika's variant-classification pipelines: a <b>Genomic Auditor</b> (cheap model) downloads and filters, a local <b>Biophysical Engine</b> computes ΔG profiles without data leaving the server, a <b>Predictor</b> scores, and a <b>gate</b> halts everything until the geneticist reviews. That is the most demanding use case there is —patient data, compliance, human-in-the-loop— and it is the one that validated the approach.</p>
-
-    <h2>Where it fits</h2>
-
-    <p>As a product, Agent Board is the governance layer for teams deploying agents over sensitive data or in regulated domains (health, legal, finance). Today it has the product built —broker, MCP Gate, RBAC, audit, 12 ADRs, a threat model with 15 threats— and a solid internal use case, but <b>no external customers yet</b>: it is an exploration line, not a market-validated one.</p>
-
-    <div class="cta-box">
-      <p>Interactive board demo and open-source code (MIT).</p>
-      <a href="https://josevilar-qbioai.github.io/agent-board/demos/board-demo.html?profile=claude-science" target="_blank" class="btn btn-teal">Interactive demo</a>
-      <a href="https://github.com/josevilar-qbioai/agent-board" target="_blank" class="btn btn-ghost">GitHub</a>
-    </div>
-
-  </div>
-
-  <footer>
-    <p><a href="en.html">&larr; Back to the blog</a> · <a href="../en.html">QMetrika Labs</a> · 2026</p>
+  <footer class="site-footer article-footer">
+    <a href="./en.html">← back to blog</a>
+    <a href="../en.html">qmetrika_labs</a>
+    <span class="push">2026</span>
   </footer>
-
 </div>
 </body>
 </html>

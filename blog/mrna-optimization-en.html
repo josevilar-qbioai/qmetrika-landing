@@ -1,230 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Therapeutic mRNA optimization — QMetrika Labs Blog</title>
 <meta name="description" content="The stacking ΔG profile as an orthogonal axis for therapeutic mRNA design. A dual optimizer that outperforms commercial vaccines.">
-<link rel="preconnect" href="https://fonts.googleapis.com/">
-<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
-<style>
-:root{
-  --bg:#E9E7E0;--panel:#DEDBD1;--ink:#1B1B18;--muted:#57544B;--faint:#7A776C;
-  --rule:#CFCCC2;--accent:#A6542E;--accent-lt:#D98A5E;--dark-fg:#E9E7E0;
-  --teal:#A6542E;--gold:#A6542E;--plum:#A6542E;--white:#1B1B18;--text:#1B1B18;
-  --soft:#7A776C;--border:#CFCCC2;--border-light:#BEBAAE;--card:#DEDBD1;--surface:#DEDBD1;
-}
-*{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',system-ui,sans-serif;font-size:16px;-webkit-font-smoothing:antialiased;}
-a{color:inherit;text-decoration:none;}
-::selection{background:var(--accent);color:var(--bg);}
-.wrap{max-width:740px;margin:0 auto;padding:0 32px;}
-.mono{font-family:'IBM Plex Mono',monospace;}
-
-/* NAV */
-nav{position:sticky;top:0;left:0;right:0;z-index:100;border-bottom:1px solid var(--rule);background:rgba(233,231,224,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:0;}
-nav .inner{max-width:740px;margin:0 auto;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;}
-.logo{display:flex;align-items:center;gap:10px;}
-.logo-mark{width:26px;height:26px;flex-shrink:0;}
-.logo-name{font-weight:600;font-size:15px;color:var(--ink);letter-spacing:-.01em;}
-nav .links{display:flex;gap:20px;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:11.5px;}
-nav .links a{color:var(--muted);}
-nav .links a:hover{color:var(--ink);}
-nav .links a.active{color:var(--accent);}
-.lang-switch{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink);border:1px solid var(--rule);padding:3px 9px;}
-.lang-switch:hover{color:var(--accent);border-color:var(--accent);}
-
-/* HEADER */
-.post-header{padding:104px 0 40px;border-bottom:1px solid var(--rule);}
-.back{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);display:inline-flex;align-items:center;gap:6px;margin-bottom:22px;}
-.back:hover{text-decoration:underline;}
-.post-date{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px;}
-.post-header h1{font-weight:500;font-size:clamp(1.9rem,4vw,2.7rem);color:var(--ink);line-height:1.1;margin-bottom:18px;letter-spacing:-.03em;}
-.post-header h1 em{font-style:normal;color:var(--accent);}
-.post-header .excerpt{font-family:'IBM Plex Mono',monospace;color:var(--muted);font-size:13.5px;line-height:1.7;max-width:60ch;}
-.post-tags{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap;}
-.tag{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;padding:3px 10px;border:1px solid var(--rule);color:var(--muted);border-radius:0;font-weight:400;}
-.tag.t,.tag.g,.tag.p{color:var(--accent);border-color:var(--accent);}
-
-/* BODY */
-.post-body{padding:52px 0 64px;}
-.post-body h2{font-weight:600;font-size:1.4rem;color:var(--ink);margin:52px 0 16px;letter-spacing:-.015em;}
-.post-body h2:first-child{margin-top:0;}
-.post-body p{color:var(--muted);font-size:15.5px;line-height:1.85;margin-bottom:18px;max-width:66ch;}
-.post-body p b{color:var(--ink);font-weight:600;}
-.post-body p em{color:var(--accent);font-style:normal;}
-.post-body ul,.post-body ol{color:var(--muted);font-size:15.5px;line-height:1.85;margin:0 0 18px 22px;max-width:66ch;}
-.post-body li{margin-bottom:8px;}
-.post-body li b{color:var(--ink);}
-
-/* PULLQUOTE */
-.pullquote{font-family:'Space Grotesk',sans-serif;font-size:1.35rem;font-weight:500;color:var(--ink);line-height:1.4;border-left:2px solid var(--accent);padding:6px 0 6px 24px;margin:40px 0;max-width:58ch;letter-spacing:-.01em;}
-.pullquote b{color:var(--accent);font-weight:600;}
-
-/* STAT ROW */
-.stat-row{display:flex;gap:1px;background:var(--rule);border:1px solid var(--rule);margin:32px 0;flex-wrap:wrap;}
-.stat-row .stat{flex:1;min-width:120px;background:var(--bg);padding:22px 20px;font-family:'IBM Plex Mono',monospace;}
-.stat-row .stat .v{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.7rem;color:var(--accent);line-height:1;}
-.stat-row .stat .l{font-size:10px;color:var(--faint);text-transform:uppercase;letter-spacing:.05em;margin-top:8px;}
-
-/* PRINCIPLES */
-.principle-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);margin:32px 0;}
-.pcard{background:var(--panel);padding:22px;}
-.pcard .pid{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);font-weight:600;}
-.pcard h4{font-weight:600;font-size:.98rem;color:var(--ink);margin:6px 0 7px;}
-.pcard p{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--faint);line-height:1.65;margin:0;max-width:none;}
-
-/* FORMULA */
-.formula{border:1px solid var(--rule);background:var(--panel);padding:32px 28px;margin:32px 0;text-align:center;}
-.formula .f{font-family:'IBM Plex Mono',monospace;font-size:2rem;color:var(--ink);letter-spacing:.05em;margin-bottom:14px;}
-.formula .f .sym{color:var(--accent);font-weight:600;}
-.formula .f .op{color:var(--faint);margin:0 8px;}
-.formula .desc{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--faint);line-height:1.7;max-width:56ch;margin:0 auto;}
-
-/* CTA */
-.cta-box{border:1px solid var(--rule);background:var(--panel);padding:28px;text-align:center;margin:44px 0;}
-.cta-box p{font-family:'IBM Plex Mono',monospace;color:var(--muted);font-size:12.5px;margin-bottom:18px;max-width:none;}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:400;margin:4px;transition:all .2s;}
-.btn-teal{background:var(--ink);color:var(--dark-fg);}
-.btn-teal:hover{background:var(--accent);}
-.btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--ink);}
-.btn-ghost:hover{background:var(--ink);color:var(--dark-fg);}
-
-/* TABLE */
-.table-wrap{overflow-x:auto;margin:32px 0;border:1px solid var(--rule);}
-table{border-collapse:collapse;width:100%;min-width:500px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;}
-th,td{text-align:left;padding:12px 16px;border-bottom:1px solid var(--rule);}
-thead th{background:var(--panel);color:var(--ink);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;}
-tbody td{color:var(--muted);}
-tbody td b{color:var(--ink);}
-tbody tr:last-child td{border-bottom:none;}
-tr.highlight-row td{background:rgba(166,84,46,.08);color:var(--ink);}
-tr.highlight-row td b{color:var(--accent);}
-
-/* FOOTER */
-footer{padding:28px 0 48px;border-top:1px solid var(--rule);}
-footer p{color:var(--faint);font-family:'IBM Plex Mono',monospace;font-size:11px;}
-footer a{color:var(--accent);}
-
-@media(max-width:600px){
-  .principle-grid{grid-template-columns:1fr;}
-  nav .links a:not(.lang-switch):not(.active){display:none;}
-  .post-header{padding-top:88px;}
-}
-</style>
+<link rel="stylesheet" href="../styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap">
 </head>
 <body>
-
-<nav>
-  <div class="inner">
-    <a href="../en.html" class="logo"><svg class="logo-mark" width="26" height="26" viewBox="6 6 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="28" cy="28" r="18" stroke="#1B1B18" stroke-width="4.5"/><circle cx="41" cy="41" r="9.6" fill="#E9E7E0"/><circle cx="41" cy="41" r="7.4" fill="#1B1B18"/><circle cx="41" cy="41" r="5.4" fill="#A6542E"/></svg><span class="logo-name">QMetrika Labs</span></a>
-    <div class="links"><a href="../en.html">Home</a><a href="en.html">Blog</a><a href="../en.html#contact">Contact</a><a href="mrna-optimization.html" class="lang-switch">ES</a></div>
-  </div>
-</nav>
-
 <div class="wrap">
+  <header class="nav nav--site">
+    <span class="nav-brand"><span class="brand-dot"></span>QMetrika Labs</span>
+    <a href="../en.html">home</a>
+    <a href="./en.html">blog</a>
+    <a href="../en.html#contact">contact</a>
+    <a class="lang" href="mrna-optimization.html">en/es</a>
+  </header>
 
-  <div class="post-header">
-    <a href="en.html" class="back">&larr; Blog</a>
-    <div class="post-date">May 2026</div>
-    <h1>Therapeutic mRNA optimization: the thermodynamic axis that <em>LinearDesign</em> doesn't use</h1>
-    <p class="excerpt">The nearest-neighbor stacking ΔG profile provides an orthogonal dimension to secondary structure (R²=0.144) and is superior to GC3 at the local level. A dual optimizer that outperforms BNT162b2 and mRNA-1273 in both ΔG and MFE simultaneously.</p>
-    <div class="post-tags">
-      <span class="tag p">bio-ia</span>
-      <span class="tag t">paper</span>
-      <span class="tag g">line 2</span>
-    </div>
-  </div>
+  <div class="article">
+    <a class="lang" href="./en.html">← blog</a>
 
-  <div class="post-body">
-
-    <h2>The context: therapeutic mRNA design</h2>
-
-    <p>The COVID-19 mRNA vaccines (BNT162b2 from Pfizer, mRNA-1273 from Moderna) demonstrated that synthetic mRNA is a viable therapeutic platform. But designing an optimal mRNA sequence is not trivial: the same protein can be encoded by trillions of different mRNA sequences (thanks to the degeneracy of the genetic code), and each has different biophysical properties.</p>
-
-    <p>The state of the art is <b>LinearDesign</b> (Zhang lab, Nature 2023), which simultaneously optimizes <em>secondary structure</em> (MFE, minimum free energy) and <em>codon usage</em> (CAI). It is an elegant algorithm. But it is missing a dimension.</p>
-
-    <h2>The missing dimension: nearest-neighbor stacking</h2>
-
-    <p>When two nucleotides sit next to each other in the mRNA, they interact through stacking forces (van der Waals, hydrophobic interactions). The energy of that interaction depends on the identity of <b>both</b> nucleotides — not just the one you are looking at. This is nearest-neighbor thermodynamics (SantaLucia 1998, Turner 2004).</p>
-
-    <p>The stacking ΔG profile sweeps along the mRNA position by position and computes that energy for each pair of adjacent nucleotides. It is <b>local context</b> information that metrics like GC3 (which only looks at the third codon position) cannot capture.</p>
-
-    <div class="pullquote">Stacking ΔG vs secondary structure MFE: <b>R² = 0.144</b>. They are independent dimensions. Nearest-neighbor stacking captures information that secondary structure does not contain, and vice versa.</div>
-
-    <h2>Key results</h2>
-
-    <div class="stat-row">
-      <div class="stat"><div class="v gold">0.144</div><div class="l">R² (ΔG vs MFE)</div></div>
-      <div class="stat"><div class="v teal">-0.501</div><div class="l">r (ΔG vs CSC codon)</div></div>
-      <div class="stat"><div class="v gold">-0.797</div><div class="l">r (ΔG vs CSC window)</div></div>
-      <div class="stat"><div class="v teal">9/9</div><div class="l">Universal genes</div></div>
+    <div class="article-head">
+      <div class="kicker kicker--accent">May 2026</div>
+      <h1 class="article-title">Therapeutic mRNA optimization: the thermodynamic axis that <em>LinearDesign</em> doesn't use</h1>
+      <p class="article-lede">The nearest-neighbor stacking ΔG profile provides an orthogonal dimension to secondary structure (R²=0.144) and is superior to GC3 at the local level. A dual optimizer that outperforms BNT162b2 and mRNA-1273 in both ΔG and MFE simultaneously.</p>
+      <div class="meta-row">
+        <span class="tag tag-accent mono">bio-ia</span>
+        <span class="tag tag-accent mono">paper</span>
+        <span class="tag tag-accent mono">line 2</span>
+      </div>
     </div>
 
-    <p><b>Demonstrated complementarity:</b> Stacking ΔG vs MFE has an R² of only 0.144 — they are nearly independent dimensions. Optimizing one does not automatically optimize the other.</p>
+    <hr class="hr" style="margin:40px 0;">
 
-    <p><b>Expression correlation:</b> ΔG correlates with CSC (Codon Stability Coefficient) at the codon level (r = -0.501) and much more strongly at the intra-gene window level (r = -0.797). The thermodynamic signal predicts mRNA stability.</p>
+    <article class="prose">
+      <h2>The context: therapeutic mRNA design</h2>
 
-    <p><b>Universality:</b> In 9 out of 9 genes analyzed, the AT → native → GC optimization maintains the pattern ΔG(AT) > ΔG(native) > ΔG(GC), with a mean effect of -0.416 kcal/mol.</p>
+      <p>The COVID-19 mRNA vaccines (BNT162b2 from Pfizer, mRNA-1273 from Moderna) demonstrated that synthetic mRNA is a viable therapeutic platform. But designing an optimal mRNA sequence is not trivial: the same protein can be encoded by trillions of different mRNA sequences (thanks to the degeneracy of the genetic code), and each has different biophysical properties.</p>
 
-    <p><b>Residual contribution:</b> After controlling for GC3 (which already explains much), ΔG still contributes r = -0.378 (p = 6.8e-30), with ΔR² = +0.050. The +5% of explained variance is the fine-tuning when GC3 is already saturated — the fine adjustment that makes the difference between a good vaccine and an excellent one.</p>
+      <p>The state of the art is <strong>LinearDesign</strong> (Zhang lab, Nature 2023), which simultaneously optimizes <em>secondary structure</em> (MFE, minimum free energy) and <em>codon usage</em> (CAI). It is an elegant algorithm. But it is missing a dimension.</p>
 
-    <h2>The dual optimizer</h2>
+      <h2>The missing dimension: nearest-neighbor stacking</h2>
 
-    <p>Two optimization modes implemented as proof-of-concept:</p>
+      <p>When two nucleotides sit next to each other in the mRNA, they interact through stacking forces (van der Waals, hydrophobic interactions). The energy of that interaction depends on the identity of <strong>both</strong> nucleotides — not just the one you are looking at. This is nearest-neighbor thermodynamics (SantaLucia 1998, Turner 2004).</p>
 
-    <p><b>Greedy with lookahead:</b> At each position, evaluates all possible synonymous codons and selects the one that minimizes ΔG locally, with a lookahead window to avoid local optima. Time: <b>0.1 seconds</b> for the 1,273 codons of the spike protein.</p>
+      <p>The stacking ΔG profile sweeps along the mRNA position by position and computes that energy for each pair of adjacent nucleotides. It is <strong>local context</strong> information that metrics like GC3 (which only looks at the third codon position) cannot capture.</p>
 
-    <p><b>Beam search with integrated MFE:</b> Maintains multiple candidates in parallel (beam_width=5) and every 10 codons evaluates secondary structure with RNAfold. Integrates MFE into the beam pruning decision. Time: <b>13 seconds</b> for the same sequence.</p>
+      <blockquote style="border-left:3px solid var(--color-accent);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">Stacking ΔG vs secondary structure MFE: <strong>R² = 0.144</strong>. They are independent dimensions. Nearest-neighbor stacking captures information that secondary structure does not contain, and vice versa.</blockquote>
 
-    <div class="table-wrap">
-      <table>
+      <h2>Key results</h2>
+
+      <div class="statcards-2">
+        <div class="statcard statcard--accent"><div class="v t-accent">0.144</div><div class="l l-accent">R² (ΔG vs MFE)</div></div>
+        <div class="statcard statcard--sage"><div class="v t-sage">-0.501</div><div class="l l-sage">r (ΔG vs CSC codon)</div></div>
+        <div class="statcard statcard--accent"><div class="v t-accent">-0.797</div><div class="l l-accent">r (ΔG vs CSC window)</div></div>
+        <div class="statcard statcard--sage"><div class="v t-sage">9/9</div><div class="l l-sage">Universal genes</div></div>
+      </div>
+
+      <p><strong>Demonstrated complementarity:</strong> Stacking ΔG vs MFE has an R² of only 0.144 — they are nearly independent dimensions. Optimizing one does not automatically optimize the other.</p>
+
+      <p><strong>Expression correlation:</strong> ΔG correlates with CSC (Codon Stability Coefficient) at the codon level (r = -0.501) and much more strongly at the intra-gene window level (r = -0.797). The thermodynamic signal predicts mRNA stability.</p>
+
+      <p><strong>Universality:</strong> In 9 out of 9 genes analyzed, the AT → native → GC optimization maintains the pattern ΔG(AT) > ΔG(native) > ΔG(GC), with a mean effect of -0.416 kcal/mol.</p>
+
+      <p><strong>Residual contribution:</strong> After controlling for GC3 (which already explains much), ΔG still contributes r = -0.378 (p = 6.8e-30), with ΔR² = +0.050. The +5% of explained variance is the fine-tuning when GC3 is already saturated — the fine adjustment that makes the difference between a good vaccine and an excellent one.</p>
+
+      <h2>The dual optimizer</h2>
+
+      <p>Two optimization modes implemented as proof-of-concept:</p>
+
+      <p><strong>Greedy with lookahead:</strong> At each position, evaluates all possible synonymous codons and selects the one that minimizes ΔG locally, with a lookahead window to avoid local optima. Time: <strong>0.1 seconds</strong> for the 1,273 codons of the spike protein.</p>
+
+      <p><strong>Beam search with integrated MFE:</strong> Maintains multiple candidates in parallel (beam_width=5) and every 10 codons evaluates secondary structure with RNAfold. Integrates MFE into the beam pruning decision. Time: <strong>13 seconds</strong> for the same sequence.</p>
+
+      <table class="table">
         <thead><tr><th>Sequence</th><th>Mean ΔG</th><th>MFE/nt</th><th>GC%</th></tr></thead>
         <tbody>
           <tr><td>Native SARS-CoV-2</td><td>-1.181</td><td>-0.117</td><td>30.1%</td></tr>
           <tr><td>BNT162b2 (Pfizer)</td><td>-1.481</td><td>-0.268</td><td>56.8%</td></tr>
           <tr><td>mRNA-1273 (Moderna)</td><td>-1.542</td><td>-0.313</td><td>62.0%</td></tr>
-          <tr class="highlight-row"><td><b>Greedy (ΔG only)</b></td><td><b>-1.593</b></td><td><b>-0.345</b></td><td><b>63.9%</b></td></tr>
-          <tr class="highlight-row"><td><b>Beam search (ΔG+MFE)</b></td><td><b>-1.592</b></td><td><b>-0.370</b></td><td><b>63.9%</b></td></tr>
+          <tr><td><strong>Greedy (ΔG only)</strong></td><td><strong>-1.593</strong></td><td><strong>-0.345</strong></td><td><strong>63.9%</strong></td></tr>
+          <tr><td><strong>Beam search (ΔG+MFE)</strong></td><td><strong>-1.592</strong></td><td><strong>-0.370</strong></td><td><strong>63.9%</strong></td></tr>
         </tbody>
       </table>
+
+      <p>Both modes outperform both commercial vaccines in ΔG and MFE simultaneously. Beam search significantly improves MFE compared to greedy (-0.370 vs -0.345) with virtually identical ΔG — demonstrating that integrating secondary structure into the decision adds real value.</p>
+
+      <h2>Positioning vs LinearDesign</h2>
+
+      <p><strong>LinearDesign</strong> optimizes MFE + CAI through dynamic programming. It is the undisputed state of the art. But it operates in a two-dimensional space.</p>
+
+      <p>QMetrika's optimizer adds a <strong>third dimension</strong>: nearest-neighbor stacking. Given that R²(ΔG, MFE) = 0.144, this dimension is mostly orthogonal — it is not redundant with what LinearDesign already optimizes. The proposal is not to replace LinearDesign, but to <strong>complement it</strong> with thermodynamic information it is not using.</p>
+
+      <blockquote style="border-left:3px solid var(--color-accent);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">The difference between a good vaccine and an excellent one may lie in a dimension that nobody is looking at. Nearest-neighbor stacking is that dimension.</blockquote>
+
+      <h2>Intellectual property</h2>
+
+      <p>The ΔG engine and optimizer are covered by patent <strong>P202630522</strong> (OEPM, April 2026). International PCT filing in April 2027. The optimizer code is not public — it is protected by the patent.</p>
+
+      <h2>Next steps</h2>
+
+      <p><strong>Experimental validation (Oct 2026 - Mar 2027):</strong> 3-5 constructs in HEK293 — native, greedy-ΔG, beam-ΔG+MFE, GC-max control — measuring protein expression (luciferase reporter) and mRNA stability (half-life). The goal is to correlate predicted ΔG with measured expression and stability.</p>
+
+      <p><strong>Pareto frontier:</strong> Sweep beam_width (3, 5, 10, 20, 50) and map the ΔG vs MFE trade-off. Is there an optimal point? Or is the frontier smooth and gene-dependent?</p>
+    </article>
+
+    <div class="cta">
+      <div>
+        <h3>Read the full preprint</h3>
+        <p>Full preprint with 9-gene analysis, correlations and optimizer proof-of-concept.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-primary btn--mono" href="https://doi.org/10.5281/zenodo.20228980" target="_blank">Zenodo · DOI 10.5281/zenodo.20228980</a>
+        <a class="btn btn-secondary btn--mono" href="https://github.com/josevilar-qbioai/mrna-stacking-optimization" target="_blank">GitHub</a>
+      </div>
     </div>
-
-    <p>Both modes outperform both commercial vaccines in ΔG and MFE simultaneously. Beam search significantly improves MFE compared to greedy (-0.370 vs -0.345) with virtually identical ΔG — demonstrating that integrating secondary structure into the decision adds real value.</p>
-
-    <h2>Positioning vs LinearDesign</h2>
-
-    <p><b>LinearDesign</b> optimizes MFE + CAI through dynamic programming. It is the undisputed state of the art. But it operates in a two-dimensional space.</p>
-
-    <p>QMetrika's optimizer adds a <b>third dimension</b>: nearest-neighbor stacking. Given that R²(ΔG, MFE) = 0.144, this dimension is mostly orthogonal — it is not redundant with what LinearDesign already optimizes. The proposal is not to replace LinearDesign, but to <b>complement it</b> with thermodynamic information it is not using.</p>
-
-    <div class="pullquote">The difference between a good vaccine and an excellent one may lie in a dimension that nobody is looking at. Nearest-neighbor stacking is that dimension.</div>
-
-    <h2>Intellectual property</h2>
-
-    <p>The ΔG engine and optimizer are covered by patent <b>P202630522</b> (OEPM, April 2026). International PCT filing in April 2027. The optimizer code is not public — it is protected by the patent.</p>
-
-    <h2>Next steps</h2>
-
-    <p><b>Experimental validation (Oct 2026 - Mar 2027):</b> 3-5 constructs in HEK293 — native, greedy-ΔG, beam-ΔG+MFE, GC-max control — measuring protein expression (luciferase reporter) and mRNA stability (half-life). The goal is to correlate predicted ΔG with measured expression and stability.</p>
-
-    <p><b>Pareto frontier:</b> Sweep beam_width (3, 5, 10, 20, 50) and map the ΔG vs MFE trade-off. Is there an optimal point? Or is the frontier smooth and gene-dependent?</p>
-
-    <div class="cta-box">
-      <p>Full preprint with 9-gene analysis, correlations and optimizer proof-of-concept.</p>
-      <a href="https://doi.org/10.5281/zenodo.20228980" target="_blank" class="btn btn-teal">Zenodo · DOI 10.5281/zenodo.20228980</a>
-      <a href="https://github.com/josevilar-qbioai/mrna-stacking-optimization" target="_blank" class="btn btn-ghost">GitHub</a>
-    </div>
-
   </div>
 
-  <footer>
-    <p><a href="en.html">&larr; Back to blog</a> · <a href="../en.html">QMetrika Labs</a> · 2026</p>
+  <footer class="site-footer article-footer">
+    <a href="./en.html">← back to blog</a>
+    <a href="../en.html">qmetrika_labs</a>
+    <span class="push">2026</span>
   </footer>
-
 </div>
 </body>
 </html>
