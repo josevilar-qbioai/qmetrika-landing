@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>QMetrika Labs — Biocomputation · AI · Q Knowledge</title>
-<meta name="description" content="QMetrika Labs builds biocomputation and AI platforms with on-prem data and proprietary knowledge. Bio-AI: genetic variant classification and therapeutic mRNA design.">
+<meta name="description" content="QMetrika Labs — thermodynamic Bio-AI. Flagship line: therapeutic mRNA optimization from the nearest-neighbor stacking axis (ΔG) that LinearDesign and MFE don't use. Plus open variant-analysis tools. Runs locally.">
 <link rel="stylesheet" href="styles.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap">
@@ -18,7 +18,7 @@
     <a href="#papers">papers</a>
     <a href="blog/en.html">blog</a>
     <a class="lang" href="index.html">en/es</a>
-    <a class="btn btn-primary" href="mailto:qmetrika@proton.me">contact</a>
+    <a class="btn btn-primary" href="mailto:info@qmetrika.xyz">contact</a>
   </header>
 
   <!-- hero -->
@@ -27,18 +27,36 @@
       <div>
         <div class="kicker kicker--sage">Biocomputation · Artificial Intelligence · Data Science</div>
         <h1 class="hero-title">Energy turned into knowledge</h1>
-        <p class="hero-lede">AI, biocomputation and data science applied to mRNA: variant classification and therapeutic design from its thermodynamic form factor — the physical axis no predictor uses. Sensitive data never leaves your infrastructure.</p>
-        <div class="hero-cta"><a class="btn btn-primary" href="tools/ef-synonymous-en.html" style="padding:14px 28px; font-size:15px;">try the tools →</a></div>
+        <p class="hero-lede">AI and biocomputation applied to mRNA. Our flagship line: <strong>therapeutic mRNA optimization</strong> from the nearest-neighbor stacking axis (ΔG) that LinearDesign and MFE don't use — a dual optimizer that beats commercial vaccines. Alongside a set of open variant-analysis tools. Sensitive data never leaves your infrastructure.</p>
+        <div class="hero-cta"><a class="btn btn-primary" href="#mrna" style="padding:14px 28px; font-size:15px;">mRNA optimization →</a> <a class="btn btn-secondary" href="#tools" style="padding:14px 28px; font-size:15px;">open tools →</a></div>
       </div>
       <div class="hero-side">
         <div class="formula">Λ = S ⊗ Φ</div>
         <div class="formula-cap">unified framework · signal ⊗ form</div>
         <div class="hero-stats">
+          <div class="stat"><span class="stat-v">2</span><span class="stat-l">commercial vaccines beaten</span></div>
           <div class="stat"><span class="stat-v">4</span><span class="stat-l">publications · doi</span></div>
-          <div class="stat"><span class="stat-v">42</span><span class="stat-l">validated genes</span></div>
-          <div class="stat"><span class="stat-v">0.99</span><span class="stat-l">peak auc</span></div>
           <div class="stat"><span class="stat-v">1</span><span class="stat-l">oepm patent</span></div>
+          <div class="stat"><span class="stat-v">100%</span><span class="stat-l">runs locally</span></div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- L2 mRNA optimization (flagship) -->
+  <section class="section" id="mrna">
+    <div class="section-head">
+      <div class="kicker kicker--accent">Flagship line · L2</div>
+      <h2 class="section-title">Therapeutic mRNA optimization</h2>
+      <p class="section-intro">mRNA sequence design from the <strong>nearest-neighbor stacking (ΔG)</strong> thermodynamic axis — a physical dimension that LinearDesign and secondary-structure energy (MFE) don't capture. The dual optimizer improves both at once.</p>
+    </div>
+    <div class="glassbox">
+      <span class="tag tag-accent-2">evidence</span>
+      <p>The dual optimizer (ΔG + MFE) <strong>simultaneously beats BNT162b2 and mRNA-1273</strong> on both metrics; the stacking axis is orthogonal to secondary structure (R²=0.144 with MFE) — information current methods don't use.</p>
+      <p class="text-muted" style="font-size:14px; margin-top:10px;">Method covered by patent P202630522; the optimizer is proprietary technology. Open to collaboration and licensing with mRNA pharma/biotech.</p>
+      <div class="video-links">
+        <a class="btn btn-primary btn--mono" href="mailto:info@qmetrika.xyz?subject=mRNA%20optimization%20(L2)">talk mRNA →</a>
+        <a class="btn btn-secondary btn--mono" href="https://doi.org/10.5281/zenodo.20228980">read P-L2 →</a>
       </div>
     </div>
   </section>
@@ -48,13 +66,13 @@
     <div class="section-head">
       <div class="kicker kicker--accent">Tools · Herramientas</div>
       <h2 class="section-title">Open, glass-box and free</h2>
-      <p class="section-intro">No signup. Each research line distills an interpretable physical observable into a tool that runs entirely on your machine — no GPU, no data leaving it.</p>
+      <p class="section-intro">Our open work. Each variant-analysis line distills an interpretable physical observable into a tool that runs entirely on your machine — no sign-up, no GPU, no data leaving it.</p>
     </div>
     <div class="tools-grid">
       <div class="tool-card">
         <span class="tag tag-accent mono">Synonymous variants</span>
         <h3 class="tool-name">ef-synonymous</h3>
-        <p class="tool-desc">The thermodynamic signal σ + G&gt;A that matches the deep network. Available as a web tool, CLI and VEP plugin.</p>
+        <p class="tool-desc">An interpretable 2-variable physical model (σ = signed ΔΔG + G&gt;A bias) for synonymous variants — glass-box and auditable. Web, CLI and VEP plugin.</p>
         <code class="install">pip install ef-synonymous</code>
         <div class="tool-links">
           <a class="btn btn-primary btn--mono" href="tools/ef-synonymous-en.html">▶ web</a>
@@ -65,7 +83,7 @@
       <div class="tool-card">
         <span class="tag tag-accent mono">Repeat expansion</span>
         <h3 class="tool-name">energorna</h3>
-        <p class="tool-desc">Predicts onset and expansion risk in DM1, Huntington, SCA1 and Fragile X — beyond counting repeats, capturing interruption type and position. Validated across 4 diseases.</p>
+        <p class="tool-desc">Interpretable physical observable of repeat-interruption architecture (type and position) in DM1, Huntington, SCA1 and Fragile X. On par with block counting on the available data; glass-box and model-free.</p>
         <code class="install">pip install energorna</code>
         <div class="tool-links">
           <a class="btn btn-primary btn--mono" href="tools/energorna-en.html">▶ web</a>
@@ -89,11 +107,11 @@
     <div>
       <div class="kicker kicker--sage">Research line</div>
       <h2 class="section-title" style="font-size:38px;">Bio-AI — thermodynamic intelligence</h2>
-      <p class="bioia-body">The lab's first vertical. A biophysical platform that operates where REVEL and AlphaMissense are blind: the thermodynamic profile of the mRNA and, in particular, synonymous variants — a niche with no competitor. A shared engine, nearest-neighbor ΔG, feeds three fronts: variant classification, mRNA design and repeat-expansion disorders.</p>
+      <p class="bioia-body">The lab's first vertical. A shared biophysical engine — nearest-neighbor stacking ΔG — feeds three fronts: <strong>therapeutic mRNA optimization (the flagship line)</strong>, variant classification and repeat-expansion disorders. It operates on a physical axis that MFE and protein-level predictors don't use.</p>
     </div>
     <div class="glassbox">
       <span class="tag tag-accent-2">glass-box</span>
-      <p>The core finding: the signal reduces to an interpretable 2-variable physical model that matches the deep network — auditable as ACMG evidence.</p>
+      <p>Our bet: each line distills an interpretable physical observable, not a black box. Auditable models that run locally — the basis for clinical and regulatory use.</p>
       <div class="video-links">
         <a class="btn btn-secondary btn--mono" href="qmetrika_video_en.html">▶ video · project overview (EN)</a>
         <a class="btn btn-secondary btn--mono" href="qmetrika_video_es.html">▶ vídeo · visión general (ES)</a>
@@ -109,24 +127,24 @@
       <p class="section-intro" style="font-size:15px;">Reviewable scientific evidence: three preprints and a technical benchmark report. A trilogy in progress, with peer review underway.</p>
     </div>
     <div class="pub-row">
+      <span class="tag tag-accent mono">P-L2</span>
+      <div><h4>mRNA Stacking Optimization: Codon design guided by nearest-neighbor thermodynamics</h4><p>Flagship line. Stacking ΔG as an axis orthogonal to MFE (R²=0.144). A dual optimizer that beats commercial vaccines.</p></div>
+      <a class="pub-doi" href="https://doi.org/10.5281/zenodo.20228980">10.5281/zenodo.20228980</a>
+    </div>
+    <div class="pub-row">
       <span class="tag tag-accent mono">P-L1</span>
       <div><h4>EnergyFingerprint: Thermodynamic stacking profiles for missense variant classification</h4><p>Multichannel 1D CNN, 42 validated genes, AUC 0.87–0.99. Zero-shot transferability gradient.</p></div>
       <a class="pub-doi" href="https://doi.org/10.5281/zenodo.19831154">10.5281/zenodo.19831154</a>
     </div>
     <div class="pub-row">
-      <span class="tag tag-accent mono">P-L2</span>
-      <div><h4>mRNA Stacking Optimization: Codon design guided by nearest-neighbor thermodynamics</h4><p>ΔG as an axis orthogonal to MFE (R²=0.144). A dual optimizer that outperforms commercial vaccines.</p></div>
-      <a class="pub-doi" href="https://doi.org/10.5281/zenodo.20228980">10.5281/zenodo.20228980</a>
-    </div>
-    <div class="pub-row">
-      <span class="tag tag-accent mono">P1</span>
-      <div><h4>Synonymous variants alter mRNA thermodynamic profiles: a CNN-based pathogenicity signal</h4><p>AUC 0.683. Λ = S ⊗ Φ framework. The CNN reduces to 2 physical observables (signed ΔΔG + G&gt;A bias), auditable as ACMG evidence (PP3/BP4).</p></div>
-      <a class="pub-doi" href="https://doi.org/10.5281/zenodo.20275792">10.5281/zenodo.20275792</a>
-    </div>
-    <div class="pub-row" style="border-bottom:none;">
       <span class="tag tag-accent mono">TECH-2</span>
       <div><h4>Benchmark: EnergyFingerprint vs CADD, REVEL, AlphaMissense</h4><p>Formal comparison across 7 genes. EF beats CADD in SCN1A (0.913 vs 0.832). Additive value demonstrated.</p></div>
       <a class="pub-doi" href="https://doi.org/10.5281/zenodo.21309529">10.5281/zenodo.21309529</a>
+    </div>
+    <div class="pub-row" style="border-bottom:none;">
+      <span class="tag tag-accent mono">P1</span>
+      <div><h4>Synonymous variants alter mRNA thermodynamic profiles: a CNN-based pathogenicity signal</h4><p>AUC 0.683 on ClinVar. The CNN reduces to 2 interpretable physical observables (signed ΔΔG + G&gt;A bias) — glass-box.</p></div>
+      <a class="pub-doi" href="https://doi.org/10.5281/zenodo.20275792">10.5281/zenodo.20275792</a>
     </div>
   </section>
 
@@ -139,10 +157,10 @@
       <div class="contact-meta">
         <div>orcid: <a href="https://orcid.org/0009-0008-1057-4223">0009-0008-1057-4223</a></div>
         <div>github: <a href="https://github.com/josevilar-qbioai">@josevilar-qbioai</a></div>
-        <div>email: qmetrika[at]proton.me</div>
+        <div>email: info[at]qmetrika.xyz</div>
       </div>
       <div style="display:flex; gap:10px; margin-top:20px;">
-        <a class="btn btn-primary" href="mailto:qmetrika@proton.me">write →</a>
+        <a class="btn btn-primary" href="mailto:info@qmetrika.xyz">write →</a>
         <a class="btn btn-secondary" href="https://github.com/josevilar-qbioai">github</a>
       </div>
     </div>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dónde gana la termodinámica: un contraste de régimen — QMetrika Labs Blog</title>
+<meta name="description" content="Auditamos nuestro propio pipeline: el canal termodinámico no añade valor en missense (donde el modelo de lenguaje ya gana), pero sí clasifica en variantes sinónimas, donde ese modelo es ciego.">
+<link rel="stylesheet" href="../styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap">
+</head>
+<body>
+<div class="wrap">
+  <header class="nav nav--site">
+    <span class="nav-brand"><svg width="26" height="26" viewBox="6 6 46 46" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><circle cx="28" cy="28" r="18" stroke="#201e1d" stroke-width="4.5"/><circle cx="41" cy="41" r="9.6" fill="#f5ead8"/><circle cx="41" cy="41" r="7.4" fill="#201e1d"/><circle cx="41" cy="41" r="5.4" fill="#c67139"/></svg>QMetrika Labs</span>
+    <a href="../index.html">home</a>
+    <a href="./index.html">blog</a>
+    <a href="../index.html#contacto">contacto</a>
+    <a class="lang" href="regimen-termodinamico-en.html">es/en</a>
+  </header>
+
+  <div class="article">
+    <a class="lang" href="./index.html">← blog</a>
+
+    <div class="article-head">
+      <div class="kicker kicker--accent">Agosto 2026</div>
+      <h1 class="article-title">Dónde gana la termodinámica: <em>un contraste de régimen</em></h1>
+      <p class="article-lede">Auditamos nuestro propio pipeline de clasificación de variantes. El resultado honesto reordena el relato: en missense manda la señal evolutiva; el canal termodinámico es el diferencial exactamente donde los modelos de lenguaje de proteína son ciegos — las variantes sinónimas y el mRNA.</p>
+      <div class="meta-row">
+        <span class="tag tag-accent mono">bio-ia</span>
+        <span class="tag tag-accent mono">glass-box</span>
+        <span class="tag tag-accent mono">auditoría</span>
+      </div>
+    </div>
+
+    <hr class="hr" style="margin:40px 0;">
+
+    <article class="prose">
+      <h2>El punto de partida</h2>
+
+      <p>EnergyFingerprint combina dos ejes: uno <strong>evolutivo</strong> (el log-likelihood ratio de un modelo de lenguaje de proteína, ESMC) y uno <strong>termodinámico</strong> (el perfil de energía de apilamiento del mRNA). Durante meses trabajamos con una cifra interna que decía que el eje evolutivo, por sí solo, apenas discriminaba variantes clínicas (AUC ≈ 0.5). De ahí nacía una hipótesis atractiva: si cada canal vale poco por separado pero juntos alcanzan AUC ≈ 0.88, la única explicación sería una <strong>interacción multiplicativa</strong> entre señal y forma — el corazón de nuestro marco Λ = S ⊗ Φ.</p>
+
+      <p>Antes de construir un paper entero sobre esa idea, decidimos verificar la cifra de la que dependía todo. Es lo que un enfoque glass-box exige: auditar el número antes de edificar sobre él.</p>
+
+      <h2>La auditoría: el número estaba mal</h2>
+
+      <p>Recomputamos el AUC del canal evolutivo aislado, leído <strong>en la posición exacta de la variante</strong> y sin normalizar, sobre las 5.023 variantes confiables del panel de 42 genes. Resultado:</p>
+
+      <div class="statcards-2">
+        <div class="statcard statcard--accent"><div class="v t-accent">0.90</div><div class="l l-accent">AUC del LLR (posición de la variante)</div></div>
+        <div class="statcard statcard--accent"><div class="v t-accent">~0.5</div><div class="l l-accent">Cifra previa (errónea)</div></div>
+        <div class="statcard statcard--accent"><div class="v t-accent">5.023</div><div class="l l-accent">Variantes auditadas</div></div>
+        <div class="statcard statcard--accent"><div class="v t-accent">42</div><div class="l l-accent">Genes</div></div>
+      </div>
+
+      <p>El canal evolutivo <strong>sí discrimina</strong>, y muy bien (AUC ≈ 0.90, en línea con lo publicado para ESM-1v). La pista definitiva: incluso el ESM-1v de referencia salía a ~0.52 en la tabla original, cuando la literatura lo sitúa en 0.75–0.85 — el fallo afectaba hasta al modelo de control, así que era un <strong>artefacto de cómputo</strong> (agregación por ventana en vez de lectura puntual), no una propiedad de ningún modelo.</p>
+
+      <h2>Con la señal bien leída: ¿qué aporta la termodinámica en missense?</h2>
+
+      <p>Corregida la cifra, la pregunta cambia. Ya no es "¿por qué dos canales flojos suman tanto?", sino "¿aporta la termodinámica algo <strong>por encima</strong> de una señal evolutiva bien leída?". Reajustamos cuatro modelos anidados (solo señal, solo forma, aditivo, con interacción) con validación cruzada por gen y corrección de comparaciones múltiples (FDR).</p>
+
+      <p>La respuesta, honesta: en <strong>missense</strong>, añadir el canal termodinámico mejora el AUC en <strong>+0.000</strong>. La interacción señal×forma existe —es estadísticamente detectable tras FDR— pero es de <strong>efecto prácticamente nulo</strong>: no cambia la clasificación. En missense, el modelo de lenguaje ya ve lo que hay que ver.</p>
+
+      <h2>El contraste: donde el modelo de lenguaje es ciego</h2>
+
+      <p>Aquí está el giro. Una variante <strong>sinónima</strong> no cambia la proteína — el modelo de lenguaje de proteína no tiene nada que leer, es ciego por construcción. Aplicamos exactamente el mismo canal termodinámico a 5.531 variantes sinónimas de 8 genes:</p>
+
+      <table class="table">
+        <thead><tr><th>Observable termodinámico</th><th>AUC en missense</th><th>AUC en sinónimas</th></tr></thead>
+        <tbody>
+          <tr><td>ΔΔG de apilamiento (con signo)</td><td>0.50</td><td><strong>0.66</strong></td></tr>
+          <tr><td>ΔG local del entorno</td><td>0.55</td><td><strong>0.66</strong></td></tr>
+          <tr><td>Modelo termodinámico combinado</td><td>≈ 0.50</td><td><strong>0.63–0.71</strong></td></tr>
+        </tbody>
+      </table>
+
+      <p>El mismo canal que es inerte en missense <strong>lleva la clasificación en sinónimas</strong>. No porque cambie el método — cambia el régimen. Donde no hay señal evolutiva que leer, la física del mRNA es la que queda, y discrimina.</p>
+
+      <blockquote style="border-left:3px solid var(--color-accent);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">La termodinámica no compite con los modelos de lenguaje en su terreno. Es el eje que ilumina el terreno donde ellos no pueden ver.</blockquote>
+
+      <h2>Qué significa esto para EnergyFingerprint</h2>
+
+      <p>Reordena el relato de forma que lo <strong>refuerza</strong>. Nuestro posicionamiento siempre fue operar "donde REVEL y AlphaMissense son ciegos" — y esos son predictores de missense. La auditoría lo confirma con números: el valor distintivo de la termodinámica no está en competir en missense (donde la señal evolutiva ya gana), sino en el régimen <strong>silencioso</strong> — variantes sinónimas, mRNA, no codificante — donde ningún modelo de lenguaje de proteína tiene entrada.</p>
+
+      <p>Y hay una lección de método: un resultado que parecía extraordinario (super-aditividad multiplicativa) descansaba en una cifra que nadie había verificado. Auditarla nos ahorró publicar un artefacto y nos dio algo más sólido — un contraste de régimen limpio y falsable. En una empresa glass-box, corregir el propio registro no es una debilidad; es el producto.</p>
+
+      <p><em>Nota de honestidad: la validación en sinónimas está limitada por la escasez de variantes patogénicas confiables (decenas); el número robusto de alta potencia (AUC 0.71) proviene del set expandido. Lo declaramos porque el rigor es el punto.</em></p>
+      <div class="note">
+        <p><strong style="color:var(--color-text);">Actualización (sep 2026):</strong> un control posterior matiza este resultado. En el conjunto de sinónimas patogénicas confiables de ClinVar, ~65&#37; cae a ≤3&nbsp;nt de un borde de exón, y <strong>SpliceAI —una herramienta gratuita— las clasifica mejor</strong> que la señal termodinámica (AUC 0,97 vs σ+G&gt;A 0,59 en el estrato exónico profundo). En la práctica, el positivo de ClinVar es un conjunto de variantes de <em>splicing</em>. Esto <strong>no refuta</strong> que la termodinámica importe para expresión/traducción — dice que ClinVar no puede probarlo, y que hace falta dato funcional (MPRA / reporter / DMS-MaPseq). El resultado se mantiene como <strong>interpretabilidad</strong> (σ+G&gt;A ≈ CNN), no como clasificador clínico independiente.</p>
+      </div>
+    </article>
+
+    <div class="cta">
+      <div>
+        <h3>Prueba el clasificador termodinámico de variantes sinónimas.</h3>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-primary btn--mono" href="../tools/ef-synonymous.html">▶ ef-synonymous</a>
+        <a class="btn btn-secondary btn--mono" href="https://doi.org/10.5281/zenodo.20275792" target="_blank">Paper P1 · sinónimas</a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer article-footer">
+    <a href="./index.html">← volver al blog</a>
+    <a href="../index.html">qmetrika_labs</a>
+    <span class="push">2026</span>
+  </footer>
+</div>
+</body>
+</html>

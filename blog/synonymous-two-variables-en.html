@@ -73,6 +73,9 @@ pip install ef-synonymous
 ef-syn score --transcript ENST00000399655 --hgvs c.213G&gt;A</pre>
 
       <p>And a <strong>glass-box web tool</strong> that runs entirely in the browser: paste a CDS (or fetch a gene from Ensembl), enter the variant, and see the score, the breakdown, the ΔG profile, and an exportable report (JSON or PDF). No signup, no server.</p>
+      <div class="note">
+        <p><strong style="color:var(--color-text);">Update (Sep 2026):</strong> a later control qualifies this result. Among ClinVar's confident pathogenic synonymous variants, ~65&#37; fall within ≤3&nbsp;nt of an exon border, and <strong>SpliceAI —a free tool— classifies them better</strong> than the thermodynamic signal (AUC 0.97 vs σ+G&gt;A 0.59 in the deep-exonic stratum). In practice, the ClinVar positive set is a set of <em>splicing</em> variants. This <strong>does not refute</strong> that thermodynamics matters for expression/translation — it says ClinVar cannot prove it, and that functional data is needed (MPRA / reporter / DMS-MaPseq). The result stands as <strong>interpretability</strong> (σ+G&gt;A ≈ CNN), not as an independent clinical classifier.</p>
+      </div>
     </article>
 
     <div class="cta">

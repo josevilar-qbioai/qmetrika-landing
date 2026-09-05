@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Where thermodynamics wins: a regime contrast — QMetrika Labs Blog</title>
+<meta name="description" content="We audited our own pipeline: the thermodynamic channel adds no value in missense (where the language model already wins), but it does classify synonymous variants, where that model is blind.">
+<link rel="stylesheet" href="../styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap">
+</head>
+<body>
+<div class="wrap">
+  <header class="nav nav--site">
+    <span class="nav-brand"><svg width="26" height="26" viewBox="6 6 46 46" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><circle cx="28" cy="28" r="18" stroke="#201e1d" stroke-width="4.5"/><circle cx="41" cy="41" r="9.6" fill="#f5ead8"/><circle cx="41" cy="41" r="7.4" fill="#201e1d"/><circle cx="41" cy="41" r="5.4" fill="#c67139"/></svg>QMetrika Labs</span>
+    <a href="../en.html">home</a>
+    <a href="./en.html">blog</a>
+    <a href="../en.html#contact">contact</a>
+    <a class="lang" href="regimen-termodinamico.html">en/es</a>
+  </header>
+
+  <div class="article">
+    <a class="lang" href="./en.html">← blog</a>
+
+    <div class="article-head">
+      <div class="kicker kicker--accent">August 2026</div>
+      <h1 class="article-title">Where thermodynamics wins: <em>a regime contrast</em></h1>
+      <p class="article-lede">We audited our own variant-classification pipeline. The honest result reorders the story: in missense the evolutionary signal is what classifies; the thermodynamic channel is the differentiator exactly where protein language models are blind — synonymous variants and mRNA.</p>
+      <div class="meta-row">
+        <span class="tag tag-accent mono">bio-ia</span>
+        <span class="tag tag-accent mono">glass-box</span>
+        <span class="tag tag-accent mono">audit</span>
+      </div>
+    </div>
+
+    <hr class="hr" style="margin:40px 0;">
+
+    <article class="prose">
+      <h2>The starting point</h2>
+
+      <p>EnergyFingerprint combines two axes: an <strong>evolutionary</strong> one (the log-likelihood ratio of a protein language model, ESMC) and a <strong>thermodynamic</strong> one (the mRNA stacking energy profile). For months we worked with an internal figure stating that the evolutionary axis, on its own, barely discriminated clinical variants (AUC ≈ 0.5). From that came an attractive hypothesis: if each channel is weak alone but together they reach AUC ≈ 0.88, the only explanation would be a <strong>multiplicative interaction</strong> between signal and shape — the heart of our Λ = S ⊗ Φ framework.</p>
+
+      <p>Before building an entire paper on that idea, we decided to verify the number everything depended on. That is what a glass-box approach demands: audit the number before building on it.</p>
+
+      <h2>The audit: the number was wrong</h2>
+
+      <p>We recomputed the AUC of the evolutionary channel alone, read <strong>at the exact position of the variant</strong> and unnormalized, over the 5,023 confident variants of the 42-gene panel. Result:</p>
+
+      <div class="statcards-2">
+        <div class="statcard statcard--accent"><div class="v t-accent">0.90</div><div class="l l-accent">LLR AUC (variant position)</div></div>
+        <div class="statcard statcard--accent"><div class="v t-accent">~0.5</div><div class="l l-accent">Previous figure (wrong)</div></div>
+        <div class="statcard statcard--accent"><div class="v t-accent">5,023</div><div class="l l-accent">Variants audited</div></div>
+        <div class="statcard statcard--accent"><div class="v t-accent">42</div><div class="l l-accent">Genes</div></div>
+      </div>
+
+      <p>The evolutionary channel <strong>does discriminate</strong>, and very well (AUC ≈ 0.90, in line with published ESM-1v). The decisive clue: even the reference ESM-1v came out at ~0.52 in the original table, when the literature places it at 0.75–0.85 — the fault hit even the control model, so it was a <strong>computation artifact</strong> (window aggregation instead of point reading), not a property of any model.</p>
+
+      <h2>With the signal read correctly: what does thermodynamics add in missense?</h2>
+
+      <p>With the figure corrected, the question changes. It is no longer "why do two weak channels add up to so much?", but "does thermodynamics add anything <strong>on top of</strong> a correctly-read evolutionary signal?". We refit four nested models (signal only, shape only, additive, with interaction) with per-gene cross-validation and multiple-comparison correction (FDR).</p>
+
+      <p>The honest answer: in <strong>missense</strong>, adding the thermodynamic channel improves AUC by <strong>+0.000</strong>. The signal×shape interaction exists — it is statistically detectable after FDR — but it is of <strong>practically null effect</strong>: it does not change the classification. In missense, the language model already sees what there is to see.</p>
+
+      <h2>The contrast: where the language model is blind</h2>
+
+      <p>Here is the twist. A <strong>synonymous</strong> variant does not change the protein — the protein language model has nothing to read, blind by construction. We applied exactly the same thermodynamic channel to 5,531 synonymous variants across 8 genes:</p>
+
+      <table class="table">
+        <thead><tr><th>Thermodynamic observable</th><th>AUC in missense</th><th>AUC in synonymous</th></tr></thead>
+        <tbody>
+          <tr><td>Stacking ΔΔG (signed)</td><td>0.50</td><td><strong>0.66</strong></td></tr>
+          <tr><td>Local ΔG of the context</td><td>0.55</td><td><strong>0.66</strong></td></tr>
+          <tr><td>Combined thermodynamic model</td><td>≈ 0.50</td><td><strong>0.63–0.71</strong></td></tr>
+        </tbody>
+      </table>
+
+      <p>The same channel that is inert in missense <strong>carries the classification in synonymous variants</strong>. Not because the method changes — the regime changes. Where there is no evolutionary signal to read, the mRNA physics is what remains, and it discriminates.</p>
+
+      <blockquote style="border-left:3px solid var(--color-accent);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">Thermodynamics does not compete with language models on their turf. It is the axis that lights up the ground where they cannot see.</blockquote>
+
+      <h2>What this means for EnergyFingerprint</h2>
+
+      <p>It reorders the story in a way that <strong>strengthens</strong> it. Our positioning was always to operate "where REVEL and AlphaMissense are blind" — and those are missense predictors. The audit confirms it with numbers: the distinctive value of thermodynamics is not competing in missense (where the evolutionary signal already wins), but in the <strong>silent</strong> regime — synonymous variants, mRNA, non-coding — where no protein language model has an entry point.</p>
+
+      <p>And there is a method lesson: a result that looked extraordinary (multiplicative super-additivity) rested on a figure no one had verified. Auditing it saved us from publishing an artifact and gave us something more solid — a clean, falsifiable regime contrast. In a glass-box company, correcting your own record is not a weakness; it is the product.</p>
+
+      <p><em>Honesty note: the synonymous validation is limited by the scarcity of confident pathogenic variants (tens); the robust high-power figure (AUC 0.71) comes from the expanded set. We state it because rigor is the point.</em></p>
+      <div class="note">
+        <p><strong style="color:var(--color-text);">Update (Sep 2026):</strong> a later control qualifies this result. Among ClinVar's confident pathogenic synonymous variants, ~65&#37; fall within ≤3&nbsp;nt of an exon border, and <strong>SpliceAI —a free tool— classifies them better</strong> than the thermodynamic signal (AUC 0.97 vs σ+G&gt;A 0.59 in the deep-exonic stratum). In practice, the ClinVar positive set is a set of <em>splicing</em> variants. This <strong>does not refute</strong> that thermodynamics matters for expression/translation — it says ClinVar cannot prove it, and that functional data is needed (MPRA / reporter / DMS-MaPseq). The result stands as <strong>interpretability</strong> (σ+G&gt;A ≈ CNN), not as an independent clinical classifier.</p>
+      </div>
+    </article>
+
+    <div class="cta">
+      <div>
+        <h3>Try the thermodynamic classifier for synonymous variants.</h3>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-primary btn--mono" href="../tools/ef-synonymous.html">▶ ef-synonymous</a>
+        <a class="btn btn-secondary btn--mono" href="https://doi.org/10.5281/zenodo.20275792" target="_blank">Paper P1 · synonymous</a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer article-footer">
+    <a href="./en.html">← back to blog</a>
+    <a href="../en.html">qmetrika_labs</a>
+    <span class="push">2026</span>
+  </footer>
+</div>
+</body>
+</html>

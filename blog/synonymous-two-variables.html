@@ -73,6 +73,9 @@ pip install ef-synonymous
 ef-syn score --transcript ENST00000399655 --hgvs c.213G&gt;A</pre>
 
       <p>Y una <strong>herramienta web glass-box</strong> que corre entera en el navegador: pegas un CDS (o buscas un gen en Ensembl), metes la variante, y ves el score, la descomposición, el perfil ΔG y un informe exportable (JSON o PDF). Cero registro, cero servidor.</p>
+      <div class="note">
+        <p><strong style="color:var(--color-text);">Actualización (sep 2026):</strong> un control posterior matiza este resultado. En el conjunto de sinónimas patogénicas confiables de ClinVar, ~65&#37; cae a ≤3&nbsp;nt de un borde de exón, y <strong>SpliceAI —una herramienta gratuita— las clasifica mejor</strong> que la señal termodinámica (AUC 0,97 vs σ+G&gt;A 0,59 en el estrato exónico profundo). En la práctica, el positivo de ClinVar es un conjunto de variantes de <em>splicing</em>. Esto <strong>no refuta</strong> que la termodinámica importe para expresión/traducción — dice que ClinVar no puede probarlo, y que hace falta dato funcional (MPRA / reporter / DMS-MaPseq). El resultado se mantiene como <strong>interpretabilidad</strong> (σ+G&gt;A ≈ CNN), no como clasificador clínico independiente.</p>
+      </div>
     </article>
 
     <div class="cta">

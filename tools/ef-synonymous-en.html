@@ -150,7 +150,7 @@
 
   <div class="card">
     <h2>How it works (and what it is not)</h2>
-    <p>The model is a logistic regression over <b>two physical observables</b> matching the dedicated CNN of Paper 1 (AUC 0.683):</p>
+    <p>The model is a logistic regression over <b>two physical observables</b> recovering most of the dedicated CNN of Paper 1 (AUC 0.709; on par on the gene-matched set, 0.659):</p>
     <ul>
       <li><b>σ (sigma_signed):</b> signed sum of nearest-neighbor stacking ΔΔG (Turner RNA parameters) over ±10 nt around the variant. Measures the local thermodynamic destabilization of the mRNA.</li>
       <li><b>is_GtoA:</b> G&gt;A transition (CpG mutational bias, 2.60× enriched in pathogenic).</li>
@@ -371,7 +371,7 @@ function exportDossier(){
       coef:MODEL.coef, intercept:MODEL.intercept, mean:MODEL.mean, std:MODEL.std,
       window:MODEL.window, local_w:MODEL.local_w,
       training:'ClinVar synonymous v2 (n=1957; 657P/1300B; 456 genes)',
-      auc:{pooled:0.671, leave_genes_out:0.680}, reference_cnn_auc:0.683,
+      auc:{pooled:0.671, leave_genes_out:0.680}, reference_cnn_auc:0.709,
       patent:'P202630522 (OEPM)', paper:'Zenodo 10.5281/zenodo.20275792'},
     input:{gene:document.getElementById('gene').value.trim()||null,
       transcript:(document.getElementById('transcript').value||null),
@@ -441,7 +441,7 @@ footer{margin-top:20px;border-top:1px solid #D3D0C6;padding-top:8px;font-size:9.
 <h2>Model provenance</h2>
 <dl class="kv"><dt>Model</dt><dd>σ + G&gt;A (glass-box logistic regression)</dd>
 <dt>Parameters</dt><dd>Turner (RNA) nearest-neighbor · v2 2026-07-17</dd>
-<dt>Performance</dt><dd>AUC 0.671 pooled / 0.680 leave-genes-out (≈ CNN 0.683)</dd>
+<dt>Performance</dt><dd>AUC 0.671 pooled / 0.680 leave-genes-out (CNN 0.709; on par on gene-matched 0.659)</dd>
 <dt>Training</dt><dd>ClinVar synonymous v2 (n=1957; 657P/1300B; 456 genes)</dd>
 <dt>CDS fingerprint</dt><dd class="mono">FNV-1a ${fp} · ${cds.length} nt</dd>
 <dt>Patent</dt><dd>P202630522 (OEPM)</dd><dt>Paper</dt><dd>Zenodo 10.5281/zenodo.20275792</dd>

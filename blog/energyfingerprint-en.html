@@ -50,7 +50,7 @@
 
       <p><strong>Evolutionary axis (channels 5-11):</strong> ESMC-300M protein language model (EvolutionaryScale, successor to ESM-1v). Masked marginal scoring: the mutated position is masked, and the log-likelihood ratio between the native and mutant amino acid is measured. It captures the evolutionary pressure that has acted on that position for millions of years.</p>
 
-      <blockquote style="border-left:3px solid var(--color-accent);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">The key is not that each axis is better than competitors on its own — it is that the two axes are <strong>orthogonal</strong>. One operates at the nucleotide level, the other at the protein level. Together they see what neither can see alone.</blockquote>
+      <blockquote style="border-left:3px solid var(--color-accent);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">The two axes are <strong>orthogonal</strong>: one operates at the nucleotide level, the other at the protein level. In missense, the classification is carried by the evolutionary axis; the thermodynamic one adds its distinctive value where the former is blind — synonymous variants and mRNA.</blockquote>
 
       <h2>Results: 42 validated genes</h2>
 
@@ -77,6 +77,10 @@
 
       <p><strong>July 2026 update:</strong> The panel has expanded from 8 to <strong>42 genes</strong> (12 trainable + 30 zero-shot only), with a mean zero-shot AUC of 0.876 across 41 evaluable genes. The evolutionary model has been migrated from ESM-1v to ESMC-300M (CNN AUC 0.961 on BRCA1). Full results in the <a href="https://doi.org/10.5281/zenodo.21309529">TECH-2 technical report</a>.</p>
 
+      <div style="border:1px solid var(--color-accent);background:rgba(198,113,57,0.06);border-radius:10px;padding:18px 22px;margin:34px 0;font-size:15px;line-height:1.55;">
+        <strong>August 2026 update — channel audit.</strong> An internal pipeline audit over the 42-gene panel (5,023 variants) found that, in <strong>missense</strong>, the classification is carried by the evolutionary channel: the ESMC LLR read at the variant position discriminates with AUC ≈ 0.90, and the thermodynamic channel — though orthogonal — adds no net discriminative power in this regime. The zero-shot AUCs above mostly reflect that evolutionary axis. The thermodynamic channel's distinctive value shows up in <strong>synonymous variants</strong>, where the protein language model is blind and ΔG does classify. Methodology in <a href="regimen-termodinamico-en.html">Where thermodynamics wins: a regime contrast</a>.
+      </div>
+
       <h2>The transferability gradient</h2>
 
       <p>The most revealing finding is not the absolute AUCs, but the pattern that emerges when training on BRCA1 and predicting on the remaining genes <strong>without retraining</strong> (zero-shot):</p>
@@ -97,7 +101,7 @@
 
       <p><strong>CADD</strong> integrates multiple genomic annotations into a single score. <strong>REVEL</strong> ensembles 13 predictors. <strong>AlphaMissense</strong> uses AlphaFold2 representations. All operate at the protein level.</p>
 
-      <p>EnergyFingerprint is the first to combine mRNA thermodynamic signal with evolutionary signal from a protein language model. The orthogonality of the axes suggests that the information it contributes is <strong>complementary</strong>, not redundant — and that opens the door to ensembles where EF adds value to any existing predictor.</p>
+      <p>EnergyFingerprint is the first to combine mRNA thermodynamic signal with evolutionary signal from a protein language model. The two axes are <strong>orthogonal</strong>, and that complementarity materializes mostly where protein-level predictors cannot reach — synonymous variants and mRNA. In missense the evolutionary axis already captures the signal; EF integrates both channels but it is the evolutionary one that classifies.</p>
     </article>
 
     <div class="cta">

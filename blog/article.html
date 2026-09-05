@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>La interrupción que rompe el patrón — QMetrika Labs Blog</title>
-<meta name="description" content="energoRNA extiende el motor termodinámico de QMetrika del ARN puntual al ARN estructural: la pérdida de periodicidad local del apilamiento predice la edad de inicio en enfermedades de expansión de repeticiones (DM1, Huntington, SCA1, X-frágil) mejor que contar repeticiones. Glass-box, pip install energorna.">
+<meta name="description" content="energoRNA extiende el motor termodinámico de QMetrika del ARN puntual al ARN estructural: la pérdida de periodicidad local del apilamiento codifica la arquitectura de las interrupciones de repetición (tipo y posición) en enfermedades de expansión (DM1, Huntington, SCA1, X-frágil) — a la par del conteo de bloques en los datos disponibles, con una ventaja glass-box. pip install energorna.">
 <link rel="stylesheet" href="../styles.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap">
@@ -25,7 +25,7 @@
     <div class="article-head">
       <div class="kicker kicker--accent">Julio 2026</div>
       <h1 class="article-title">La interrupción que <em>rompe el patrón</em></h1>
-      <p class="article-lede">En las enfermedades de expansión de repeticiones, la edad de inicio no la fija solo cuántas repeticiones hay, sino si el tracto está interrumpido. energoRNA lo mide con un único observable físico — la pérdida de periodicidad del apilamiento — que predice el inicio mejor que contar. Glass-box, <span class="ic">pip install energorna</span>.</p>
+      <p class="article-lede">En las enfermedades de expansión de repeticiones, la edad de inicio no la fija solo cuántas repeticiones hay, sino si el tracto está interrumpido. energoRNA lo mide con un único observable físico — la pérdida de periodicidad del apilamiento — que codifica el <strong>tipo</strong> y la <strong>posición</strong> de la interrupción, a la par del conteo de bloques en los datos disponibles. Glass-box, <span class="ic">pip install energorna</span>.</p>
       <div class="meta-row">
         <span class="tag tag-accent mono">bio-ia</span>
         <span class="tag tag-accent mono">glass-box</span>
@@ -49,17 +49,17 @@ pip install energorna
 energorna score --repeat CTG --n 40</pre>
       <p>Auto-calibra el periodo por motivo (3 en trinucleótidos, 4 en el tetranucleótido CCTG de DM2) y, a diferencia de contar, es sensible al <strong>tipo</strong> de interrupción (CCG desestabiliza el patrón mucho más que CTC) y a su <strong>posición</strong> en el tracto.</p>
 
-      <h2>Supera al conteo, en cuatro enfermedades</h2>
-      <p>En DM1, la pérdida de periodicidad predice el residuo de inicio mucho mejor que contar interrupciones:</p>
+      <h2>A la par del conteo fuerte, con una ventaja glass-box</h2>
+      <p>En DM1 (n=7), la pérdida de periodicidad predice el residuo de inicio <strong>a la par</strong> de la base de conteo más fuerte —contar bloques de interrupción— y por encima de las débiles (conteo simple +0.53). Con n=7 no se separan (Δr≈0):</p>
       <div class="statcards-2">
         <div class="statcard statcard--accent"><div class="v t-accent">+0.81</div><div class="l l-accent">periodicidad vs inicio (DM1)</div></div>
-        <div class="statcard statcard--muted"><div class="v t-muted">+0.53</div><div class="l l-muted">conteo de interrupciones</div></div>
+        <div class="statcard statcard--sage"><div class="v t-sage">+0.83</div><div class="l l-sage">contar bloques · empata (Δr≈0)</div></div>
       </div>
-      <p>En <strong>Huntington</strong>, las tres arquitecturas canónicas se ordenan por pérdida de periodicidad exactamente como por su inicio publicado. En <strong>SCA1</strong>, con datos individuales reales y abiertos (Menon 2013, n=35), el tramo ininterrumpido —el eje del observable— predice el inicio muy por encima del tamaño total. Y en <strong>X-frágil</strong> el mismo observable ordena las arquitecturas AGG por su <strong>riesgo de expansión</strong> publicado — un motivo, una interrupción y un endpoint nuevos:</p>
+      <p>En <strong>Huntington</strong>, las tres arquitecturas canónicas se ordenan por pérdida de periodicidad exactamente como por su inicio publicado. En <strong>SCA1</strong> (Menon 2013, n=35, datos reales y abiertos) el <strong>tramo ininterrumpido</strong> —la métrica de longitud de Menon— predice el inicio muy por encima del tamaño total; pero el observable propio de energoRNA ahí <strong>no aplica</strong> (solo 8/35 alelos patogénicos están interrumpidos): un negativo informativo, no una validación del observable. Y en <strong>X-frágil</strong> el mismo observable ordena las arquitecturas AGG por su <strong>riesgo de expansión</strong> publicado — un motivo, una interrupción y un endpoint nuevos:</p>
       <div class="statcards-3">
-        <div class="statcard statcard--sage"><div class="v t-sage">0.64</div><div class="l l-sage">R² tramo ininterrumpido (SCA1)</div></div>
+        <div class="statcard statcard--sage"><div class="v t-sage">0.64</div><div class="l l-sage">R² tramo ininterrumpido · métrica de Menon</div></div>
         <div class="statcard statcard--muted"><div class="v t-muted">0.24</div><div class="l l-muted">R² tamaño total</div></div>
-        <div class="statcard statcard--sage"><div class="v t-sage">n=35</div><div class="l l-sage">reproduce un paper peer-reviewed</div></div>
+        <div class="statcard statcard--sage"><div class="v t-sage">n=35</div><div class="l l-sage">reproduce a Menon (no valida el observable)</div></div>
       </div>
       <p>No es cuántas repeticiones hay, es la <strong>ruptura del patrón periódico</strong> del campo de energía. El mismo observable físico, en DM1, Huntington, SCA1 y X-frágil.</p>
 

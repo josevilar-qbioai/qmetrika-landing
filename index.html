@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>QMetrika Labs — Biocomputación · IA · Conocimiento Q</title>
-<meta name="description" content="QMetrika Labs desarrolla plataformas de biocomputación e inteligencia artificial con datos en local y conocimiento propio. Bio-IA: clasificación de variantes genéticas y optimización de mRNA terapéutico.">
+<meta name="description" content="QMetrika Labs — Bio-IA termodinámica. Línea principal: optimización de mRNA terapéutico desde el eje de apilamiento ΔG que LinearDesign y el MFE no usan. Además, herramientas abiertas de análisis de variantes. Ejecución en local.">
 <link rel="stylesheet" href="styles.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap">
@@ -18,7 +18,7 @@
     <a href="#papers">papers</a>
     <a href="blog/">blog</a>
     <a class="lang" href="en.html">es/en</a>
-    <a class="btn btn-primary" href="mailto:qmetrika@proton.me">contacto</a>
+    <a class="btn btn-primary" href="mailto:info@qmetrika.xyz">contacto</a>
   </header>
 
   <!-- hero -->
@@ -27,18 +27,36 @@
       <div>
         <div class="kicker kicker--sage">Biocomputación · Inteligencia Artificial · Ciencia de Datos</div>
         <h1 class="hero-title">Energía que se transforma en conocimiento</h1>
-        <p class="hero-lede">IA, biocomputación y ciencia de datos aplicadas al mRNA: clasificación de variantes y diseño terapéutico desde su factor de forma termodinámico — el eje físico que ningún predictor usa. Los datos sensibles nunca salen de tu infraestructura.</p>
-        <div class="hero-cta"><a class="btn btn-primary" href="tools/ef-synonymous.html" style="padding:14px 28px; font-size:15px;">probar las herramientas →</a></div>
+        <p class="hero-lede">IA y biocomputación aplicadas al mRNA. Nuestra línea principal: <strong>optimización de mRNA terapéutico</strong> desde el eje termodinámico de apilamiento (ΔG) que LinearDesign y el MFE no usan — un optimizador dual que supera a las vacunas comerciales. Junto a un conjunto de herramientas abiertas de análisis de variantes. Los datos sensibles nunca salen de tu infraestructura.</p>
+        <div class="hero-cta"><a class="btn btn-primary" href="#mrna" style="padding:14px 28px; font-size:15px;">optimización de mRNA →</a> <a class="btn btn-secondary" href="#tools" style="padding:14px 28px; font-size:15px;">herramientas abiertas →</a></div>
       </div>
       <div class="hero-side">
         <div class="formula">Λ = S ⊗ Φ</div>
         <div class="formula-cap">marco unificado · señal ⊗ forma</div>
         <div class="hero-stats">
+          <div class="stat"><span class="stat-v">2</span><span class="stat-l">vacunas comerciales superadas</span></div>
           <div class="stat"><span class="stat-v">4</span><span class="stat-l">publicaciones · doi</span></div>
-          <div class="stat"><span class="stat-v">42</span><span class="stat-l">genes validados</span></div>
-          <div class="stat"><span class="stat-v">0.99</span><span class="stat-l">auc máximo</span></div>
           <div class="stat"><span class="stat-v">1</span><span class="stat-l">patente oepm</span></div>
+          <div class="stat"><span class="stat-v">100%</span><span class="stat-l">ejecución en local</span></div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- L2 mRNA optimization (flagship) -->
+  <section class="section" id="mrna">
+    <div class="section-head">
+      <div class="kicker kicker--accent">Línea principal · L2</div>
+      <h2 class="section-title">Optimización de mRNA terapéutico</h2>
+      <p class="section-intro">Diseño de secuencias de mRNA desde el eje termodinámico de <strong>apilamiento nearest-neighbor (ΔG)</strong> — una dimensión física que LinearDesign y la energía de estructura (MFE) no capturan. El optimizador dual mejora ambas a la vez.</p>
+    </div>
+    <div class="glassbox">
+      <span class="tag tag-accent-2">evidencia</span>
+      <p>El optimizador dual (ΔG + MFE) <strong>supera simultáneamente a BNT162b2 y mRNA-1273</strong> en ambas métricas; el eje de apilamiento es ortogonal a la estructura secundaria (R²=0,144 con el MFE) — información que los métodos actuales no usan.</p>
+      <p class="text-muted" style="font-size:14px; margin-top:10px;">Método cubierto por la patente P202630522; el optimizador es tecnología propietaria. Abierto a colaboración y licencia con pharma/biotech de mRNA.</p>
+      <div class="video-links">
+        <a class="btn btn-primary btn--mono" href="mailto:info@qmetrika.xyz?subject=Optimizaci%C3%B3n%20de%20mRNA%20(L2)">hablar de mRNA →</a>
+        <a class="btn btn-secondary btn--mono" href="https://doi.org/10.5281/zenodo.20228980">leer P-L2 →</a>
       </div>
     </div>
   </section>
@@ -48,13 +66,13 @@
     <div class="section-head">
       <div class="kicker kicker--accent">Herramientas · Tools</div>
       <h2 class="section-title">Abiertas, glass-box y gratis</h2>
-      <p class="section-intro">Sin registro. Cada línea destila un observable físico interpretable en una herramienta que corre entera en tu equipo — sin GPU, sin que los datos salgan de ahí.</p>
+      <p class="section-intro">Nuestro trabajo abierto. Cada línea de análisis de variantes destila un observable físico interpretable en una herramienta que corre entera en tu equipo — sin registro, sin GPU, sin que los datos salgan de ahí.</p>
     </div>
     <div class="tools-grid">
       <div class="tool-card">
         <span class="tag tag-accent mono">Variantes sinónimas</span>
         <h3 class="tool-name">ef-synonymous</h3>
-        <p class="tool-desc">La señal termodinámica σ + G&gt;A que iguala a la red profunda. Disponible como web, CLI y plugin VEP.</p>
+        <p class="tool-desc">Un modelo interpretable de 2 variables físicas (σ = ΔΔG con signo + sesgo G&gt;A) para variantes sinónimas — glass-box y auditable. Web, CLI y plugin VEP.</p>
         <code class="install">pip install ef-synonymous</code>
         <div class="tool-links">
           <a class="btn btn-primary btn--mono" href="tools/ef-synonymous.html">▶ web</a>
@@ -65,7 +83,7 @@
       <div class="tool-card">
         <span class="tag tag-accent mono">Expansión de repeticiones</span>
         <h3 class="tool-name">energorna</h3>
-        <p class="tool-desc">Predice inicio y riesgo de expansión en DM1, Huntington, SCA1 y X-frágil — mejor que contar repeticiones, capturando el tipo y la posición de la interrupción. Validada en 4 enfermedades.</p>
+        <p class="tool-desc">Observable físico interpretable de la arquitectura de las interrupciones de repetición (tipo y posición) en DM1, Huntington, SCA1 y X-frágil. A la par del conteo de bloques en los datos disponibles; glass-box y model-free.</p>
         <code class="install">pip install energorna</code>
         <div class="tool-links">
           <a class="btn btn-primary btn--mono" href="tools/energorna.html">▶ web</a>
@@ -89,11 +107,11 @@
     <div>
       <div class="kicker kicker--sage">Línea de investigación</div>
       <h2 class="section-title" style="font-size:38px;">Bio-IA — inteligencia termodinámica</h2>
-      <p class="bioia-body">Primera vertical del laboratorio. Una plataforma biofísica que opera donde REVEL y AlphaMissense son ciegos: el perfil termodinámico del mRNA y, en particular, las variantes sinónimas — un nicho sin competidor. Un motor compartido, ΔG nearest-neighbor, alimenta tres frentes: clasificación de variantes, diseño de mRNA y enfermedades de expansión de repeticiones.</p>
+      <p class="bioia-body">Primera vertical del laboratorio. Un motor biofísico compartido —ΔG de apilamiento nearest-neighbor— alimenta tres frentes: <strong>optimización de mRNA terapéutico (la línea principal)</strong>, clasificación de variantes y enfermedades de expansión de repeticiones. Opera sobre un eje físico que el MFE y los predictores a nivel de proteína no usan.</p>
     </div>
     <div class="glassbox">
       <span class="tag tag-accent-2">glass-box</span>
-      <p>El hallazgo core: la señal se reduce a un modelo interpretable de 2 variables físicas que iguala a la red profunda — auditable como evidencia ACMG.</p>
+      <p>Nuestra apuesta: cada línea destila un observable físico interpretable, no una caja negra. Modelos auditables que corren en local — la base para uso clínico y regulatorio.</p>
       <div class="video-links">
         <a class="btn btn-secondary btn--mono" href="qmetrika_video_es.html">▶ vídeo · visión general (ES)</a>
         <a class="btn btn-secondary btn--mono" href="qmetrika_video_en.html">▶ video · project overview (EN)</a>
@@ -109,24 +127,24 @@
       <p class="section-intro" style="font-size:15px;">Evidencia científica revisable: tres preprints y un informe técnico de benchmark. Una trilogía en construcción, con revisión por pares en curso.</p>
     </div>
     <div class="pub-row">
+      <span class="tag tag-accent mono">P-L2</span>
+      <div><h4>mRNA Stacking Optimization: Codon design guided by nearest-neighbor thermodynamics</h4><p>Línea principal. ΔG de apilamiento como eje ortogonal al MFE (R²=0,144). Optimizador dual que supera a las vacunas comerciales.</p></div>
+      <a class="pub-doi" href="https://doi.org/10.5281/zenodo.20228980">10.5281/zenodo.20228980</a>
+    </div>
+    <div class="pub-row">
       <span class="tag tag-accent mono">P-L1</span>
       <div><h4>EnergyFingerprint: Thermodynamic stacking profiles for missense variant classification</h4><p>CNN 1D multicanal, 42 genes validados, AUC 0,87–0,99. Gradiente de transferibilidad zero-shot.</p></div>
       <a class="pub-doi" href="https://doi.org/10.5281/zenodo.19831154">10.5281/zenodo.19831154</a>
     </div>
     <div class="pub-row">
-      <span class="tag tag-accent mono">P-L2</span>
-      <div><h4>mRNA Stacking Optimization: Codon design guided by nearest-neighbor thermodynamics</h4><p>ΔG como eje ortogonal a MFE (R²=0,144). Optimizador dual que supera vacunas comerciales.</p></div>
-      <a class="pub-doi" href="https://doi.org/10.5281/zenodo.20228980">10.5281/zenodo.20228980</a>
-    </div>
-    <div class="pub-row">
-      <span class="tag tag-accent mono">P1</span>
-      <div><h4>Synonymous variants alter mRNA thermodynamic profiles: a CNN-based pathogenicity signal</h4><p>AUC 0,683. Marco Λ = S ⊗ Φ. La CNN se reduce a 2 observables físicos (ΔΔG con signo + sesgo G&gt;A), auditable como evidencia ACMG (PP3/BP4).</p></div>
-      <a class="pub-doi" href="https://doi.org/10.5281/zenodo.20275792">10.5281/zenodo.20275792</a>
-    </div>
-    <div class="pub-row" style="border-bottom:none;">
       <span class="tag tag-accent mono">TECH-2</span>
       <div><h4>Benchmark: EnergyFingerprint vs CADD, REVEL, AlphaMissense</h4><p>Comparativa formal en 7 genes. EF supera a CADD en SCN1A (0,913 vs 0,832). Valor aditivo demostrado.</p></div>
       <a class="pub-doi" href="https://doi.org/10.5281/zenodo.21309529">10.5281/zenodo.21309529</a>
+    </div>
+    <div class="pub-row" style="border-bottom:none;">
+      <span class="tag tag-accent mono">P1</span>
+      <div><h4>Synonymous variants alter mRNA thermodynamic profiles: a CNN-based pathogenicity signal</h4><p>AUC 0,683 en ClinVar. La CNN se reduce a 2 observables físicos interpretables (ΔΔG con signo + sesgo G&gt;A) — glass-box.</p></div>
+      <a class="pub-doi" href="https://doi.org/10.5281/zenodo.20275792">10.5281/zenodo.20275792</a>
     </div>
   </section>
 
@@ -139,10 +157,10 @@
       <div class="contact-meta">
         <div>orcid: <a href="https://orcid.org/0009-0008-1057-4223">0009-0008-1057-4223</a></div>
         <div>github: <a href="https://github.com/josevilar-qbioai">@josevilar-qbioai</a></div>
-        <div>email: qmetrika[at]proton.me</div>
+        <div>email: info[at]qmetrika.xyz</div>
       </div>
       <div style="display:flex; gap:10px; margin-top:20px;">
-        <a class="btn btn-primary" href="mailto:qmetrika@proton.me">escribir →</a>
+        <a class="btn btn-primary" href="mailto:info@qmetrika.xyz">escribir →</a>
         <a class="btn btn-secondary" href="https://github.com/josevilar-qbioai">github</a>
       </div>
     </div>

@@ -150,7 +150,7 @@
 
   <div class="card">
     <h2>Cómo funciona (y qué NO es)</h2>
-    <p>El modelo es una regresión logística de <b>dos observables físicos</b> que iguala a la CNN dedicada del Paper 1 (AUC 0.683):</p>
+    <p>El modelo es una regresión logística de <b>dos observables físicos</b> que recupera la mayor parte de la CNN dedicada del Paper 1 (AUC 0.709; a la par en el set gene-matched, 0.659):</p>
     <ul>
       <li><b>σ (sigma_signed):</b> suma con signo del ΔΔG de apilamiento nearest-neighbor (parámetros Turner de RNA) en ±10 nt alrededor de la variante. Mide la desestabilización termodinámica local del mRNA.</li>
       <li><b>is_GtoA:</b> transición G&gt;A (sesgo mutacional CpG, enriquecido 2.60× en patogénicas).</li>
@@ -371,7 +371,7 @@ function exportDossier(){
       coef:MODEL.coef, intercept:MODEL.intercept, mean:MODEL.mean, std:MODEL.std,
       window:MODEL.window, local_w:MODEL.local_w,
       training:'ClinVar synonymous v2 (n=1957; 657P/1300B; 456 genes)',
-      auc:{pooled:0.671, leave_genes_out:0.680}, reference_cnn_auc:0.683,
+      auc:{pooled:0.671, leave_genes_out:0.680}, reference_cnn_auc:0.709,
       patent:'P202630522 (OEPM)', paper:'Zenodo 10.5281/zenodo.20275792'},
     input:{gene:document.getElementById('gene').value.trim()||null,
       transcript:(document.getElementById('transcript').value||null),
@@ -441,7 +441,7 @@ footer{margin-top:20px;border-top:1px solid #D3D0C6;padding-top:8px;font-size:9.
 <h2>Procedencia del modelo</h2>
 <dl class="kv"><dt>Modelo</dt><dd>σ + G&gt;A (regresión logística glass-box)</dd>
 <dt>Parámetros</dt><dd>Turner (RNA) nearest-neighbor · v2 2026-07-17</dd>
-<dt>Rendimiento</dt><dd>AUC 0.671 pooled / 0.680 leave-genes-out (≈ CNN 0.683)</dd>
+<dt>Rendimiento</dt><dd>AUC 0.671 pooled / 0.680 leave-genes-out (CNN 0.709; a la par en gene-matched 0.659)</dd>
 <dt>Entrenamiento</dt><dd>ClinVar sinónimas v2 (n=1957; 657P/1300B; 456 genes)</dd>
 <dt>Huella CDS</dt><dd class="mono">FNV-1a ${fp} · ${cds.length} nt</dd>
 <dt>Patente</dt><dd>P202630522 (OEPM)</dd><dt>Paper</dt><dd>Zenodo 10.5281/zenodo.20275792</dd>

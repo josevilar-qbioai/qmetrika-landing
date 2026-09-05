@@ -115,7 +115,7 @@
         </div>
         <div style="display:flex;gap:18px;margin-bottom:18px;">
           <div style="font-family:var(--font-heading);font-size:32px;line-height:1;color:var(--color-accent-700);flex:none;">2</div>
-          <p style="font-size:15px;line-height:1.6;margin:0;color:color-mix(in srgb, var(--color-text) 85%, transparent);"><strong>"The signal is interpretable"</strong> (horizon 2027) — The dedicated CNN reduces to two physical observables: the <em>signed</em> nearest-neighbor stacking ΔΔG (Turner parameters) plus the G>A mutational bias. A two-feature model matches the deep network and generalizes across genes — full interpretability of the σ operator, decisive for clinical adoption.</p>
+          <p style="font-size:15px;line-height:1.6;margin:0;color:color-mix(in srgb, var(--color-text) 85%, transparent);"><strong>"The signal is interpretable"</strong> (horizon 2027) — The dedicated CNN reduces to two physical observables: the <em>signed</em> nearest-neighbor stacking ΔΔG (Turner parameters) plus the G>A mutational bias. A two-feature model matches the deep network and generalizes across genes — full interpretability of the σ operator, a step toward the traceability the clinic demands.</p>
         </div>
         <div style="display:flex;gap:18px;">
           <div style="font-family:var(--font-heading);font-size:32px;line-height:1;color:var(--color-accent-700);flex:none;">3</div>
@@ -130,6 +130,9 @@
       <p>Together they predict exactly this result: if ΔG is informative for missense and orthogonal to MFE, it should also be informative for synonymous variants — where it is the <strong>only</strong> available signal, because the protein doesn't change.</p>
 
       <p>The natural extension is the evolutionary channel. ESM-1v operates at the protein level — for synonymous variants it does not directly apply. But a masked marginal at the DNA level (not protein) could capture evolutionary pressure on the nucleotide sequence. That is the subject of Paper 2.</p>
+      <div class="note">
+        <p><strong style="color:var(--color-text);">Update (Sep 2026):</strong> a later control qualifies this result. Among ClinVar's confident pathogenic synonymous variants, ~65&#37; fall within ≤3&nbsp;nt of an exon border, and <strong>SpliceAI —a free tool— classifies them better</strong> than the thermodynamic signal (AUC 0.97 vs σ+G&gt;A 0.59 in the deep-exonic stratum). In practice, the ClinVar positive set is a set of <em>splicing</em> variants. This <strong>does not refute</strong> that thermodynamics matters for expression/translation — it says ClinVar cannot prove it, and that functional data is needed (MPRA / reporter / DMS-MaPseq). The result stands as <strong>interpretability</strong> (σ+G&gt;A ≈ CNN), not as an independent clinical classifier.</p>
+      </div>
     </article>
 
     <div class="cta">

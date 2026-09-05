@@ -115,7 +115,7 @@
         </div>
         <div style="display:flex;gap:18px;margin-bottom:18px;">
           <div style="font-family:var(--font-heading);font-size:32px;line-height:1;color:var(--color-accent-700);flex:none;">2</div>
-          <p style="font-size:15px;line-height:1.6;margin:0;color:color-mix(in srgb, var(--color-text) 85%, transparent);"><strong>"La señal es interpretable"</strong> (horizonte 2027) — La CNN dedicada se reduce a dos observables físicos: el ΔΔG de apilamiento con <em>signo</em> (parámetros Turner) más el sesgo mutacional G>A. Un modelo de 2 variables iguala a la red profunda y generaliza entre genes — interpretabilidad total del operador σ, decisiva para la adopción clínica.</p>
+          <p style="font-size:15px;line-height:1.6;margin:0;color:color-mix(in srgb, var(--color-text) 85%, transparent);"><strong>"La señal es interpretable"</strong> (horizonte 2027) — La CNN dedicada se reduce a dos observables físicos: el ΔΔG de apilamiento con <em>signo</em> (parámetros Turner) más el sesgo mutacional G>A. Un modelo de 2 variables iguala a la red profunda y generaliza entre genes — interpretabilidad total del operador σ, un paso hacia la trazabilidad que exige la clínica.</p>
         </div>
         <div style="display:flex;gap:18px;">
           <div style="font-family:var(--font-heading);font-size:32px;line-height:1;color:var(--color-accent-700);flex:none;">3</div>
@@ -130,6 +130,9 @@
       <p>Juntas predicen exactamente este resultado: si ΔG es informativo para missense y ortogonal a MFE, debería ser informativo también para sinónimas — donde es la <strong>única</strong> señal disponible, porque la proteína no cambia.</p>
 
       <p>La extensión natural es el canal evolutivo. ESM-1v opera a nivel de proteína — para sinónimas no aplica directamente. Pero un masked marginal a nivel de DNA (no de proteína) podría capturar presión evolutiva sobre la secuencia de nucleótidos. Eso es materia del Paper 2.</p>
+      <div class="note">
+        <p><strong style="color:var(--color-text);">Actualización (sep 2026):</strong> un control posterior matiza este resultado. En el conjunto de sinónimas patogénicas confiables de ClinVar, ~65&#37; cae a ≤3&nbsp;nt de un borde de exón, y <strong>SpliceAI —una herramienta gratuita— las clasifica mejor</strong> que la señal termodinámica (AUC 0,97 vs σ+G&gt;A 0,59 en el estrato exónico profundo). En la práctica, el positivo de ClinVar es un conjunto de variantes de <em>splicing</em>. Esto <strong>no refuta</strong> que la termodinámica importe para expresión/traducción — dice que ClinVar no puede probarlo, y que hace falta dato funcional (MPRA / reporter / DMS-MaPseq). El resultado se mantiene como <strong>interpretabilidad</strong> (σ+G&gt;A ≈ CNN), no como clasificador clínico independiente.</p>
+      </div>
     </article>
 
     <div class="cta">

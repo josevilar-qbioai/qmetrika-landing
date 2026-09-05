@@ -50,7 +50,7 @@
 
       <p><strong>Eje evolutivo (canales 5-11):</strong> ESMC-300M protein language model (EvolutionaryScale, sucesor de ESM-1v). Masked marginal scoring: se enmascara la posición mutada, se mide la log-likelihood ratio entre el aminoácido nativo y el mutante. Captura la presión evolutiva que ha actuado sobre esa posición durante millones de años.</p>
 
-      <blockquote style="border-left:3px solid var(--color-accent);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">La clave no es que cada eje sea mejor que los competidores por separado — es que los dos ejes son <strong>ortogonales</strong>. Uno opera a nivel de nucleótido, el otro a nivel de proteína. Juntos ven lo que ninguno ve solo.</blockquote>
+      <blockquote style="border-left:3px solid var(--color-accent);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">Los dos ejes son <strong>ortogonales</strong>: uno opera a nivel de nucleótido, el otro a nivel de proteína. En missense la clasificación la lleva el eje evolutivo; el termodinámico aporta su valor distintivo allí donde aquél es ciego — variantes sinónimas y mRNA.</blockquote>
 
       <h2>Resultados: 42 genes validados</h2>
 
@@ -77,6 +77,10 @@
 
       <p><strong>Actualización julio 2026:</strong> El panel se ha expandido de 8 a <strong>42 genes</strong> (12 entrenables + 30 solo zero-shot), con AUC medio zero-shot de 0.876 sobre 41 genes evaluables. El modelo evolutivo se ha migrado de ESM-1v a ESMC-300M (AUC CNN 0.961 en BRCA1). Resultados completos en el <a href="https://doi.org/10.5281/zenodo.21309529">informe técnico TECH-2</a>.</p>
 
+      <div style="border:1px solid var(--color-accent);background:rgba(198,113,57,0.06);border-radius:10px;padding:18px 22px;margin:34px 0;font-size:15px;line-height:1.55;">
+        <strong>Actualización agosto 2026 — auditoría de canales.</strong> Una auditoría interna del pipeline sobre el panel de 42 genes (5.023 variantes) reveló que, en <strong>missense</strong>, la clasificación la lleva el canal evolutivo: el LLR de ESMC leído en la posición de la variante discrimina con AUC ≈ 0.90, y el canal termodinámico —aunque ortogonal— no añade poder discriminativo neto en este régimen. Los AUC zero-shot de arriba reflejan sobre todo ese eje evolutivo. El valor distintivo de la termodinámica aparece en las <strong>variantes sinónimas</strong>, donde el modelo de lenguaje proteico es ciego y ΔG sí clasifica. Detalle metodológico en <a href="regimen-termodinamico.html">Dónde gana la termodinámica: un contraste de régimen</a>.
+      </div>
+
       <h2>El gradiente de transferibilidad</h2>
 
       <p>El hallazgo más revelador no son los AUCs absolutos, sino el patrón que emerge al entrenar con BRCA1 y predecir en los demás genes <strong>sin reentrenamiento</strong> (zero-shot):</p>
@@ -97,7 +101,7 @@
 
       <p><strong>CADD</strong> integra múltiples anotaciones genómicas en un solo score. <strong>REVEL</strong> ensambla 13 predictores. <strong>AlphaMissense</strong> usa representaciones de AlphaFold2. Todos operan a nivel de proteína.</p>
 
-      <p>EnergyFingerprint es el primero en combinar señal termodinámica del mRNA con señal evolutiva de protein language model. La ortogonalidad de los ejes sugiere que la información que aporta es <strong>complementaria</strong>, no redundante — y eso abre la puerta a ensembles donde EF añade valor a cualquiera de los predictores existentes.</p>
+      <p>EnergyFingerprint es el primero en combinar señal termodinámica del mRNA con señal evolutiva de protein language model. La información de los dos ejes es <strong>ortogonal</strong>, y esa complementariedad se materializa sobre todo donde los predictores de proteína no llegan — variantes sinónimas y mRNA. En missense, el eje evolutivo ya captura la señal; ahí EF integra ambos canales pero es el evolutivo el que clasifica.</p>
     </article>
 
     <div class="cta">
