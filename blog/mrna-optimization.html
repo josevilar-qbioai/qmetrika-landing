@@ -25,7 +25,7 @@
     <div class="article-head">
       <div class="kicker kicker--accent">Mayo 2026</div>
       <h1 class="article-title">Optimización de mRNA terapéutico: el eje termodinámico que <em>LinearDesign</em> no usa</h1>
-      <p class="article-lede">El perfil ΔG de apilamiento nearest-neighbor aporta una dimensión ortogonal a la estructura secundaria (R²=0.144) y superior a GC3 a nivel local. Un optimizador dual que supera a BNT162b2 y mRNA-1273 en ΔG y MFE simultáneamente.</p>
+      <p class="article-lede">El perfil ΔG de apilamiento nearest-neighbor aporta una dimensión propia frente a la estructura secundaria — el 78 % de su varianza no es ni composición local ni apareamiento — y es superior a GC3 a nivel local. Un optimizador dual que supera a BNT162b2 y mRNA-1273 en ΔG y MFE simultáneamente.</p>
       <div class="meta-row">
         <span class="tag tag-accent mono">bio-ia</span>
         <span class="tag tag-accent mono">paper</span>
@@ -48,18 +48,18 @@
 
       <p>El perfil ΔG de apilamiento recorre el mRNA posición por posición y calcula esa energía para cada par de nucleótidos adyacentes. Es información de <strong>contexto local</strong> que métricas como GC3 (que solo mira la tercera posición del codón) no capturan.</p>
 
-      <blockquote style="border-left:3px solid var(--color-accent);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">ΔG apilamiento vs MFE estructura secundaria: <strong>R² = 0.144</strong>. Son dimensiones independientes. El apilamiento nearest-neighbor captura información que la estructura secundaria no contiene, y viceversa.</blockquote>
+      <blockquote style="border-left:3px solid var(--color-accent);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">A resolución de nucleótido, el apilamiento y el apareamiento comparten solo el <strong>12 %</strong> de su varianza, y el <strong>78 %</strong> del perfil ΔG no lo explican ni la composición local ni la estructura secundaria. El apilamiento nearest-neighbor captura información que la estructura secundaria no contiene.</blockquote>
 
       <h2>Resultados clave</h2>
 
       <div class="statcards-2">
-        <div class="statcard statcard--accent"><div class="v t-accent">0.144</div><div class="l l-accent">R² (ΔG vs MFE)</div></div>
+        <div class="statcard statcard--accent"><div class="v t-accent">78 %</div><div class="l l-accent">varianza propia del ΔG</div></div>
         <div class="statcard statcard--sage"><div class="v t-sage">-0.501</div><div class="l l-sage">r (ΔG vs CSC codón)</div></div>
         <div class="statcard statcard--accent"><div class="v t-accent">-0.797</div><div class="l l-accent">r (ΔG vs CSC ventana)</div></div>
         <div class="statcard statcard--sage"><div class="v t-sage">9/9</div><div class="l l-sage">Genes universales</div></div>
       </div>
 
-      <p><strong>Complementariedad demostrada:</strong> ΔG apilamiento vs MFE tiene un R² de solo 0.144 — son dimensiones casi independientes. Optimizar una no optimiza automáticamente la otra.</p>
+      <p><strong>Complementariedad, medida donde toca:</strong> a escala de ventana el ΔG medio es en su mayor parte composición, así que ahí la comparación no dice nada. A resolución de nucleótido, en 13 secuencias, el apilamiento comparte solo el 12 % de su varianza con la probabilidad de apareamiento (r agregado −0,345, IC 95 % [−0,378, −0,312]). Optimizar una no optimiza automáticamente la otra.</p>
 
       <p><strong>Correlación con expresión:</strong> ΔG correlaciona con CSC (Codon Stability Coefficient) a nivel de codón (r = -0.501) y mucho más fuerte a nivel de ventana intra-gen (r = -0.797). La señal termodinámica predice estabilidad del mRNA.</p>
 
@@ -92,7 +92,7 @@
 
       <p><strong>LinearDesign</strong> optimiza MFE + CAI mediante programación dinámica. Es el estado del arte indiscutible. Pero opera en un espacio de dos dimensiones.</p>
 
-      <p>El optimizador de QMetrika añade una <strong>tercera dimensión</strong>: el apilamiento nearest-neighbor. Dado que R²(ΔG, MFE) = 0.144, esta dimensión es mayoritariamente ortogonal — no es redundante con lo que LinearDesign ya optimiza. La propuesta no es reemplazar LinearDesign, sino <strong>complementarlo</strong> con información termodinámica que no está usando.</p>
+      <p>El optimizador de QMetrika añade una <strong>tercera dimensión</strong>: el apilamiento nearest-neighbor. Dado que el 78 % de la varianza del ΔG no la explican ni la composición ni el apareamiento, esta dimensión es mayoritariamente propia — no es redundante con lo que LinearDesign ya optimiza. La propuesta no es reemplazar LinearDesign, sino <strong>complementarlo</strong> con información termodinámica que no está usando.</p>
 
       <blockquote style="border-left:3px solid var(--color-accent);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">La diferencia entre una vacuna buena y una excelente puede estar en una dimensión que nadie está mirando. El apilamiento nearest-neighbor es esa dimensión.</blockquote>
 

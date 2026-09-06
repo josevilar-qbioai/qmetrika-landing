@@ -33,7 +33,7 @@
     <article class="prose">
       <h2>The question Paper 1 left open</h2>
 
-      <p>The first study showed that a CNN classifies synonymous variants using mRNA thermodynamics alone (AUC 0.683), with no evolutionary signal. A good result — but it left an uncomfortable question: <strong>what exactly does that network learn?</strong> A black box that gets it right explains nothing, and in a clinical context that is a problem.</p>
+      <p>The first study showed that a CNN classifies synonymous variants using mRNA thermodynamics alone (AUC 0.709 with Turner parameters), with no evolutionary signal. A good result — but it left an uncomfortable question: <strong>what exactly does that network learn?</strong> A black box that gets it right explains nothing, and in a clinical context that is a problem.</p>
 
       <p>The answer turned out to be simpler —and more useful— than expected: the network does not learn some unfathomable hidden grammar. It learns to aggregate <em>two physical numbers</em>.</p>
 
@@ -49,10 +49,10 @@
       <div class="statcards-3">
         <div class="statcard statcard--accent"><div class="v t-accent">0.671</div><div class="l l-accent">AUC pooled (2 features)</div></div>
         <div class="statcard statcard--accent"><div class="v t-accent">0.680</div><div class="l l-accent">AUC leave-genes-out</div></div>
-        <div class="statcard statcard--muted"><div class="v t-muted">0.683</div><div class="l l-muted">Dedicated CNN (reference)</div></div>
+        <div class="statcard statcard--muted"><div class="v t-muted">0.709</div><div class="l l-muted">Dedicated CNN (Turner, expanded set)</div></div>
       </div>
 
-      <blockquote style="border-left:3px solid var(--color-accent);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">Two interpretable physical observables reproduce the dedicated deep network — and generalize to genes they never saw. The black box was not necessary.</blockquote>
+      <blockquote style="border-left:3px solid var(--color-accent);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">Two interpretable physical observables come level with the dedicated deep network in the gene-matched head-to-head (0.671 vs 0.659) and recover most of its AUC on the expanded set (0.709) — and generalize to genes they never saw. The black box was not indispensable.</blockquote>
 
       <h2>The right physics: stacking, not base-pairing</h2>
 
@@ -64,7 +64,7 @@
 
       <h2>From science to product</h2>
 
-      <p>A 2-variable model matching the deep network is not only elegant — it is <strong>deployable</strong>. No GPU, no API, no data leaving your machine, and a prediction that is <em>auditable variant by variant</em> (you see each observable's contribution). It is the glass-box argument a clinical lab and a regulator want.</p>
+      <p>A 2-variable model coming this close to the deep network is not only elegant — it is <strong>deployable</strong>. No GPU, no API, no data leaving your machine, and a prediction that is <em>auditable variant by variant</em> (you see each observable's contribution). It is the glass-box argument a clinical lab and a regulator want.</p>
 
       <p>So we packaged it as a real, free product:</p>
 

@@ -25,7 +25,7 @@
     <div class="article-head">
       <div class="kicker kicker--accent">May 2026</div>
       <h1 class="article-title">Therapeutic mRNA optimization: the thermodynamic axis that <em>LinearDesign</em> doesn't use</h1>
-      <p class="article-lede">The nearest-neighbor stacking ΔG profile provides an orthogonal dimension to secondary structure (R²=0.144) and is superior to GC3 at the local level. A dual optimizer that outperforms BNT162b2 and mRNA-1273 in both ΔG and MFE simultaneously.</p>
+      <p class="article-lede">The nearest-neighbor stacking ΔG profile provides a dimension of its own next to secondary structure — 78 % of its variance is neither local composition nor base pairing — and is superior to GC3 at the local level. A dual optimizer that outperforms BNT162b2 and mRNA-1273 in both ΔG and MFE simultaneously.</p>
       <div class="meta-row">
         <span class="tag tag-accent mono">bio-ia</span>
         <span class="tag tag-accent mono">paper</span>
@@ -48,18 +48,18 @@
 
       <p>The stacking ΔG profile sweeps along the mRNA position by position and computes that energy for each pair of adjacent nucleotides. It is <strong>local context</strong> information that metrics like GC3 (which only looks at the third codon position) cannot capture.</p>
 
-      <blockquote style="border-left:3px solid var(--color-accent);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">Stacking ΔG vs secondary structure MFE: <strong>R² = 0.144</strong>. They are independent dimensions. Nearest-neighbor stacking captures information that secondary structure does not contain, and vice versa.</blockquote>
+      <blockquote style="border-left:3px solid var(--color-accent);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">At nucleotide resolution, stacking and base pairing share only <strong>12 %</strong> of their variance, and <strong>78 %</strong> of the ΔG profile is explained by neither local composition nor secondary structure. Nearest-neighbor stacking captures information that secondary structure does not contain.</blockquote>
 
       <h2>Key results</h2>
 
       <div class="statcards-2">
-        <div class="statcard statcard--accent"><div class="v t-accent">0.144</div><div class="l l-accent">R² (ΔG vs MFE)</div></div>
+        <div class="statcard statcard--accent"><div class="v t-accent">78 %</div><div class="l l-accent">ΔG variance of its own</div></div>
         <div class="statcard statcard--sage"><div class="v t-sage">-0.501</div><div class="l l-sage">r (ΔG vs CSC codon)</div></div>
         <div class="statcard statcard--accent"><div class="v t-accent">-0.797</div><div class="l l-accent">r (ΔG vs CSC window)</div></div>
         <div class="statcard statcard--sage"><div class="v t-sage">9/9</div><div class="l l-sage">Universal genes</div></div>
       </div>
 
-      <p><strong>Demonstrated complementarity:</strong> Stacking ΔG vs MFE has an R² of only 0.144 — they are nearly independent dimensions. Optimizing one does not automatically optimize the other.</p>
+      <p><strong>Complementarity, measured at the right scale:</strong> averaged over windows the stacking ΔG is mostly composition, so the comparison says little there. At nucleotide resolution, across 13 sequences, stacking shares only 12 % of its variance with base-pairing probability (pooled r −0.345, 95 % CI [−0.378, −0.312]). Optimizing one does not automatically optimize the other.</p>
 
       <p><strong>Expression correlation:</strong> ΔG correlates with CSC (Codon Stability Coefficient) at the codon level (r = -0.501) and much more strongly at the intra-gene window level (r = -0.797). The thermodynamic signal predicts mRNA stability.</p>
 
@@ -92,7 +92,7 @@
 
       <p><strong>LinearDesign</strong> optimizes MFE + CAI through dynamic programming. It is the undisputed state of the art. But it operates in a two-dimensional space.</p>
 
-      <p>QMetrika's optimizer adds a <strong>third dimension</strong>: nearest-neighbor stacking. Given that R²(ΔG, MFE) = 0.144, this dimension is mostly orthogonal — it is not redundant with what LinearDesign already optimizes. The proposal is not to replace LinearDesign, but to <strong>complement it</strong> with thermodynamic information it is not using.</p>
+      <p>QMetrika's optimizer adds a <strong>third dimension</strong>: nearest-neighbor stacking. Given that 78 % of the ΔG variance is explained by neither composition nor base pairing, this dimension is mostly its own — it is not redundant with what LinearDesign already optimizes. The proposal is not to replace LinearDesign, but to <strong>complement it</strong> with thermodynamic information it is not using.</p>
 
       <blockquote style="border-left:3px solid var(--color-accent);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">The difference between a good vaccine and an excellent one may lie in a dimension that nobody is looking at. Nearest-neighbor stacking is that dimension.</blockquote>
 

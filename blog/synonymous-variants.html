@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="es"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Variantes sinónimas patogénicas — QMetrika Labs Blog</title>
-<meta name="description" content="Primer predictor CNN con señal termodinámica pura para variantes sinónimas. AUC 0.683. Marco conceptual Λ = S ⊗ Φ.">
+<meta name="description" content="Primer predictor CNN con señal termodinámica pura para variantes sinónimas. AUC 0.709. Marco conceptual Λ = S ⊗ Φ.">
 <link rel="stylesheet" href="../styles.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap">
@@ -17,7 +17,7 @@
     <div class="article-head">
       <div class="kicker kicker--accent">Mayo 2026</div>
       <h1 class="article-title">Variantes sinónimas patogénicas: la señal que <em>REVEL no ve</em></h1>
-      <p class="article-lede">Las variantes sinónimas no cambian la proteína, pero sí alteran el perfil termodinámico del mRNA. Primer predictor CNN con señal termodinámica pura: AUC 0.683. Marco conceptual Λ = S ⊗ Φ. Paper 1 de una trilogía.</p>
+      <p class="article-lede">Las variantes sinónimas no cambian la proteína, pero sí alteran el perfil termodinámico del mRNA. Primer predictor CNN con señal termodinámica pura: AUC 0.709. Marco conceptual Λ = S ⊗ Φ. Paper 1 de una trilogía.</p>
       <div class="meta-row">
         <span class="tag tag-accent mono">bio-ia</span>
         <span class="tag tag-accent mono">paper</span>
@@ -82,12 +82,12 @@
       <h2>Resultados</h2>
 
       <div class="statcards-3">
-        <div class="statcard statcard--accent"><div class="v t-accent">0.683</div><div class="l l-accent">AUC dedicada</div></div>
+        <div class="statcard statcard--accent"><div class="v t-accent">0.709</div><div class="l l-accent">AUC dedicada</div></div>
         <div class="statcard statcard--accent"><div class="v t-accent">0.625</div><div class="l l-accent">AUC LOGO</div></div>
         <div class="statcard statcard--accent"><div class="v t-accent">2.60×</div><div class="l l-accent">Enriquecimiento G>A</div></div>
       </div>
 
-      <p><strong>CNN dedicada:</strong> AUC 0.683 usando solo señal termodinámica del mRNA (canales ΔG). Sin información evolutiva, sin conservación, sin estructura 3D. Pura física del nucleótido.</p>
+      <p><strong>CNN dedicada:</strong> AUC 0.709 usando solo señal termodinámica del mRNA (canales ΔG). Sin información evolutiva, sin conservación, sin estructura 3D. Pura física del nucleótido.</p>
 
       <p><strong>LOGO (Leave-One-Gene-Out):</strong> AUC 0.625 — la señal generaliza entre genes, no es un artefacto de un gen particular.</p>
 
@@ -97,7 +97,7 @@
 
       <h2>Lo que esto implica</h2>
 
-      <p>Un AUC de 0.683 no compite con los mejores predictores de missense (que llegan a 0.99). Pero no tiene que hacerlo. La pregunta no es "¿es mejor que AlphaMissense?" sino <strong>"¿existe señal termodinámica en variantes sinónimas?"</strong> Y la respuesta es sí.</p>
+      <p>Un AUC de 0,709 no compite con los mejores predictores de missense (que llegan a 0.99). Pero no tiene que hacerlo. La pregunta no es "¿es mejor que AlphaMissense?" sino <strong>"¿existe señal termodinámica en variantes sinónimas?"</strong> Y la respuesta es sí.</p>
 
       <p>Esto abre un nicho que ningún predictor publicado cubre. REVEL, AlphaMissense, CADD — todos son ciegos a variantes sinónimas porque operan a nivel de proteína. EnergyFingerprint opera a nivel de nucleótido. El canal biofísico ya funciona para sinónimas sin modificación.</p>
 
@@ -127,7 +127,7 @@
 
       <p>Este trabajo es la convergencia natural de las dos líneas de investigación de QMetrika. <strong>L1</strong> (EnergyFingerprint) proporciona la CNN y el gradiente de transferibilidad. <strong>L2</strong> (mRNA Design) demuestra que el perfil ΔG es una dimensión útil y ortogonal.</p>
 
-      <p>Juntas predicen exactamente este resultado: si ΔG es informativo para missense y ortogonal a MFE, debería ser informativo también para sinónimas — donde es la <strong>única</strong> señal disponible, porque la proteína no cambia.</p>
+      <p>Juntas predicen exactamente este resultado: si ΔG es informativo para missense y aporta una dimensión propia frente al MFE, debería ser informativo también para sinónimas — donde es la <strong>única</strong> señal disponible, porque la proteína no cambia.</p>
 
       <p>La extensión natural es el canal evolutivo. ESM-1v opera a nivel de proteína — para sinónimas no aplica directamente. Pero un masked marginal a nivel de DNA (no de proteína) podría capturar presión evolutiva sobre la secuencia de nucleótidos. Eso es materia del Paper 2.</p>
       <div class="note">

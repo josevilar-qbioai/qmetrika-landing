@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="es"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>El clasificador sinónimo cabe en dos variables físicas — QMetrika Labs Blog</title>
-<meta name="description" content="La CNN que clasifica variantes sinónimas se reduce a dos observables físicos interpretables — el ΔΔG de apilamiento con signo (Turner) y el sesgo G>A — que la igualan y generalizan entre genes. Glass-box, desplegable como pip install ef-synonymous.">
+<meta name="description" content="La CNN que clasifica variantes sinónimas se reduce a dos observables físicos interpretables — el ΔΔG de apilamiento con signo (Turner) y el sesgo G>A — que recuperan la mayor parte de su AUC y generalizan entre genes. Glass-box, desplegable como pip install ef-synonymous.">
 <link rel="stylesheet" href="../styles.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap">
@@ -20,7 +20,7 @@
     <div class="article-head">
       <div class="kicker kicker--accent">Julio 2026</div>
       <h1 class="article-title">El clasificador sinónimo cabe en <em>dos variables físicas</em></h1>
-      <p class="article-lede">La CNN que clasifica variantes sinónimas no era una caja negra necesaria. Se reduce a dos observables físicos interpretables — el ΔΔG de apilamiento con signo (Turner) y el sesgo G>A — que la igualan, generalizan entre genes, y ahora se instalan con un <code>pip install</code>.</p>
+      <p class="article-lede">La CNN que clasifica variantes sinónimas no era una caja negra necesaria. Se reduce a dos observables físicos interpretables — el ΔΔG de apilamiento con signo (Turner) y el sesgo G>A — que quedan a la par en la comparación pareada gen a gen, generalizan a genes que nunca vieron, y ahora se instalan con un <code>pip install</code>.</p>
       <div class="meta-row">
         <span class="tag tag-accent mono">bio-ia</span>
         <span class="tag tag-accent mono">glass-box</span>
@@ -33,7 +33,7 @@
     <article class="prose">
       <h2>La pregunta que dejó abierta el Paper 1</h2>
 
-      <p>El primer trabajo demostró que una CNN clasifica variantes sinónimas usando solo la termodinámica del mRNA (AUC 0.683), sin señal evolutiva. Buen resultado — pero dejó una pregunta incómoda: <strong>¿qué aprende exactamente esa red?</strong> Una caja negra que acierta no explica nada, y en un contexto clínico eso es un problema.</p>
+      <p>El primer trabajo demostró que una CNN clasifica variantes sinónimas usando solo la termodinámica del mRNA (AUC 0,709 con parámetros Turner), sin señal evolutiva. Buen resultado — pero dejó una pregunta incómoda: <strong>¿qué aprende exactamente esa red?</strong> Una caja negra que acierta no explica nada, y en un contexto clínico eso es un problema.</p>
 
       <p>La respuesta resultó ser más simple —y más útil— de lo esperado: la red no aprende una gramática oculta insondable. Aprende a agregar <em>dos números físicos</em>.</p>
 
@@ -49,10 +49,10 @@
       <div class="statcards-3">
         <div class="statcard statcard--accent"><div class="v t-accent">0.671</div><div class="l l-accent">AUC pooled (2 features)</div></div>
         <div class="statcard statcard--accent"><div class="v t-accent">0.680</div><div class="l l-accent">AUC leave-genes-out</div></div>
-        <div class="statcard statcard--muted"><div class="v t-muted">0.683</div><div class="l l-muted">CNN dedicada (referencia)</div></div>
+        <div class="statcard statcard--muted"><div class="v t-muted">0.709</div><div class="l l-muted">CNN dedicada (Turner, set expandido)</div></div>
       </div>
 
-      <blockquote style="border-left:3px solid var(--color-accent);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">Dos observables físicos interpretables reproducen a la red profunda dedicada — y generalizan a genes que nunca vieron. La caja negra no era necesaria.</blockquote>
+      <blockquote style="border-left:3px solid var(--color-accent);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">Dos observables físicos interpretables quedan a la par de la red profunda en la comparación pareada gen a gen (0,671 vs 0,659) y recuperan la mayor parte de su AUC en el set expandido (0,709) — y generalizan a genes que nunca vieron. La caja negra no era imprescindible.</blockquote>
 
       <h2>La física correcta: apilamiento, no emparejamiento</h2>
 
@@ -64,7 +64,7 @@
 
       <h2>De la ciencia al producto</h2>
 
-      <p>Que un modelo de 2 variables iguale a la red profunda no es solo elegante — es <strong>desplegable</strong>. Sin GPU, sin API, sin que los datos salgan de tu equipo, y con una predicción <em>auditable variante a variante</em> (ves la contribución de cada observable). Es el argumento glass-box que un laboratorio clínico y un regulador quieren.</p>
+      <p>Que un modelo de 2 variables se acerque tanto a la red profunda no es solo elegante — es <strong>desplegable</strong>. Sin GPU, sin API, sin que los datos salgan de tu equipo, y con una predicción <em>auditable variante a variante</em> (ves la contribución de cada observable). Es el argumento glass-box que un laboratorio clínico y un regulador quieren.</p>
 
       <p>Así que lo empaquetamos como producto real y gratuito:</p>
 

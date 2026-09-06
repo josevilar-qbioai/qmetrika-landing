@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pathogenic synonymous variants — QMetrika Labs Blog</title>
-<meta name="description" content="First CNN predictor with pure thermodynamic signal for synonymous variants. AUC 0.683. Conceptual framework Λ = S ⊗ Φ.">
+<meta name="description" content="First CNN predictor with pure thermodynamic signal for synonymous variants. AUC 0.709. Conceptual framework Λ = S ⊗ Φ.">
 <link rel="stylesheet" href="../styles.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap">
@@ -17,7 +17,7 @@
     <div class="article-head">
       <div class="kicker kicker--accent">May 2026</div>
       <h1 class="article-title">Pathogenic synonymous variants: the signal that <em>REVEL can't see</em></h1>
-      <p class="article-lede">Synonymous variants don't change the protein, but they do alter the mRNA thermodynamic profile. First CNN predictor with pure thermodynamic signal: AUC 0.683. Conceptual framework Λ = S ⊗ Φ. Paper 1 of a trilogy.</p>
+      <p class="article-lede">Synonymous variants don't change the protein, but they do alter the mRNA thermodynamic profile. First CNN predictor with pure thermodynamic signal: AUC 0.709. Conceptual framework Λ = S ⊗ Φ. Paper 1 of a trilogy.</p>
       <div class="meta-row">
         <span class="tag tag-accent mono">bio-ia</span>
         <span class="tag tag-accent mono">paper</span>
@@ -82,12 +82,12 @@
       <h2>Results</h2>
 
       <div class="statcards-3">
-        <div class="statcard statcard--accent"><div class="v t-accent">0.683</div><div class="l l-accent">Dedicated AUC</div></div>
+        <div class="statcard statcard--accent"><div class="v t-accent">0.709</div><div class="l l-accent">Dedicated AUC</div></div>
         <div class="statcard statcard--accent"><div class="v t-accent">0.625</div><div class="l l-accent">LOGO AUC</div></div>
         <div class="statcard statcard--accent"><div class="v t-accent">2.60×</div><div class="l l-accent">G>A enrichment</div></div>
       </div>
 
-      <p><strong>Dedicated CNN:</strong> AUC 0.683 using only mRNA thermodynamic signal (ΔG channels). No evolutionary information, no conservation, no 3D structure. Pure nucleotide physics.</p>
+      <p><strong>Dedicated CNN:</strong> AUC 0.709 using only mRNA thermodynamic signal (ΔG channels). No evolutionary information, no conservation, no 3D structure. Pure nucleotide physics.</p>
 
       <p><strong>LOGO (Leave-One-Gene-Out):</strong> AUC 0.625 — the signal generalizes across genes; it is not an artifact of a particular gene.</p>
 
@@ -97,7 +97,7 @@
 
       <h2>What this implies</h2>
 
-      <p>An AUC of 0.683 does not compete with the best missense predictors (which reach 0.99). But it doesn't have to. The question is not "Is it better than AlphaMissense?" but <strong>"Does a thermodynamic signal exist in synonymous variants?"</strong> And the answer is yes.</p>
+      <p>An AUC of 0.709 does not compete with the best missense predictors (which reach 0.99). But it doesn't have to. The question is not "Is it better than AlphaMissense?" but <strong>"Does a thermodynamic signal exist in synonymous variants?"</strong> And the answer is yes.</p>
 
       <p>This opens a niche that no published predictor covers. REVEL, AlphaMissense, CADD — all are blind to synonymous variants because they operate at the protein level. EnergyFingerprint operates at the nucleotide level. The biophysical channel already works for synonymous variants without modification.</p>
 
