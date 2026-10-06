@@ -1,0 +1,79 @@
+/* QMetrika Labs — sistema minimalista (tema oscuro principal).
+   Tokens y reglas: DESIGN_SYSTEM.md. Solo lo usa index.html por ahora; el resto del sitio sigue con styles.css. */
+:root, [data-theme="dark"] {
+  --bg: #1B1B18; --panel: #2A2925; --ink: #E9E7E0; --muted: #B4B0A5;
+  --rule: #3A3934; --accent: #A6542E; --accent-text: #D98A5E;
+}
+[data-theme="light"] {
+  --bg: #E9E7E0; --panel: #DEDBD1; --ink: #1B1B18; --muted: #57544B;
+  --rule: #CFCCC2; --accent: #A6542E; --accent-text: #904625;
+}
+:root {
+  --font-sans: "Space Grotesk", ui-sans-serif, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --space-1: 8px; --space-2: 16px; --space-3: 24px; --space-4: 48px; --space-5: 88px;
+  --hairline: 1px; --focus: 2px;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--bg); }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-sans); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+::selection { background: var(--accent); color: var(--ink); }
+a { color: var(--accent-text); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+:focus-visible { outline: var(--focus) solid var(--accent-text); outline-offset: 2px; }
+h1, h2, h3 { font-weight: 500; margin: 0; }
+p { margin: 0; }
+b, strong { color: var(--ink); font-weight: 600; }
+
+.shell { max-width: 960px; margin: 0 auto; padding: 0 var(--space-4); }
+
+/* navegación */
+.q-nav { border-bottom: var(--hairline) solid var(--rule); }
+.q-nav .shell { display: flex; align-items: center; gap: var(--space-3); height: 64px; }
+.q-brand { display: flex; align-items: center; gap: 10px; color: var(--ink); font-weight: 600; font-size: 15px; margin-right: auto; }
+.q-brand:hover { text-decoration: none; }
+.q-brand svg { width: 24px; height: 24px; flex-shrink: 0; }
+.q-nav a.l { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.q-nav a.l:hover { color: var(--ink); text-decoration: none; }
+.q-nav a.lang span { color: var(--accent-text); }
+
+/* texto */
+.q-kick { font-family: var(--font-mono); font-size: 11px; line-height: 1.4; font-weight: 500; letter-spacing: .1em; color: var(--muted); margin-bottom: var(--space-3); }
+.q-kick .sec { color: var(--ink); margin-right: 12px; }
+.display { font-size: 48px; line-height: 1.08; letter-spacing: -.03em; max-width: 16ch; }
+.heading { font-size: 24px; line-height: 1.2; letter-spacing: -.02em; }
+.title { font-size: 17px; line-height: 1.45; font-weight: 500; }
+.lede { font-family: var(--font-mono); font-size: 14px; line-height: 1.75; color: var(--muted); max-width: 64ch; }
+.desc { font-family: var(--font-mono); font-size: 13px; line-height: 1.7; color: var(--muted); margin-top: var(--space-1); max-width: 62ch; }
+.meta { font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; color: var(--muted); }
+
+/* cabecera */
+.intro { padding: var(--space-5) 0 var(--space-4); }
+.intro .lede { margin-top: var(--space-3); }
+
+/* secciones */
+.q-section { padding: var(--space-4) 0 var(--space-5); }
+.q-section-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3); padding-bottom: var(--space-2); border-bottom: var(--hairline) solid var(--ink); }
+.q-section-head .q-kick { margin: 0; }
+
+/* índice: filas separadas por líneas de 1px */
+.q-index { list-style: none; margin: 0; padding: 0; }
+.q-row { display: grid; grid-template-columns: 96px 1fr auto; gap: var(--space-3); padding: var(--space-3) 0; border-bottom: var(--hairline) solid var(--rule); align-items: baseline; }
+.q-row .code { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.q-row .code b { display: block; color: var(--ink); font-weight: 500; }
+.q-row .side { font-family: var(--font-mono); font-size: 12px; text-align: right; white-space: nowrap; display: flex; flex-direction: column; gap: 4px; }
+.q-row code { font-family: var(--font-mono); font-size: 12px; color: var(--ink); }
+
+/* pie */
+.q-footer { border-top: var(--hairline) solid var(--rule); padding: var(--space-3) 0 var(--space-4); font-family: var(--font-mono); font-size: 12px; line-height: 2; color: var(--muted); }
+.q-footer .line { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+.q-footer .who { color: var(--ink); }
+
+@media (max-width: 760px) {
+  .shell { padding: 0 22px; }
+  .q-nav a.l:not(.lang) { display: none; }
+  .display { font-size: 36px; }
+  .intro { padding: var(--space-4) 0 var(--space-3); }
+  .q-row { grid-template-columns: 1fr; gap: var(--space-1); }
+  .q-row .side { text-align: left; flex-direction: row; flex-wrap: wrap; gap: var(--space-2); }
+}
