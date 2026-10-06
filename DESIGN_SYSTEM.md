@@ -4,7 +4,7 @@ Documento de referencia de la identidad visual de **qmetrika.xyz**. Propuesta mi
 
 Última actualización: octubre de 2026
 
-> **Estado de la migración.** La hoja de estilos de este sistema es `qmetrika.css`. Por ahora solo la usa `index.html`. El resto de páginas (`en.html`, `blog/`, `tools/`) siguen cargando `styles.css` y se migrarán una a una. No editar `styles.css` para aplicar este sistema: afectaría a todo el sitio a la vez.
+> **Estado de la migración.** Usan este sistema `index.html`, `en.html` (con `qmetrika.css`) y todo `blog/` (con `qmetrika.css` + `blog.css`). Las herramientas (`tools/`) y las páginas de tesis siguen con `styles.css`. `blog.css` reestiliza el marcado antiguo del blog sin tocar su contenido y traduce las variables de `styles.css` (`--color-text`, `--color-accent`…) a los tokens, para que los estilos en línea de los artículos sigan funcionando.
 
 ---
 

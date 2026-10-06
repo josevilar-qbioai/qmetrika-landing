@@ -1,184 +1,148 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>QMetrika Labs — Biocomputation · AI · Q Knowledge</title>
 <meta name="description" content="QMetrika Labs — thermodynamic Bio-AI. Flagship line: therapeutic mRNA optimization from the nearest-neighbor stacking axis (ΔG) that LinearDesign and MFE don't use. Plus open variant-analysis tools. Runs locally.">
-<link rel="stylesheet" href="styles.css">
+<meta name="theme-color" content="#1B1B18">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="qmetrika.css">
 </head>
 <body>
-<div class="wrap">
-  <header class="nav nav--site">
-    <span class="nav-brand"><svg width="26" height="26" viewBox="6 6 46 46" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><circle cx="28" cy="28" r="18" stroke="#201e1d" stroke-width="4.5"/><circle cx="41" cy="41" r="9.6" fill="#f5ead8"/><circle cx="41" cy="41" r="7.4" fill="#201e1d"/><circle cx="41" cy="41" r="5.4" fill="#c67139"/></svg>QMetrika Labs</span>
-    <a href="#tools">tools</a>
-    <a href="#bioia">bio-ai</a>
-    <a href="#papers">papers</a>
-    <a href="blog/en.html">blog</a>
-    <a class="lang" href="index.html">en/es</a>
-    <a class="btn btn-primary" href="mailto:info@qmetrika.xyz">contact</a>
-  </header>
 
-  <!-- hero -->
-  <section class="hero">
-    <div class="hero-panel">
-      <div>
-        <div class="kicker kicker--sage">Biocomputation · Artificial Intelligence · Data Science</div>
-        <h1 class="hero-title">Energy turned into knowledge</h1>
-        <p class="hero-lede">AI and biocomputation applied to mRNA. Our flagship line: <strong>therapeutic mRNA optimization</strong> from the nearest-neighbor stacking axis (ΔG) that LinearDesign and MFE don't use — a dual optimizer that beats commercial vaccines. Alongside a set of open variant-analysis tools. Sensitive data never leaves your infrastructure.</p>
-        <div class="hero-cta"><a class="btn btn-primary" href="#mrna" style="padding:14px 28px; font-size:15px;">mRNA optimization →</a> <a class="btn btn-secondary" href="#tools" style="padding:14px 28px; font-size:15px;">open tools →</a></div>
-      </div>
-      <div class="hero-side">
-        <div class="formula">Λ = S ⊗ Φ</div>
-        <div class="formula-cap">unified framework · signal ⊗ form</div>
-        <div class="hero-stats">
-          <div class="stat"><span class="stat-v">2</span><span class="stat-l">commercial vaccines beaten</span></div>
-          <div class="stat"><span class="stat-v">4</span><span class="stat-l">publications · doi</span></div>
-          <div class="stat"><span class="stat-v">100%</span><span class="stat-l">runs locally</span></div>
+<header class="q-nav">
+  <div class="shell">
+    <a class="q-brand" href="en.html"><svg viewBox="6 6 46 46" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="28" cy="28" r="18" stroke="#E9E7E0" stroke-width="4.5"/><circle cx="41" cy="41" r="9.6" fill="#1B1B18"/><circle cx="41" cy="41" r="7.4" fill="#E9E7E0"/><circle cx="41" cy="41" r="5.4" fill="#A6542E"/></svg>QMetrika Labs</a>
+    <a class="l" href="#research">[ research ]</a>
+    <a class="l" href="#papers">[ publications ]</a>
+    <a class="l" href="#tools">[ tools ]</a>
+    <a class="l" href="blog/en.html">[ blog ]</a>
+    <a class="l lang" href="index.html">es<span>/</span>en</a>
+  </div>
+</header>
+
+<main class="shell">
+
+  <section class="intro">
+    <div class="q-kick">// thermodynamic bio-ai</div>
+    <h1 class="display">Energy turned into knowledge</h1>
+    <p class="lede">AI and biocomputation applied to mRNA. A shared biophysical engine — nearest-neighbor stacking ΔG — operates on a physical axis that MFE and protein-level predictors don't use. Each line distills an interpretable physical observable, not a black box: auditable models that run locally.</p>
+  </section>
+
+  <!-- § 01 research lines -->
+  <section class="q-section" id="research">
+    <div class="q-section-head">
+      <div class="q-kick"><span class="sec">§ 01</span>research lines</div>
+      <span class="meta">3 fronts</span>
+    </div>
+    <ol class="q-index">
+      <li class="q-row">
+        <span class="code"><b>L2</b>flagship line</span>
+        <div>
+          <h2 class="title">Therapeutic mRNA optimization</h2>
+          <p class="desc">Sequence design from the stacking axis (ΔG), which LinearDesign and MFE don't capture. The dual optimizer (ΔG + MFE) simultaneously beats BNT162b2 and mRNA-1273 on both metrics; 78 % of the stacking axis variance is neither local composition nor secondary structure. Code not public; open to collaboration and licensing.</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- L2 mRNA optimization (flagship) -->
-  <section class="section" id="mrna">
-    <div class="section-head">
-      <div class="kicker kicker--accent">Flagship line · L2</div>
-      <h2 class="section-title">Therapeutic mRNA optimization</h2>
-      <p class="section-intro">mRNA sequence design from the <strong>nearest-neighbor stacking (ΔG)</strong> thermodynamic axis — a physical dimension that LinearDesign and secondary-structure energy (MFE) don't capture. The dual optimizer improves both at once.</p>
-    </div>
-    <div class="glassbox">
-      <span class="tag tag-accent-2">evidence</span>
-      <p>The dual optimizer (ΔG + MFE) <strong>simultaneously beats BNT162b2 and mRNA-1273</strong> on both metrics; the stacking axis carries a dimension of its own — <strong>78 % of its variance is neither local composition nor secondary structure</strong> (13 sequences, nucleotide resolution) — information current methods don't use. With RNA parameters the design also lands at mRNA-1273-level CpG (o/e 0.70), which matters for immunogenicity.</p>
-      <p class="text-muted" style="font-size:14px; margin-top:10px;">The optimizer code is not public. Open to collaboration and licensing with mRNA pharma/biotech.</p>
-      <div class="video-links">
-        <a class="btn btn-secondary btn--mono" href="https://doi.org/10.5281/zenodo.20228979">read P-L2 →</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- tools -->
-  <section class="section" id="tools">
-    <div class="section-head">
-      <div class="kicker kicker--accent">Tools · Herramientas</div>
-      <h2 class="section-title">Open, glass-box and free</h2>
-      <p class="section-intro">Our open work. Each variant-analysis line distills an interpretable physical observable into a tool that runs entirely on your machine — no sign-up, no GPU, no data leaving it.</p>
-    </div>
-    <div class="tools-grid">
-      <div class="tool-card">
-        <span class="tag tag-accent mono">Synonymous variants</span>
-        <h3 class="tool-name">ef-synonymous</h3>
-        <p class="tool-desc">An interpretable 2-variable physical model (σ = signed ΔΔG + G&gt;A bias) for synonymous variants — glass-box and auditable. Web, CLI and VEP plugin.</p>
-        <code class="install">pip install ef-synonymous</code>
-        <div class="tool-links">
-          <a class="btn btn-primary btn--mono" href="tools/ef-synonymous-en.html">▶ web</a>
-          <a class="btn btn-primary btn--mono" href="https://pypi.org/project/ef-synonymous/">pypi</a>
-          <a class="btn btn-primary btn--mono" href="https://github.com/josevilar-qbioai/ef-synonymous">github</a>
+        <span class="side"><a href="https://doi.org/10.5281/zenodo.20228979">P-L2 →</a></span>
+      </li>
+      <li class="q-row">
+        <span class="code"><b>L1</b>variants</span>
+        <div>
+          <h2 class="title">Variant classification</h2>
+          <p class="desc">Thermodynamic stacking profiles for missense and synonymous variants. For synonymous variants, the signal reduces to 2 interpretable physical observables (signed ΔΔG + G&gt;A bias).</p>
         </div>
-      </div>
-      <div class="tool-card">
-        <span class="tag tag-accent mono">Repeat expansion</span>
-        <h3 class="tool-name">energorna</h3>
-        <p class="tool-desc">Interpretable physical observable of repeat-interruption architecture (type and position) in DM1, Huntington, SCA1 and Fragile X. On par with block counting on the available data; glass-box and model-free.</p>
-        <code class="install">pip install energorna</code>
-        <div class="tool-links">
-          <a class="btn btn-primary btn--mono" href="tools/energorna-en.html">▶ web</a>
-          <a class="btn btn-primary btn--mono" href="https://pypi.org/project/energorna/">pypi</a>
-          <a class="btn btn-primary btn--mono" href="https://github.com/josevilar-qbioai/energorna">github</a>
+        <span class="side"><a href="https://doi.org/10.5281/zenodo.19831154">P-L1 →</a><a href="https://doi.org/10.5281/zenodo.20275792">P1 →</a></span>
+      </li>
+      <li class="q-row">
+        <span class="code"><b>—</b>repeats</span>
+        <div>
+          <h2 class="title">Repeat-expansion disorders</h2>
+          <p class="desc">Physical observable of repeat-interruption architecture (type and position) in DM1, Huntington, SCA1 and Fragile X.</p>
         </div>
-      </div>
-    </div>
+        <span class="side"><a href="tools/energorna-en.html">energorna →</a></span>
+      </li>
+    </ol>
   </section>
 
-  <!-- pillars -->
-  <section class="pillars">
-    <div class="pillar"><span class="pillar-n">01</span><h4>Data Science</h4><p class="text-muted">from raw data to an actionable result</p></div>
-    <div class="pillar"><span class="pillar-n">02</span><h4>Biocomputation</h4><p class="text-muted">algorithms that speak molecular biology</p></div>
-    <div class="pillar"><span class="pillar-n">03</span><h4>Artificial Intelligence</h4><p class="text-muted">cnn · llm · governed multi-agent</p></div>
-    <div class="pillar"><span class="pillar-n">04</span><h4>Thermodynamics</h4><p class="text-muted">the mRNA form factor others don't see</p></div>
+  <!-- § 02 publications -->
+  <section class="q-section" id="papers">
+    <div class="q-section-head">
+      <div class="q-kick"><span class="sec">§ 02</span>publications</div>
+      <span class="meta">permanent DOI · Zenodo</span>
+    </div>
+    <ol class="q-index">
+      <li class="q-row">
+        <span class="code"><b>P-L2</b>preprint</span>
+        <div>
+          <h3 class="title">mRNA Stacking Optimization: Codon design guided by nearest-neighbor thermodynamics</h3>
+          <p class="desc">Stacking ΔG as a dimension of its own next to MFE. A dual optimizer that beats commercial vaccines.</p>
+        </div>
+        <span class="side"><a href="https://doi.org/10.5281/zenodo.20228979">10.5281/zenodo.20228979</a></span>
+      </li>
+      <li class="q-row">
+        <span class="code"><b>P-L1</b>preprint</span>
+        <div>
+          <h3 class="title">EnergyFingerprint: Thermodynamic stacking profiles for missense variant classification</h3>
+          <p class="desc">Multichannel 1D CNN, 42 validated genes, AUC 0.87–0.99. Zero-shot transferability gradient.</p>
+        </div>
+        <span class="side"><a href="https://doi.org/10.5281/zenodo.19831154">10.5281/zenodo.19831154</a></span>
+      </li>
+      <li class="q-row">
+        <span class="code"><b>TECH-2</b>technical report</span>
+        <div>
+          <h3 class="title">Benchmark: EnergyFingerprint vs CADD, REVEL, AlphaMissense</h3>
+          <p class="desc">Formal comparison across 7 genes. EF beats CADD in SCN1A (0.913 vs 0.832). Additive value demonstrated.</p>
+        </div>
+        <span class="side"><a href="https://doi.org/10.5281/zenodo.21309529">10.5281/zenodo.21309529</a></span>
+      </li>
+      <li class="q-row">
+        <span class="code"><b>P1</b>preprint</span>
+        <div>
+          <h3 class="title">Synonymous variants alter mRNA thermodynamic profiles: a CNN-based pathogenicity signal</h3>
+          <p class="desc">AUC 0.709 on ClinVar. The CNN reduces to 2 interpretable physical observables (signed ΔΔG + G&gt;A bias).</p>
+        </div>
+        <span class="side"><a href="https://doi.org/10.5281/zenodo.20275792">10.5281/zenodo.20275792</a></span>
+      </li>
+    </ol>
   </section>
 
-  <!-- bio-ai -->
-  <section class="bioia" id="bioia">
-    <div>
-      <div class="kicker kicker--sage">Research line</div>
-      <h2 class="section-title" style="font-size:38px;">Bio-AI — thermodynamic intelligence</h2>
-      <p class="bioia-body">The lab's first vertical. A shared biophysical engine — nearest-neighbor stacking ΔG — feeds three fronts: <strong>therapeutic mRNA optimization (the flagship line)</strong>, variant classification and repeat-expansion disorders. It operates on a physical axis that MFE and protein-level predictors don't use.</p>
+  <!-- § 03 tools -->
+  <section class="q-section" id="tools">
+    <div class="q-section-head">
+      <div class="q-kick"><span class="sec">§ 03</span>open tools</div>
+      <span class="meta">no sign-up · no GPU · local</span>
     </div>
-    <div class="glassbox">
-      <span class="tag tag-accent-2">glass-box</span>
-      <p>Our bet: each line distills an interpretable physical observable, not a black box. Auditable models that run locally — the basis for clinical and regulatory use.</p>
-      <div class="video-links">
-        <a class="btn btn-secondary btn--mono" href="qmetrika_video_en.html">▶ video · project overview (EN)</a>
-        <a class="btn btn-secondary btn--mono" href="qmetrika_video_es.html">▶ vídeo · visión general (ES)</a>
-      </div>
-    </div>
+    <ol class="q-index">
+      <li class="q-row">
+        <span class="code"><b>L1</b>synonymous</span>
+        <div>
+          <h3 class="title">ef-synonymous</h3>
+          <p class="desc">Interpretable 2-variable physical model for synonymous variants. Web, CLI and VEP plugin. <code>pip install ef-synonymous</code></p>
+        </div>
+        <span class="side"><a href="tools/ef-synonymous-en.html">web</a><a href="https://pypi.org/project/ef-synonymous/">pypi</a><a href="https://github.com/josevilar-qbioai/ef-synonymous">github</a></span>
+      </li>
+      <li class="q-row">
+        <span class="code"><b>—</b>repeats</span>
+        <div>
+          <h3 class="title">energorna</h3>
+          <p class="desc">Repeat-interruption architecture; glass-box and model-free. <code>pip install energorna</code></p>
+        </div>
+        <span class="side"><a href="tools/energorna-en.html">web</a><a href="https://pypi.org/project/energorna/">pypi</a><a href="https://github.com/josevilar-qbioai/energorna">github</a></span>
+      </li>
+    </ol>
   </section>
 
-  <!-- pubs -->
-  <section class="pubs" id="papers">
-    <div class="section-head" style="margin-bottom:26px;">
-      <div class="kicker kicker--accent">Publications · bio-ai</div>
-      <h2 class="section-title" style="font-size:34px;">Four publications with permanent DOI</h2>
-      <p class="section-intro" style="font-size:15px;">Reviewable scientific evidence: three preprints and a technical benchmark report. A trilogy in progress, with peer review underway.</p>
-    </div>
-    <div class="pub-row">
-      <span class="tag tag-accent mono">P-L2</span>
-      <div><h4>mRNA Stacking Optimization: Codon design guided by nearest-neighbor thermodynamics</h4><p>Flagship line. Stacking ΔG as a dimension of its own next to MFE (78 % of variance shared with neither composition nor structure). A dual optimizer that beats commercial vaccines.</p></div>
-      <a class="pub-doi" href="https://doi.org/10.5281/zenodo.20228979">10.5281/zenodo.20228979</a>
-    </div>
-    <div class="pub-row">
-      <span class="tag tag-accent mono">P-L1</span>
-      <div><h4>EnergyFingerprint: Thermodynamic stacking profiles for missense variant classification</h4><p>Multichannel 1D CNN, 42 validated genes, AUC 0.87–0.99. Zero-shot transferability gradient.</p></div>
-      <a class="pub-doi" href="https://doi.org/10.5281/zenodo.19831154">10.5281/zenodo.19831154</a>
-    </div>
-    <div class="pub-row">
-      <span class="tag tag-accent mono">TECH-2</span>
-      <div><h4>Benchmark: EnergyFingerprint vs CADD, REVEL, AlphaMissense</h4><p>Formal comparison across 7 genes. EF beats CADD in SCN1A (0.913 vs 0.832). Additive value demonstrated.</p></div>
-      <a class="pub-doi" href="https://doi.org/10.5281/zenodo.21309529">10.5281/zenodo.21309529</a>
-    </div>
-    <div class="pub-row" style="border-bottom:none;">
-      <span class="tag tag-accent mono">P1</span>
-      <div><h4>Synonymous variants alter mRNA thermodynamic profiles: a CNN-based pathogenicity signal</h4><p>AUC 0.709 on ClinVar. The CNN reduces to 2 interpretable physical observables (signed ΔΔG + G&gt;A bias) — glass-box.</p></div>
-      <a class="pub-doi" href="https://doi.org/10.5281/zenodo.20275792">10.5281/zenodo.20275792</a>
-    </div>
-  </section>
+</main>
 
-  <!-- contact -->
-  <section class="contact" id="contact">
-    <div>
-      <div class="kicker kicker--sage">Contact</div>
-      <h3 class="contact-name">Jose Antonio Vilar Sánchez</h3>
-      <div class="contact-org">QMetrika Labs</div>
-      <div class="contact-meta">
-        <div>orcid: <a href="https://orcid.org/0009-0008-1057-4223">0009-0008-1057-4223</a></div>
-        <div>github: <a href="https://github.com/josevilar-qbioai">@josevilar-qbioai</a></div>
-        <div>email: info[at]qmetrika.xyz</div>
-      </div>
-      <div style="display:flex; gap:10px; margin-top:20px;">
-        <a class="btn btn-primary" href="mailto:info@qmetrika.xyz">contact →</a>
-        <a class="btn btn-secondary" href="https://github.com/josevilar-qbioai">github</a>
-      </div>
-    </div>
-    <div class="open-card">
-      <h4 style="font-size:22px; margin:0 0 12px;">Open science</h4>
-      <p>Preprints with DOI, open-source code and two PyPI packages. Glass-box, no signup.</p>
-      <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <a class="btn btn-primary" href="tools/ef-synonymous-en.html">try ef-synonymous →</a>
-        <a class="btn btn-secondary" href="tools/energorna-en.html">try energorna →</a>
-      </div>
-    </div>
-  </section>
+<footer class="q-footer" id="contact">
+  <div class="shell">
+    <div class="line"><span class="who">QMetrika Labs</span><span>orcid <a href="https://orcid.org/0009-0008-1057-4223">0009-0008-1057-4223</a></span><span>github <a href="https://github.com/josevilar-qbioai">@josevilar-qbioai</a></span><span>info[at]qmetrika.xyz</span></div>
+    <div class="line"><span>qmetrika_labs · 2026</span><a href="blog/en.html">blog</a><a href="qmetrika_video_en.html">video (EN)</a><a href="qmetrika_video_es.html">vídeo (ES)</a></div>
+  </div>
+</footer>
 
-  <footer class="site-footer">
-    <span class="lead">qmetrika_labs · 2026</span>
-    <a href="https://doi.org/10.5281/zenodo.19831154">P-L1</a>
-    <a href="https://doi.org/10.5281/zenodo.20228979">P-L2</a>
-    <a href="https://doi.org/10.5281/zenodo.20275792">P1</a>
-    <a href="https://doi.org/10.5281/zenodo.21309529">TECH-2</a>
-  </footer>
-</div>
 </body>
 </html>
