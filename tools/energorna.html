@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --teal:#c67139; --teal-dark:#a6542e; --ink:#201e1d; --muted:#645c50; --line:#d9d2c4;
+    --teal:#c67139; --teal-dark:#a6542e; --ink:#201e1d; --muted:#B4B0A5; --line:#d9d2c4;
     --bg:#f5ead8; --card:#fbf7f0; --amber:#8a5a12; --amber-bg:#f7efd8; --green:#3d6b4a;
     --faint:#82796a; --accent-lt:#b2622d; --field:#fbf7f0; --navy:#201e1d;
   }
@@ -53,12 +53,14 @@
   footer a{color:var(--accent-lt);}
   .err{color:var(--amber);font-family:'IBM Plex Mono',monospace;font-size:12.5px;margin-top:10px;}
 </style>
+<link rel="stylesheet" href="instrumento.css">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
 </head>
 <body>
 
 <nav class="qm">
   <div class="brand">
-    <svg width="24" height="24" viewBox="6 6 46 46" fill="none"><circle cx="28" cy="28" r="18" stroke="#201e1d" stroke-width="4.5"/><circle cx="41" cy="41" r="9.6" fill="#f5ead8"/><circle cx="41" cy="41" r="7.4" fill="#201e1d"/><circle cx="41" cy="41" r="5.4" fill="#c67139"/></svg>
+    <svg width="24" height="24" viewBox="6 6 46 46" fill="none"><circle cx="28" cy="28" r="18" stroke="#E9E7E0" stroke-width="4.5"/><circle cx="41" cy="41" r="9.6" fill="#151513"/><circle cx="41" cy="41" r="7.4" fill="#E9E7E0"/><circle cx="41" cy="41" r="5.4" fill="#A6542E"/></svg>
     <span>QMetrika Labs</span>
   </div>
   <div class="links">
@@ -187,12 +189,12 @@ function drawChart(pos,val){
   const W=c.width,H=c.height,pad=24; ctx.clearRect(0,0,W,H);
   const vmax=Math.max(0.05,...val);
   // ejes
-  ctx.strokeStyle="#d9d2c4"; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(pad,H-pad); ctx.lineTo(W-8,H-pad); ctx.stroke();
+  ctx.strokeStyle="#3A3934"; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(pad,H-pad); ctx.lineTo(W-8,H-pad); ctx.stroke();
   // línea
-  ctx.strokeStyle="#C2673B"; ctx.lineWidth=2; ctx.beginPath();
+  ctx.strokeStyle="#D98A5E"; ctx.lineWidth=2; ctx.beginPath();
   pos.forEach((p,i)=>{const x=pad+p*(W-pad-8); const y=(H-pad)-(val[i]/vmax)*(H-2*pad); i?ctx.lineTo(x,y):ctx.moveTo(x,y);});
   ctx.stroke();
-  ctx.fillStyle="#645c50"; ctx.font="10px 'IBM Plex Mono',monospace";
+  ctx.fillStyle="#B4B0A5"; ctx.font="10px 'IBM Plex Mono',monospace";
   ctx.fillText("5'",pad-2,H-8); ctx.fillText("3'",W-20,H-8);
 }
 

@@ -4,7 +4,7 @@ Documento de referencia de la identidad visual de **qmetrika.xyz**. Propuesta mi
 
 Última actualización: octubre de 2026
 
-> **Estado de la migración.** Usan este sistema `index.html`, `en.html` (con `qmetrika.css`) y todo `blog/` (con `qmetrika.css` + `blog.css`). Las herramientas (`tools/`) y las páginas de tesis siguen con `styles.css`. `blog.css` reestiliza el marcado antiguo del blog sin tocar su contenido y traduce las variables de `styles.css` (`--color-text`, `--color-accent`…) a los tokens, para que los estilos en línea de los artículos sigan funcionando.
+> **Estado de la migración.** Usan este sistema `index.html`, `en.html` (con `qmetrika.css`) y todo `blog/` (con `qmetrika.css` + `blog.css`). Las herramientas (`tools/`) usan la variante «instrumento» (§ 6 bis). Las páginas de tesis siguen con `styles.css`. `blog.css` reestiliza el marcado antiguo del blog sin tocar su contenido y traduce las variables de `styles.css` (`--color-text`, `--color-accent`…) a los tokens, para que los estilos en línea de los artículos sigan funcionando.
 
 ---
 
@@ -125,6 +125,32 @@ El sitio se lee como el de un laboratorio: estructura de artículo científico, 
 - **Cada cifra con su fuente:** toda cifra (AUC, número de genes, % de varianza) aparece junto a la publicación que la respalda.
 - **Sin reclamos comerciales:** nada de filas de cifras, botones de llamada a la acción ni bloques de «disciplinas».
 - **Contacto en el pie,** no como sección.
+
+---
+
+## 6 bis. Tema «instrumento» (herramientas web)
+
+Variante del tema oscuro para las herramientas de `tools/` (`tools/instrumento.css`). Mantiene la tinta, el texto secundario y el acento del sitio, pero hunde el fondo un escalón para que la zona de trabajo se lea como un instrumento de laboratorio.
+
+| Token (herramienta) | Valor | Equivale en el sitio |
+|---------------------|-------|----------------------|
+| `--bg` | `#151513` | (nuevo, un escalón bajo `bg`) |
+| `--card` | `#1B1B18` | `bg` |
+| `--field` | `#222220` | entre `bg` y `panel` |
+| `--line` | `#3A3934` | `rule` |
+| `--ink` | `#E9E7E0` | `ink` |
+| `--muted` | `#B4B0A5` | `muted` |
+| `--accent-lt` | `#D98A5E` | `accent-text` |
+
+Colores de estado, solo para resultados, y siempre con texto que los nombre:
+
+| Token | Valor | Uso | Contraste sobre `#151513` |
+|-------|-------|-----|---------------------------|
+| `--red` | `#E2725B` | Patogénico, error | 5,9:1 |
+| `--amber` | `#D9B45E` | Aviso, RUO | 9,3:1 |
+| `--green` | `#8DB596` | Benigno, correcto | 8,0:1 |
+
+Reglas: esquinas rectas, sin sombras, botón sólido en `ink` con hover en acento, igual que el sitio. `instrumento.css` se carga después del `<style>` propio de cada herramienta y solo cambia su aspecto. El informe PDF de ef-synonymous mantiene su diseño claro, porque es para imprimir.
 
 ---
 

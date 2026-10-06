@@ -1,0 +1,60 @@
+/* QMetrika Labs — tema «instrumento» para las herramientas web.
+   Variante del tema oscuro del sitio: mismos colores de texto y acento, fondo un escalón más profundo
+   y el fondo del sitio (#1B1B18) como superficie de trabajo. Se carga después del <style> de cada herramienta
+   y solo cambia su aspecto; la lógica y el informe imprimible no se tocan. */
+:root{
+  --bg:#151513; --card:#1B1B18; --field:#222220; --line:#3A3934;
+  --ink:#E9E7E0; --navy:#E9E7E0; --muted:#B4B0A5; --faint:#B4B0A5; --mint:#2A2925;
+  --teal:#D98A5E; --teal-dark:#D98A5E; --accent-lt:#D98A5E; --gold:#D98A5E;
+  /* estados de resultado: se distinguen por luminosidad además de por tono */
+  --red:#E2725B; --green:#8DB596; --amber:#D9B45E; --amber-bg:#221F16;
+}
+body{background:var(--bg);color:var(--ink);}
+::selection{background:#A6542E;color:#E9E7E0;}
+
+/* navegación y cabecera, como en el resto del sitio */
+nav.qm{background:var(--bg);backdrop-filter:none;-webkit-backdrop-filter:none;border-bottom:1px solid var(--line);}
+nav.qm .lang{border:0;padding:0;color:var(--muted);}
+nav.qm .back{color:var(--accent-lt);}
+header.hero{background:var(--bg);border-bottom:1px solid var(--line);}
+.kicker{text-transform:none;letter-spacing:.1em;color:var(--muted);}
+header h1, header.hero h1{font-weight:500;letter-spacing:-.02em;color:var(--ink);}
+.ribbon{background:var(--amber-bg);color:var(--amber);border-bottom:1px solid var(--line);}
+
+/* superficies: esquinas rectas, sin sombras */
+.card{background:var(--card);border:1px solid var(--line);border-radius:0;box-shadow:none;}
+h2{font-weight:500;color:var(--ink);}
+label{font-weight:500;color:var(--ink);}
+textarea,select,input{background:var(--field);color:var(--ink);border:1px solid var(--line);border-radius:0;}
+textarea:focus,select:focus,input:focus{outline:2px solid var(--accent-lt);outline-offset:1px;}
+code{background:var(--field);color:var(--ink);border-radius:0;}
+th{background:var(--field);color:var(--muted);font-weight:500;}
+
+/* botones como en el sitio: sólido en tinta, hover en acento */
+button{background:var(--ink);color:var(--bg);border:1px solid var(--ink);border-radius:0;font-family:'IBM Plex Mono',monospace;font-weight:500;}
+button:hover{background:var(--accent-lt);border-color:var(--accent-lt);color:var(--bg);}
+.btn-ghost,.preset{background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:0;}
+.btn-ghost:hover,.preset:hover{background:var(--ink);color:var(--bg);border-color:var(--ink);}
+
+/* resultados */
+.stat-row{border-radius:0;background:var(--line);border-color:var(--line);}
+.stat{background:var(--card);}
+.stat .v{color:var(--ink);font-weight:500;}
+.bignum{color:var(--ink);font-weight:500;}
+.verdict-badge{border-radius:0;color:#151513;font-weight:600;}
+.b-ind{background:var(--muted);}
+.gauge{border-radius:0;background:linear-gradient(90deg,#8DB596 0%,#D9B45E 50%,#E2725B 100%);}
+.gauge .mark{background:var(--ink);border-radius:0;box-shadow:0 0 0 1px #151513;}
+.gauge .gray{background:rgba(21,21,19,.72);}
+.contrib-bar{background:var(--field);border-radius:0;}
+.flag{border-radius:0;}
+.flag.ok{background:#18201A;color:var(--green);}
+.flag.warn{background:var(--amber-bg);color:var(--amber);}
+.flag.err{background:#241815;color:var(--red);}
+svg.chart,canvas{background:var(--field);border:1px solid var(--line);border-radius:0;}
+.sw{border-radius:0 !important;}
+.interp,.hint,.legend,.disc{color:var(--muted);}
+.interp b{color:var(--ink);}
+.err{color:var(--red);}
+footer{color:var(--muted);border-top:1px solid var(--line);}
+footer a{color:var(--accent-lt);}
