@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="es" data-theme="dark"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Variantes sinónimas patogénicas — QMetrika Labs Blog</title>
-<meta name="description" content="Primer predictor CNN con señal termodinámica pura para variantes sinónimas. AUC 0.709. Marco conceptual Λ = S ⊗ Φ.">
+<meta name="description" content="Un predictor CNN con señal termodinámica pura para variantes sinónimas. AUC 0,683. Marco conceptual Λ = S ⊗ Φ.">
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
 <link rel="stylesheet" href="../qmetrika.css">
 <link rel="stylesheet" href="../blog.css">
@@ -20,7 +20,7 @@
     <div class="article-head">
       <div class="kicker kicker--accent">Mayo 2026</div>
       <h1 class="article-title">Variantes sinónimas patogénicas: la señal que <em>REVEL no ve</em></h1>
-      <p class="article-lede">Las variantes sinónimas no cambian la proteína, pero sí alteran el perfil termodinámico del mRNA. Primer predictor CNN con señal termodinámica pura: AUC 0.709. Marco conceptual Λ = S ⊗ Φ. Paper 1 de una trilogía.</p>
+      <p class="article-lede">Las variantes sinónimas no cambian la proteína, pero sí alteran el perfil termodinámico del mRNA. Un predictor CNN con señal termodinámica pura: AUC 0,683 ± 0,018, sin superar a SpliceAI. Marco conceptual Λ = S ⊗ Φ. Paper 1 de una trilogía.</p>
       <div class="meta-row">
         <span class="tag tag-accent mono">bio-ia</span>
         <span class="tag tag-accent mono">paper</span>
@@ -35,7 +35,7 @@
 
       <p>Una variante sinónima es una mutación en el ADN que <strong>no cambia</strong> el aminoácido codificado. El codón cambia, pero la proteína resultante es idéntica. Durante décadas, las variantes sinónimas se consideraron "silenciosas" — sin efecto funcional.</p>
 
-      <p>Sabemos que eso es falso. Variantes sinónimas causan fibrosis quística, cáncer, y decenas de enfermedades. Pero los predictores más potentes de la genómica — <strong>REVEL</strong>, <strong>AlphaMissense</strong>, <strong>CADD</strong> — son fundamentalmente ciegos a ellas. Operan a nivel de proteína: si la proteína no cambia, no tienen señal que medir.</p>
+      <p>Sabemos que eso es falso. Variantes sinónimas causan fibrosis quística, cáncer, y decenas de enfermedades. Pero dos de los predictores más usados de la genómica — <strong>REVEL</strong> y <strong>AlphaMissense</strong> — son ciegos a ellas: operan a nivel de proteína, así que si la proteína no cambia, no tienen señal que medir. <strong>CADD sí puntúa variantes sinónimas</strong>, al integrar anotaciones a nivel de nucleótido, y <strong>SpliceAI</strong> las puntúa mejor que nuestra señal termodinámica cuando caen cerca de un borde de exón.</p>
 
       <p>Aquí es donde las dos líneas de investigación de QMetrika convergen.</p>
 
@@ -85,12 +85,14 @@
       <h2>Resultados</h2>
 
       <div class="statcards-3">
-        <div class="statcard statcard--accent"><div class="v t-accent">0.709</div><div class="l l-accent">AUC dedicada</div></div>
-        <div class="statcard statcard--accent"><div class="v t-accent">0.625</div><div class="l l-accent">AUC LOGO</div></div>
+        <div class="statcard statcard--accent"><div class="v t-accent">0,683</div><div class="l l-accent">AUC dedicada (± 0,018)</div></div>
+        <div class="statcard statcard--accent"><div class="v t-accent">0,625</div><div class="l l-accent">AUC LOGO</div></div>
         <div class="statcard statcard--accent"><div class="v t-accent">2.60×</div><div class="l l-accent">Enriquecimiento G>A</div></div>
       </div>
 
-      <p><strong>CNN dedicada:</strong> AUC 0.709 usando solo señal termodinámica del mRNA (canales ΔG). Sin información evolutiva, sin conservación, sin estructura 3D. Pura física del nucleótido.</p>
+      <p><strong>CNN dedicada:</strong> AUC 0,683 ± 0,018 usando solo señal termodinámica del mRNA (canales ΔG). Sin información evolutiva, sin conservación, sin estructura 3D. Pura física del nucleótido. No supera a SpliceAI.</p>
+
+      <p class="note">Nota sobre los AUC: se calculan sobre ClinVar, donde el valor puede reflejar la identidad del gen o la posición de la variante más que el efecto de la propia variante.</p>
 
       <p><strong>LOGO (Leave-One-Gene-Out):</strong> AUC 0.625 — la señal generaliza entre genes, no es un artefacto de un gen particular.</p>
 
@@ -100,11 +102,11 @@
 
       <h2>Lo que esto implica</h2>
 
-      <p>Un AUC de 0,709 no compite con los mejores predictores de missense (que llegan a 0.99). Pero no tiene que hacerlo. La pregunta no es "¿es mejor que AlphaMissense?" sino <strong>"¿existe señal termodinámica en variantes sinónimas?"</strong> Y la respuesta es sí.</p>
+      <p>Un AUC de 0,683 no compite con los mejores predictores de missense (que llegan a 0,99), ni con SpliceAI en las sinónimas cercanas a un borde de exón. Pero no tiene que hacerlo. La pregunta no es "¿es mejor que AlphaMissense?" sino <strong>"¿existe señal termodinámica en variantes sinónimas?"</strong> Y la respuesta es sí.</p>
 
-      <p>Esto abre un nicho que ningún predictor publicado cubre. REVEL, AlphaMissense, CADD — todos son ciegos a variantes sinónimas porque operan a nivel de proteína. EnergyFingerprint opera a nivel de nucleótido. El canal biofísico ya funciona para sinónimas sin modificación.</p>
+      <p>Esto apunta a un hueco donde los predictores a nivel de proteína no llegan: REVEL y AlphaMissense son ciegos a las variantes sinónimas. EnergyFingerprint opera a nivel de nucleótido, y su canal biofísico funciona para sinónimas sin modificación. El hueco no está vacío: CADD las puntúa, y SpliceAI lo hace mejor que nosotros cuando el mecanismo es de <em>splicing</em>.</p>
 
-      <blockquote style="border-left:3px solid var(--color-accent);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">EnergyFingerprint no compite con AlphaMissense en su terreno. Abre un terreno nuevo donde <strong>nadie puede operar</strong> — porque nadie más mira la física del mRNA.</blockquote>
+      <blockquote style="border-left:3px solid var(--color-accent);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">EnergyFingerprint no compite con AlphaMissense en su terreno. Mira otro eje: la física del mRNA.</blockquote>
 
       <h2>La trilogía</h2>
 

@@ -18,7 +18,7 @@
   <div class="shell">
     <a class="q-brand" href="./"><svg viewBox="6 6 46 46" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="28" cy="28" r="18" stroke="#E9E7E0" stroke-width="4.5"/><circle cx="41" cy="41" r="9.6" fill="#1B1B18"/><circle cx="41" cy="41" r="7.4" fill="#E9E7E0"/><circle cx="41" cy="41" r="5.4" fill="#A6542E"/></svg>QMetrika Labs</a>
     <a class="l" href="#investigacion">[ investigación ]</a>
-    <a class="l" href="#papers">[ publicaciones ]</a>
+    <a class="l" href="#papers">[ preprints ]</a>
     <a class="l" href="#tools">[ herramientas ]</a>
     <a class="l" href="blog/">[ blog ]</a>
     <a class="l lang" href="en.html">es<span>/</span>en</a>
@@ -44,7 +44,7 @@
         <span class="code"><b>L2</b>línea principal</span>
         <div>
           <h2 class="title">Optimización de mRNA terapéutico</h2>
-          <p class="desc">Diseño de secuencias desde el eje de apilamiento (ΔG), que LinearDesign y el MFE no capturan. El optimizador dual (ΔG + MFE) supera simultáneamente a BNT162b2 y mRNA-1273 en ambas métricas; el 78 % de la varianza del eje de apilamiento no es ni composición local ni estructura secundaria. Código no público; abierto a colaboración y licencia.</p>
+          <p class="desc">Diseño de secuencias desde el eje de apilamiento (ΔG), que LinearDesign y el MFE no capturan. Como prueba de concepto computacional, sin validación experimental, el optimizador dual (ΔG + MFE) obtiene valores de ΔG y MFE más favorables que los de BNT162b2 y mRNA-1273; el 78 % de la varianza del eje de apilamiento no es ni composición local ni estructura secundaria. Código no público; abierto a colaboración y licencia.</p>
         </div>
         <span class="side"><a href="https://doi.org/10.5281/zenodo.20228979">P-L2 →</a></span>
       </li>
@@ -70,15 +70,15 @@
   <!-- § 02 publicaciones -->
   <section class="q-section" id="papers">
     <div class="q-section-head">
-      <div class="q-kick"><span class="sec">§ 02</span>publicaciones</div>
-      <span class="meta">DOI permanente · Zenodo</span>
+      <div class="q-kick"><span class="sec">§ 02</span>preprints y notas técnicas</div>
+      <span class="meta">sin revisión por pares · DOI en Zenodo</span>
     </div>
     <ol class="q-index">
       <li class="q-row">
         <span class="code"><b>P-L2</b>preprint</span>
         <div>
           <h3 class="title">mRNA Stacking Optimization: Codon design guided by nearest-neighbor thermodynamics</h3>
-          <p class="desc">El ΔG de apilamiento como dimensión propia frente al MFE. Optimizador dual que supera a las vacunas comerciales.</p>
+          <p class="desc">El ΔG de apilamiento como dimensión propia frente al MFE. Optimizador dual: prueba de concepto computacional en ΔG y MFE, sin validación experimental.</p>
         </div>
         <span class="side"><a href="https://doi.org/10.5281/zenodo.20228979">10.5281/zenodo.20228979</a></span>
       </li>
@@ -86,7 +86,7 @@
         <span class="code"><b>P-L1</b>preprint</span>
         <div>
           <h3 class="title">EnergyFingerprint: Thermodynamic stacking profiles for missense variant classification</h3>
-          <p class="desc">CNN 1D multicanal, 42 genes validados, AUC 0,87–0,99. Gradiente de transferibilidad zero-shot.</p>
+          <p class="desc">CNN 1D multicanal. 8 genes en el preprint, AUC intra-gen 0,72–0,99<sup>†</sup>; panel de 42 genes, resultados no publicados. Gradiente de transferibilidad zero-shot.</p>
         </div>
         <span class="side"><a href="https://doi.org/10.5281/zenodo.19831154">10.5281/zenodo.19831154</a></span>
       </li>
@@ -94,7 +94,7 @@
         <span class="code"><b>TECH-2</b>informe técnico</span>
         <div>
           <h3 class="title">Benchmark: EnergyFingerprint vs CADD, REVEL, AlphaMissense</h3>
-          <p class="desc">Comparativa formal en 7 genes. EF supera a CADD en SCN1A (0,913 vs 0,832). Valor aditivo demostrado.</p>
+          <p class="desc">Comparativa en 7 genes. En conjunto, EF queda por debajo de CADD (ΔAUC −0,024, p = 0,048), REVEL (−0,028) y AlphaMissense (−0,040)<sup>†</sup>; en SCN1A supera a CADD (0,913 frente a 0,832, 5 folds). Que EF aporte valor añadido a estos predictores es una hipótesis por probar.</p>
         </div>
         <span class="side"><a href="https://doi.org/10.5281/zenodo.21309529">10.5281/zenodo.21309529</a></span>
       </li>
@@ -102,11 +102,12 @@
         <span class="code"><b>P1</b>preprint</span>
         <div>
           <h3 class="title">Synonymous variants alter mRNA thermodynamic profiles: a CNN-based pathogenicity signal</h3>
-          <p class="desc">AUC 0,709 en ClinVar. La CNN se reduce a 2 observables físicos interpretables (ΔΔG con signo + sesgo G&gt;A).</p>
+          <p class="desc">AUC 0,683 ± 0,018 en ClinVar<sup>†</sup>, sin superar a SpliceAI. La CNN se reduce a 2 observables físicos interpretables (ΔΔG con signo + sesgo G&gt;A).</p>
         </div>
         <span class="side"><a href="https://doi.org/10.5281/zenodo.20275792">10.5281/zenodo.20275792</a></span>
       </li>
     </ol>
+    <p class="desc" style="margin-top:1.25rem;font-size:.85em;color:var(--muted)">† AUC calculado sobre ClinVar: puede reflejar la identidad del gen o la posición de la variante más que el efecto de la propia variante.</p>
   </section>
 
   <!-- § 03 herramientas -->

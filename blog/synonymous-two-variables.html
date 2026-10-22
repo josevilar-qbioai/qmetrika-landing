@@ -36,7 +36,7 @@
     <article class="prose">
       <h2>La pregunta que dejó abierta el Paper 1</h2>
 
-      <p>El primer trabajo demostró que una CNN clasifica variantes sinónimas usando solo la termodinámica del mRNA (AUC 0,709 con parámetros Turner), sin señal evolutiva. Buen resultado — pero dejó una pregunta incómoda: <strong>¿qué aprende exactamente esa red?</strong> Una caja negra que acierta no explica nada, y en un contexto clínico eso es un problema.</p>
+      <p>El primer trabajo demostró que una CNN clasifica variantes sinónimas usando solo la termodinámica del mRNA (AUC 0,683 ± 0,018 con parámetros Turner), sin señal evolutiva. Buen resultado — pero dejó una pregunta incómoda: <strong>¿qué aprende exactamente esa red?</strong> Una caja negra que acierta no explica nada, y en un contexto clínico eso es un problema.</p>
 
       <p>La respuesta resultó ser más simple —y más útil— de lo esperado: la red no aprende una gramática oculta insondable. Aprende a agregar <em>dos números físicos</em>.</p>
 
@@ -52,10 +52,12 @@
       <div class="statcards-3">
         <div class="statcard statcard--accent"><div class="v t-accent">0.671</div><div class="l l-accent">AUC pooled (2 features)</div></div>
         <div class="statcard statcard--accent"><div class="v t-accent">0.680</div><div class="l l-accent">AUC leave-genes-out</div></div>
-        <div class="statcard statcard--muted"><div class="v t-muted">0.709</div><div class="l l-muted">CNN dedicada (Turner, set expandido)</div></div>
+        <div class="statcard statcard--muted"><div class="v t-muted">0,683</div><div class="l l-muted">CNN dedicada (Turner, ± 0,018)</div></div>
       </div>
 
-      <blockquote style="border-left:3px solid var(--color-accent);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">Dos observables físicos interpretables quedan a la par de la red profunda en la comparación pareada gen a gen (0,671 vs 0,659) y recuperan la mayor parte de su AUC en el set expandido (0,709) — y generalizan a genes que nunca vieron. La caja negra no era imprescindible.</blockquote>
+      <p class="note">Nota sobre los AUC: se calculan sobre ClinVar, donde el valor puede reflejar la identidad del gen o la posición de la variante más que el efecto de la propia variante.</p>
+
+      <blockquote style="border-left:3px solid var(--color-accent);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">Dos observables físicos interpretables quedan a la par de la red profunda en la comparación pareada gen a gen (0,671 vs 0,659) y recuperan la mayor parte de su AUC (0,683 ± 0,018) — y generalizan a genes que nunca vieron. La caja negra no era imprescindible.</blockquote>
 
       <h2>La física correcta: apilamiento, no emparejamiento</h2>
 

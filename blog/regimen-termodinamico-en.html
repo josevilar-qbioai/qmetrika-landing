@@ -64,6 +64,8 @@
 
       <p>The honest answer: in <strong>missense</strong>, adding the thermodynamic channel improves AUC by <strong>+0.000</strong>. The signal×shape interaction exists — it is statistically detectable after FDR — but it is of <strong>practically null effect</strong>: it does not change the classification. In missense, the language model already sees what there is to see.</p>
 
+      <p class="note">A note on the AUCs: they are computed on ClinVar, where the value may reflect gene identity or variant position rather than the effect of the variant itself. The 42-gene panel results are unpublished.</p>
+
       <h2>The contrast: where the language model is blind</h2>
 
       <p>Here is the twist. A <strong>synonymous</strong> variant does not change the protein — the protein language model has nothing to read, blind by construction. We applied exactly the same thermodynamic channel to 5,531 synonymous variants across 8 genes:</p>

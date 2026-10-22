@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EnergyFingerprint: missense variant classification — QMetrika Labs Blog</title>
-<meta name="description" content="Multichannel 1D CNN classifying missense variants using mRNA stacking thermodynamic profiles and ESMC-300M evolutionary signal. 42 validated genes.">
+<meta name="description" content="Multichannel 1D CNN classifying missense variants using mRNA stacking thermodynamic profiles and ESMC-300M evolutionary signal. 8 genes in the preprint; 42-gene panel with results unpublished.">
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
 <link rel="stylesheet" href="../qmetrika.css">
 <link rel="stylesheet" href="../blog.css">
@@ -28,7 +28,7 @@
     <div class="article-head">
       <div class="kicker kicker--accent">June 2026</div>
       <h1 class="article-title">EnergyFingerprint: missense variant classification with <em>thermodynamic profiles</em></h1>
-      <p class="article-lede">Multichannel 1D CNN (~228K parameters) that classifies missense variants as pathogenic or benign by combining mRNA stacking free energy with ESMC-300M evolutionary signal. 42 validated genes, AUC up to 0.994, zero-shot transferability across protein families.</p>
+      <p class="article-lede">Multichannel 1D CNN (~228K parameters) that classifies missense variants as pathogenic or benign by combining mRNA stacking free energy with ESMC-300M evolutionary signal. 8 genes in the preprint, intra-gene AUC up to 0.994; 42-gene panel with results unpublished. Zero-shot transferability across protein families.</p>
       <div class="meta-row">
         <span class="tag tag-accent mono">bio-ia</span>
         <span class="tag tag-accent mono">paper</span>
@@ -55,11 +55,11 @@
 
       <blockquote style="border-left:3px solid var(--color-accent);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">The two axes are <strong>orthogonal</strong>: one operates at the nucleotide level, the other at the protein level. In missense, the classification is carried by the evolutionary axis; the thermodynamic one adds its distinctive value where the former is blind — synonymous variants and mRNA.</blockquote>
 
-      <h2>Results: 42 validated genes</h2>
+      <h2>Results: the 8 genes of the preprint</h2>
 
       <div class="statcards-2">
-        <div class="statcard statcard--accent"><div class="v t-accent">42</div><div class="l l-accent">Genes</div></div>
-        <div class="statcard statcard--accent"><div class="v t-accent">0.994</div><div class="l l-accent">Max AUC (PTEN)</div></div>
+        <div class="statcard statcard--accent"><div class="v t-accent">8</div><div class="l l-accent">Genes (preprint)</div></div>
+        <div class="statcard statcard--accent"><div class="v t-accent">0.994</div><div class="l l-accent">Max intra-gene AUC (PTEN)</div></div>
         <div class="statcard statcard--accent"><div class="v t-accent">~228K</div><div class="l l-accent">CNN parameters</div></div>
         <div class="statcard statcard--accent"><div class="v t-accent">11</div><div class="l l-accent">Channels</div></div>
       </div>
@@ -78,7 +78,9 @@
         </tbody>
       </table>
 
-      <p><strong>July 2026 update:</strong> The panel has expanded from 8 to <strong>42 genes</strong> (12 trainable + 30 zero-shot only), with a mean zero-shot AUC of 0.876 across 41 evaluable genes. The evolutionary model has been migrated from ESM-1v to ESMC-300M (CNN AUC 0.961 on BRCA1). Full results in the <a href="https://doi.org/10.5281/zenodo.21309529">TECH-2 technical report</a>.</p>
+      <p class="note">A note on the AUCs: they are computed on ClinVar, where the value may reflect gene identity or variant position rather than the effect of the variant itself.</p>
+
+      <p><strong>July 2026 update:</strong> The panel has expanded from 8 to <strong>42 genes</strong> (12 trainable + 30 zero-shot only), with a mean zero-shot AUC of 0.876 across 41 evaluable genes. These 42-gene panel results are <strong>unpublished</strong>: only the 8 genes in the table above have a public source. The evolutionary model has been migrated from ESM-1v to ESMC-300M (CNN AUC 0.961 on BRCA1, a figure that is also unpublished). Seven-gene benchmark results in the <a href="https://doi.org/10.5281/zenodo.21309529">TECH-2 technical report</a>.</p>
 
       <div style="border:1px solid var(--color-accent);background:rgba(198,113,57,0.06);border-radius:10px;padding:18px 22px;margin:34px 0;font-size:15px;line-height:1.55;">
         <strong>August 2026 update — channel audit.</strong> An internal pipeline audit over the 42-gene panel (5,023 variants) found that, in <strong>missense</strong>, the classification is carried by the evolutionary channel: the ESMC LLR read at the variant position discriminates with AUC ≈ 0.90, and the thermodynamic channel — though orthogonal — adds no net discriminative power in this regime. The zero-shot AUCs above mostly reflect that evolutionary axis. The thermodynamic channel's distinctive value shows up in <strong>synonymous variants</strong>, where the protein language model is blind and ΔG does classify. Methodology in <a href="regimen-termodinamico-en.html">Where thermodynamics wins: a regime contrast</a>.
@@ -104,7 +106,7 @@
 
       <p><strong>CADD</strong> integrates multiple genomic annotations into a single score. <strong>REVEL</strong> ensembles 13 predictors. <strong>AlphaMissense</strong> uses AlphaFold2 representations. All operate at the protein level.</p>
 
-      <p>EnergyFingerprint is the first to combine mRNA thermodynamic signal with evolutionary signal from a protein language model. The two axes are <strong>orthogonal</strong>, and that complementarity materializes mostly where protein-level predictors cannot reach — synonymous variants and mRNA. In missense the evolutionary axis already captures the signal; EF integrates both channels but it is the evolutionary one that classifies.</p>
+      <p>EnergyFingerprint combines mRNA thermodynamic signal with evolutionary signal from a protein language model. That the two axes are <strong>orthogonal</strong> is the working hypothesis; if they are, that complementarity would materialize mostly where protein-level predictors cannot reach — synonymous variants and mRNA. In missense the evolutionary axis already captures the signal; EF integrates both channels but it is the evolutionary one that classifies.</p>
     </article>
 
     <div class="cta">

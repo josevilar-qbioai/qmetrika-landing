@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="en" data-theme="dark"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pathogenic synonymous variants — QMetrika Labs Blog</title>
-<meta name="description" content="First CNN predictor with pure thermodynamic signal for synonymous variants. AUC 0.709. Conceptual framework Λ = S ⊗ Φ.">
+<meta name="description" content="A CNN predictor with pure thermodynamic signal for synonymous variants. AUC 0.683. Conceptual framework Λ = S ⊗ Φ.">
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
 <link rel="stylesheet" href="../qmetrika.css">
 <link rel="stylesheet" href="../blog.css">
@@ -20,7 +20,7 @@
     <div class="article-head">
       <div class="kicker kicker--accent">May 2026</div>
       <h1 class="article-title">Pathogenic synonymous variants: the signal that <em>REVEL can't see</em></h1>
-      <p class="article-lede">Synonymous variants don't change the protein, but they do alter the mRNA thermodynamic profile. First CNN predictor with pure thermodynamic signal: AUC 0.709. Conceptual framework Λ = S ⊗ Φ. Paper 1 of a trilogy.</p>
+      <p class="article-lede">Synonymous variants don't change the protein, but they do alter the mRNA thermodynamic profile. A CNN predictor with pure thermodynamic signal: AUC 0.683 ± 0.018, not exceeding SpliceAI. Conceptual framework Λ = S ⊗ Φ. Paper 1 of a trilogy.</p>
       <div class="meta-row">
         <span class="tag tag-accent mono">bio-ia</span>
         <span class="tag tag-accent mono">paper</span>
@@ -35,7 +35,7 @@
 
       <p>A synonymous variant is a DNA mutation that <strong>does not change</strong> the encoded amino acid. The codon changes, but the resulting protein is identical. For decades, synonymous variants were considered "silent" — with no functional effect.</p>
 
-      <p>We know that is false. Synonymous variants cause cystic fibrosis, cancer, and dozens of diseases. But the most powerful genomics predictors — <strong>REVEL</strong>, <strong>AlphaMissense</strong>, <strong>CADD</strong> — are fundamentally blind to them. They operate at the protein level: if the protein doesn't change, they have no signal to measure.</p>
+      <p>We know that is false. Synonymous variants cause cystic fibrosis, cancer, and dozens of diseases. But two of the most widely used genomics predictors — <strong>REVEL</strong> and <strong>AlphaMissense</strong> — are blind to them: they operate at the protein level, so if the protein doesn't change they have no signal to measure. <strong>CADD does score synonymous variants</strong>, since it integrates nucleotide-level annotations, and <strong>SpliceAI</strong> scores them better than our thermodynamic signal when they fall near an exon border.</p>
 
       <p>This is where QMetrika's two research lines converge.</p>
 
@@ -85,12 +85,14 @@
       <h2>Results</h2>
 
       <div class="statcards-3">
-        <div class="statcard statcard--accent"><div class="v t-accent">0.709</div><div class="l l-accent">Dedicated AUC</div></div>
+        <div class="statcard statcard--accent"><div class="v t-accent">0.683</div><div class="l l-accent">Dedicated AUC (± 0.018)</div></div>
         <div class="statcard statcard--accent"><div class="v t-accent">0.625</div><div class="l l-accent">LOGO AUC</div></div>
         <div class="statcard statcard--accent"><div class="v t-accent">2.60×</div><div class="l l-accent">G>A enrichment</div></div>
       </div>
 
-      <p><strong>Dedicated CNN:</strong> AUC 0.709 using only mRNA thermodynamic signal (ΔG channels). No evolutionary information, no conservation, no 3D structure. Pure nucleotide physics.</p>
+      <p><strong>Dedicated CNN:</strong> AUC 0.683 ± 0.018 using only mRNA thermodynamic signal (ΔG channels). No evolutionary information, no conservation, no 3D structure. Pure nucleotide physics. It does not exceed SpliceAI.</p>
+
+      <p class="note">A note on the AUCs: they are computed on ClinVar, where the value may reflect gene identity or variant position rather than the effect of the variant itself.</p>
 
       <p><strong>LOGO (Leave-One-Gene-Out):</strong> AUC 0.625 — the signal generalizes across genes; it is not an artifact of a particular gene.</p>
 
@@ -100,11 +102,11 @@
 
       <h2>What this implies</h2>
 
-      <p>An AUC of 0.709 does not compete with the best missense predictors (which reach 0.99). But it doesn't have to. The question is not "Is it better than AlphaMissense?" but <strong>"Does a thermodynamic signal exist in synonymous variants?"</strong> And the answer is yes.</p>
+      <p>An AUC of 0.683 does not compete with the best missense predictors (which reach 0.99), nor with SpliceAI on synonymous variants close to an exon border. But it doesn't have to. The question is not "Is it better than AlphaMissense?" but <strong>"Does a thermodynamic signal exist in synonymous variants?"</strong> And the answer is yes.</p>
 
-      <p>This opens a niche that no published predictor covers. REVEL, AlphaMissense, CADD — all are blind to synonymous variants because they operate at the protein level. EnergyFingerprint operates at the nucleotide level. The biophysical channel already works for synonymous variants without modification.</p>
+      <p>This points to a gap that protein-level predictors cannot reach: REVEL and AlphaMissense are blind to synonymous variants. EnergyFingerprint operates at the nucleotide level, and its biophysical channel works for synonymous variants without modification. The gap is not empty: CADD scores them, and SpliceAI does it better than we do when the mechanism is splicing.</p>
 
-      <blockquote style="border-left:3px solid var(--color-accent);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">EnergyFingerprint is not competing with AlphaMissense on its turf. It opens new ground where <strong>nobody can operate</strong> — because nobody else looks at the physics of the mRNA.</blockquote>
+      <blockquote style="border-left:3px solid var(--color-accent);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">EnergyFingerprint is not competing with AlphaMissense on its turf. It looks at a different axis: the physics of the mRNA.</blockquote>
 
       <h2>The trilogy</h2>
 

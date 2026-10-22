@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Optimización de mRNA terapéutico — QMetrika Labs Blog</title>
-<meta name="description" content="El perfil ΔG de apilamiento como eje ortogonal para el diseño de mRNA terapéutico. Optimizador dual que supera vacunas comerciales.">
+<meta name="description" content="El perfil ΔG de apilamiento como eje ortogonal para el diseño de mRNA terapéutico. Optimizador dual: prueba de concepto computacional en ΔG y MFE, sin validación experimental.">
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
 <link rel="stylesheet" href="../qmetrika.css">
 <link rel="stylesheet" href="../blog.css">
@@ -28,7 +28,7 @@
     <div class="article-head">
       <div class="kicker kicker--accent">Mayo 2026</div>
       <h1 class="article-title">Optimización de mRNA terapéutico: el eje termodinámico que <em>LinearDesign</em> no usa</h1>
-      <p class="article-lede">El perfil ΔG de apilamiento nearest-neighbor aporta una dimensión propia frente a la estructura secundaria — el 78 % de su varianza no es ni composición local ni apareamiento — y es superior a GC3 a nivel local. Un optimizador dual que supera a BNT162b2 y mRNA-1273 en ΔG y MFE simultáneamente.</p>
+      <p class="article-lede">El perfil ΔG de apilamiento nearest-neighbor aporta una dimensión propia frente a la estructura secundaria — el 78 % de su varianza no es ni composición local ni apareamiento — y es superior a GC3 a nivel local. Un optimizador dual que, como prueba de concepto computacional y sin validación experimental, obtiene valores de ΔG y MFE más favorables que BNT162b2 y mRNA-1273.</p>
       <div class="meta-row">
         <span class="tag tag-accent mono">bio-ia</span>
         <span class="tag tag-accent mono">paper</span>
@@ -57,18 +57,18 @@
 
       <div class="statcards-2">
         <div class="statcard statcard--accent"><div class="v t-accent">78 %</div><div class="l l-accent">varianza propia del ΔG</div></div>
-        <div class="statcard statcard--sage"><div class="v t-sage">-0.501</div><div class="l l-sage">r (ΔG vs CSC codón)</div></div>
-        <div class="statcard statcard--accent"><div class="v t-accent">-0.797</div><div class="l l-accent">r (ΔG vs CSC ventana)</div></div>
+        <div class="statcard statcard--sage"><div class="v t-sage">−0,497</div><div class="l l-sage">r (ΔG vs CSC codón)</div></div>
+        <div class="statcard statcard--accent"><div class="v t-accent">−0,797</div><div class="l l-accent">r (ΔG vs CSC ventana)</div></div>
         <div class="statcard statcard--sage"><div class="v t-sage">9/9</div><div class="l l-sage">Genes universales</div></div>
       </div>
 
       <p><strong>Complementariedad, medida donde toca:</strong> a escala de ventana el ΔG medio es en su mayor parte composición, así que ahí la comparación no dice nada. A resolución de nucleótido, en 13 secuencias, el apilamiento comparte solo el 12 % de su varianza con la probabilidad de apareamiento (r agregado −0,345, IC 95 % [−0,378, −0,312]). Optimizar una no optimiza automáticamente la otra.</p>
 
-      <p><strong>Correlación con expresión:</strong> ΔG correlaciona con CSC (Codon Stability Coefficient) a nivel de codón (r = -0.501) y mucho más fuerte a nivel de ventana intra-gen (r = -0.797). La señal termodinámica predice estabilidad del mRNA.</p>
+      <p><strong>Correlación con expresión:</strong> ΔG correlaciona con CSC (Codon Stability Coefficient) a nivel de codón (r = −0,497) y mucho más fuerte a nivel de ventana intra-gen (r = −0,797). La señal termodinámica predice estabilidad del mRNA.</p>
 
       <p><strong>Universalidad:</strong> En 9 de 9 genes analizados, la optimización AT → nativo → GC mantiene el patrón ΔG(AT) > ΔG(nativo) > ΔG(GC), con un efecto medio de -0.416 kcal/mol.</p>
 
-      <p><strong>Contribución residual:</strong> Después de controlar por GC3 (que ya explica mucho), ΔG todavía aporta r = -0.378 (p = 6.8e-30), con un ΔR² de +0.050. El +5% de varianza explicada es el fine-tuning cuando GC3 ya está saturado — el ajuste fino que marca la diferencia entre una vacuna buena y una excelente.</p>
+      <p><strong>Contribución residual:</strong> Después de controlar por GC3 (que ya explica mucho), ΔG todavía aporta r = −0,359 (p = 7,5e-27), con un ΔR² de +0,044, y el efecto es significativo en 6 de los 9 genes por separado. Ese ~4 % de varianza explicada es el ajuste fino cuando GC3 ya está saturado — el ajuste fino que marca la diferencia entre una vacuna buena y una excelente.</p>
 
       <h2>El optimizador dual</h2>
 
@@ -81,7 +81,7 @@
       <table class="table">
         <thead><tr><th>Secuencia</th><th>Mean ΔG</th><th>MFE/nt</th><th>GC%</th></tr></thead>
         <tbody>
-          <tr><td>Nativa SARS-CoV-2</td><td>-1.181</td><td>-0.117</td><td>30.1%</td></tr>
+          <tr><td>Control: S2P_AT_backtrans</td><td>-1.181</td><td>-0.117</td><td>30.1%</td></tr>
           <tr><td>BNT162b2 (Pfizer)</td><td>-1.481</td><td>-0.268</td><td>56.8%</td></tr>
           <tr><td>mRNA-1273 (Moderna)</td><td>-1.542</td><td>-0.313</td><td>62.0%</td></tr>
           <tr><td><strong>Greedy (ΔG only)</strong></td><td><strong>-1.593</strong></td><td><strong>-0.345</strong></td><td><strong>63.9%</strong></td></tr>
@@ -89,7 +89,9 @@
         </tbody>
       </table>
 
-      <p>Ambos modos superan a ambas vacunas comerciales en ΔG y MFE simultáneamente. El beam search mejora significativamente MFE respecto al greedy (-0.370 vs -0.345) con ΔG prácticamente idéntico — demuestra que la integración de estructura secundaria en la decisión aporta valor real.</p>
+      <p class="note">La primera fila no es la secuencia vírica nativa: es una retrotraducción AT-máxima del antígeno S-2P (el mismo de las vacunas), que sirve de control inferior del optimizador, no de referencia biológica. La CDS silvestre real codifica otra proteína y por eso no entra en la comparación.</p>
+
+      <p>Ambos modos obtienen valores de ΔG y MFE más favorables que las dos vacunas comerciales. Son medidas computacionales: ninguna de estas secuencias se ha expresado ni medido en laboratorio, así que no hay evidencia de que esa ventaja numérica se traduzca en más expresión o más estabilidad. El beam search mejora significativamente MFE respecto al greedy (-0.370 vs -0.345) con ΔG prácticamente idéntico — demuestra que la integración de estructura secundaria en la decisión aporta valor real.</p>
 
       <h2>Posicionamiento vs LinearDesign</h2>
 
@@ -97,7 +99,7 @@
 
       <p>El optimizador de QMetrika añade una <strong>tercera dimensión</strong>: el apilamiento nearest-neighbor. Dado que el 78 % de la varianza del ΔG no la explican ni la composición ni el apareamiento, esta dimensión es mayoritariamente propia — no es redundante con lo que LinearDesign ya optimiza. La propuesta no es reemplazar LinearDesign, sino <strong>complementarlo</strong> con información termodinámica que no está usando.</p>
 
-      <blockquote style="border-left:3px solid var(--color-accent);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">La diferencia entre una vacuna buena y una excelente puede estar en una dimensión que nadie está mirando. El apilamiento nearest-neighbor es esa dimensión.</blockquote>
+      <blockquote style="border-left:3px solid var(--color-accent);padding:6px 0 6px 24px;margin:32px 0;font-size:21px;line-height:1.4;font-family:var(--font-heading);color:var(--color-text);">La diferencia entre una vacuna buena y una excelente puede estar en una dimensión que los optimizadores actuales no usan. El apilamiento nearest-neighbor es esa dimensión.</blockquote>
 
       <h2>Propiedad intelectual</h2>
 
@@ -117,7 +119,7 @@
       </div>
       <div class="cta-actions">
         <a class="btn btn-primary btn--mono" href="https://doi.org/10.5281/zenodo.20228979" target="_blank">Zenodo · DOI 10.5281/zenodo.20228979</a>
-        <a class="btn btn-secondary btn--mono" href="https://github.com/josevilar-qbioai/mrna-stacking-optimization" target="_blank">GitHub</a>
+        <a class="btn btn-secondary btn--mono" href="https://github.com/josevilar-qbioai/mrna-stacking-analysis" target="_blank">GitHub</a>
       </div>
     </div>
   </div>

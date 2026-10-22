@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Benchmark: EnergyFingerprint vs CADD, REVEL, AlphaMissense — QMetrika Labs Blog</title>
-<meta name="description" content="Comparativa formal en 7 genes: EnergyFingerprint alcanza ΔAUC de -0.024 a -0.040 frente a predictores entrenados en conjuntos de datos masivos, y supera a CADD en SCN1A.">
+<meta name="description" content="Comparativa en 7 genes: EnergyFingerprint alcanza ΔAUC de −0,024 a −0,040 frente a predictores entrenados en conjuntos de datos masivos, y supera a CADD en SCN1A.">
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
 <link rel="stylesheet" href="../qmetrika.css">
 <link rel="stylesheet" href="../blog.css">
@@ -28,7 +28,7 @@
     <div class="article-head">
       <div class="kicker kicker--accent">Julio 2026</div>
       <h1 class="article-title">Benchmark: EnergyFingerprint vs CADD, REVEL, <em>AlphaMissense</em></h1>
-      <p class="article-lede">Comparativa formal en 7 genes con meta-análisis estratificado. EnergyFingerprint alcanza ΔAUC de -0.024 a -0.040 frente a predictores entrenados en conjuntos de datos masivos — y supera a CADD en el canal de sodio SCN1A (0.913 vs 0.832). La señal ortogonal se ha confirmado: EnergyFingerprint aporta información termodinámica que los predictores existentes no capturan, lo que la convierte en una dimensión complementaria e independiente para la clasificación de variantes.</p>
+      <p class="article-lede">Comparativa formal en 7 genes con meta-análisis estratificado. EnergyFingerprint alcanza ΔAUC de -0.024 a -0.040 frente a predictores entrenados en conjuntos de datos masivos — y supera a CADD en el canal de sodio SCN1A (0.913 vs 0.832). Que EnergyFingerprint aporte información termodinámica que los predictores existentes no capturan es una hipótesis que este benchmark no prueba, lo que la convierte en una dimensión complementaria e independiente para la clasificación de variantes.</p>
       <div class="meta-row">
         <span class="tag tag-accent mono">bio-ia</span>
         <span class="tag tag-accent mono">benchmark</span>
@@ -96,11 +96,12 @@
       <h2>Meta-análisis: el veredicto estadístico</h2>
 
       <p>El meta-análisis estratificado por gen (varianza inversa, 7 genes) resume la comparación:</p>
+      <p class="note">Nota sobre los AUC: se calculan sobre ClinVar, donde el valor puede reflejar la identidad del gen o la posición de la variante más que el efecto de la propia variante. Esto afecta por igual a EF y a los predictores comparados.</p>
 
       <table class="table">
         <thead><tr><th>Comparación</th><th>ΔAUC combinado</th><th>p</th><th>p (BH adj.)</th><th>Interpretación</th></tr></thead>
         <tbody>
-          <tr><td><strong>EF vs CADD</strong></td><td>-0.024</td><td>0.048</td><td>0.048</td><td>Estadísticamente a la par</td></tr>
+          <tr><td><strong>EF vs CADD</strong></td><td>-0.024</td><td>0.048</td><td>0.048</td><td>Significativamente por debajo (p = 0,048)</td></tr>
           <tr><td><strong>EF vs REVEL</strong></td><td>-0.028</td><td>0.022</td><td>0.033</td><td>Marginalmente detrás</td></tr>
           <tr><td><strong>EF vs AlphaMissense</strong></td><td>-0.040</td><td>0.0003</td><td>0.0009</td><td>Detrás</td></tr>
         </tbody>
@@ -118,17 +119,17 @@
 
       <h2>Qué significa para el diagnóstico</h2>
 
-      <p>La comparativa confirma que EnergyFingerprint aporta una <strong>señal ortogonal</strong> — es decir, información independiente y complementaria — a los predictores existentes. Decimos "ortogonal" porque la señal termodinámica del mRNA y las señales de conservación evolutiva que usan CADD, REVEL y AlphaMissense capturan aspectos distintos de la biología: son dimensiones perpendiculares, no redundantes. EnergyFingerprint no es un sustituto, sino un complemento que mide lo que los otros no ven. En ciertos contextos — canales iónicos de membrana, proteínas con restricciones de plegamiento cotraduccional — esa dimensión termodinámica domina.</p>
+      <p>La comparativa deja planteada, sin probarla, la hipótesis de que EnergyFingerprint aporte una <strong>señal ortogonal</strong> — es decir, información independiente y complementaria — a los predictores existentes. El benchmark no incluye ningún experimento de aditividad: mide cada predictor por separado, no la combinación de EF con los demás. Decimos "ortogonal" porque la señal termodinámica del mRNA y las señales de conservación evolutiva que usan CADD, REVEL y AlphaMissense capturan aspectos distintos de la biología: son dimensiones perpendiculares, no redundantes. EnergyFingerprint no es un sustituto, sino un complemento que mide lo que los otros no ven. En ciertos contextos — canales iónicos de membrana, proteínas con restricciones de plegamiento cotraduccional — esa dimensión termodinámica domina.</p>
 
-      <p>Para un laboratorio de diagnóstico genético, el valor está en la <strong>combinación</strong>: añadir EF al panel de predictores existentes aportaría señal adicional precisamente en los genes donde los predictores actuales son más débiles.</p>
+      <p>Si la hipótesis se confirmara, el valor para un laboratorio de diagnóstico genético estaría en la <strong>combinación</strong>: añadir EF al panel de predictores existentes aportaría señal adicional precisamente en los genes donde los predictores actuales son más débiles. Comprobarlo exige un estudio de valor aditivo que todavía no hemos publicado.</p>
 
       <p>Y para la investigación, el resultado de SCN1A abre una puerta: si la física del mRNA explica mejor las variantes en canales iónicos, ¿qué otros genes de membrana se beneficiarían de un predictor termodinámico? El zero-shot cruzado SCN1A↔CFTR es el siguiente experimento.</p>
     </article>
 
     <div class="cta">
       <div>
-        <h3>Datos completos de la comparativa</h3>
-        <p>Tablas, puntuaciones por variante, y figura ROC publicable.</p>
+        <h3>Datos de la comparativa</h3>
+        <p>Tablas y figura ROC publicable. Las puntuaciones por variante y el script del benchmark están pendientes de depósito.</p>
       </div>
       <div class="cta-actions">
         <a class="btn btn-primary btn--mono" href="https://doi.org/10.5281/zenodo.21309529" target="_blank">Informe Técnico · DOI 10.5281/zenodo.21309529</a>

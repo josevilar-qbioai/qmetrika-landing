@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>El paradigma micro: un fundador y una orquesta de agentes — QMetrika Labs Blog</title>
 <meta name="description" content="Un investigador con modelos locales, agentes especializados y acceso puntual a modelos fundacionales puede lanzar proyectos de deep-tech que antes requerían un equipo completo.">
+<meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
 <link rel="stylesheet" href="../qmetrika.css">
 <link rel="stylesheet" href="../blog.css">
@@ -25,8 +26,12 @@
   <div class="article">
     <a class="lang" href="./index.html">← blog</a>
 
+    <div class="note" style="margin-bottom:28px">
+      <p><strong style="color:var(--ink)">Entrada retirada (22/10/2026).</strong> Este texto apoyaba su argumento en cifras que una revisión posterior no sostiene: presentaba como validados 42 genes cuando solo 8 tienen fuente pública, y daba por demostrado un valor aditivo frente a CADD y REVEL que ningún experimento nuestro ha probado. Se retira del índice del blog y se conserva aquí, corregido, para no romper enlaces. Las cifras que sí tienen fuente están en los <a href="../index.html#papers">preprints y notas técnicas</a>.</p>
+    </div>
+
     <div class="article-head">
-      <div class="kicker kicker--sage">Agosto 2026 · colateral</div>
+      <div class="kicker kicker--sage">Agosto 2026 · colateral · retirada</div>
       <h1 class="article-title">El paradigma <em>micro</em>: un fundador y una orquesta de agentes</h1>
       <p class="article-lede">Reflexiones sobre cómo se pueden realizar investigaciones con modelos locales, agentes especializados y acceso puntual a modelos fundacionales para lanzar proyectos de deep-tech que antes requerían un equipo completo. QMetrika como caso real.</p>
       <div class="meta-row">
@@ -81,13 +86,13 @@
       <p>El resultado de operar así, en números:</p>
 
       <div class="statcards-2">
-        <div class="statcard statcard--sage"><div class="v t-sage">0.961</div><div class="l l-sage">AUC BRCA1 (CNN 11ch)</div></div>
-        <div class="statcard statcard--sage"><div class="v t-sage">42</div><div class="l l-sage">Genes validados (AUC medio 0.876)</div></div>
-        <div class="statcard statcard--sage"><div class="v t-sage">4</div><div class="l l-sage">Publicaciones con DOI permanente</div></div>
+        <div class="statcard statcard--sage"><div class="v t-sage">0,961</div><div class="l l-sage">AUC BRCA1 (CNN 11ch) · sin publicar</div></div>
+        <div class="statcard statcard--sage"><div class="v t-sage">8</div><div class="l l-sage">Genes validados (preprint) · panel de 42 sin publicar</div></div>
+        <div class="statcard statcard--sage"><div class="v t-sage">4</div><div class="l l-sage">Preprints y notas técnicas con DOI</div></div>
         <div class="statcard statcard--sage"><div class="v t-sage">228K</div><div class="l l-sage">Parámetros del modelo</div></div>
       </div>
 
-      <p>Tres preprints (clasificación missense, optimización de mRNA terapéutico, variantes sinónimas) y un benchmark formal publicado que compara EnergyFingerprint contra CADD, REVEL y AlphaMissense. Un optimizador de mRNA que supera a las vacunas de Pfizer y Moderna en estabilidad termodinámica. Un estudio de valor aditivo que demuestra que EF mejora a CADD en canales iónicos (<strong>SCN1A: +0.109 AUC</strong>) y reclasifica VUS con 90.6% de precisión. Un prototipo de red neuronal sobre grafos termodinámicos (DT-GNN) con interpretabilidad <em>glass-box</em>. Y un marco teórico (Λ = S ⊗ Φ) que despliega una trilogía de papers planificada hasta 2028.</p>
+      <p>Tres preprints (clasificación missense, optimización de mRNA terapéutico, variantes sinónimas) y un benchmark formal publicado que compara EnergyFingerprint contra CADD, REVEL y AlphaMissense. Un optimizador de mRNA que, como prueba de concepto computacional y sin validación experimental, obtiene valores de ΔG y MFE más favorables que las vacunas de Pfizer y Moderna. Un prototipo de red neuronal sobre grafos termodinámicos (DT-GNN) con interpretabilidad <em>glass-box</em>. Y un marco teórico (Λ = S ⊗ Φ) que despliega una trilogía de papers planificada hasta 2028.</p>
 
       <p>Todo desde un escritorio con un Mac Mini, conexión a internet y una cuenta de API.</p>
 
@@ -107,13 +112,13 @@
 
       <h2>Donde el paradigma micro necesita dejar de ser micro</h2>
 
-      <p>Todo lo anterior es real y funciona. Cuatro publicaciones con DOI, un benchmark formal publicado, 42 genes validados, un optimizador que supera vacunas comerciales — todo desde un escritorio. Pero sería deshonesto cerrar aquí sin decir lo que viene después.</p>
+      <p>Todo lo anterior es real y funciona. Cuatro preprints y notas técnicas con DOI —sin revisión por pares—, un benchmark publicado, 8 genes validados en el preprint y un panel de 42 con resultados aún sin publicar, y un optimizador que mejora las cifras computacionales de las vacunas comerciales sin que eso se haya medido en laboratorio — todo desde un escritorio. Pero sería deshonesto cerrar aquí sin decir lo que viene después.</p>
 
       <p>Este modelo es extraordinariamente eficaz para <strong>validar una hipótesis, construir un prototipo y generar evidencia publicable</strong>. La fase de exploración y prueba de concepto se comprime de años a meses. Hasta ahí, un fundador con una orquesta de agentes es suficiente.</p>
 
       <p>Pero la ciencia no termina en el preprint. La validación experimental — sintetizar constructos de mRNA, medir expresión en cultivos celulares, realizar ensayos DMS-MaPseq — requiere un <strong>laboratorio físico</strong>. Proteger y licenciar la tecnología requiere <strong>capital</strong>. Escalar el producto desde un prototipo hasta una herramienta clínica certificada requiere <strong>regulación, infraestructura y personas</strong>.</p>
 
-      <p>El paradigma micro demuestra que la barrera de entrada al deep-tech ha bajado drásticamente. Pero la barrera de <strong>escalado</strong> sigue donde estaba. Lo que cambia es la posición desde la que se negocia: ya no es una idea en una servilleta — es un proyecto con resultados cuantificados (AUC 0.961, 42 genes, benchmark publicado contra los tres predictores dominantes), con DOIs, con IP protegida y con un sistema operativo probado.</p>
+      <p>El paradigma micro demuestra que la barrera de entrada al deep-tech ha bajado drásticamente. Pero la barrera de <strong>escalado</strong> sigue donde estaba. Lo que cambia es la posición desde la que se negocia: ya no es una idea en una servilleta — es un proyecto con resultados cuantificados (benchmark publicado contra los tres predictores dominantes; la CNN con ESMC da AUC 0,961 en BRCA1, aún sin publicar), con DOIs y con un sistema operativo probado.</p>
 
       <p>El siguiente paso natural para QMetrika es <strong>colaboración con universidades</strong> para validación experimental, <strong>cooperación con empresas de capital</strong> para el desarrollo de producto, y <strong>partnerships con laboratorios de diagnóstico y pharma</strong> para pilotos clínicos. El micro-proyecto ha demostrado que la ciencia funciona. Ahora necesita el ecosistema para crecer.</p>
     </article>
