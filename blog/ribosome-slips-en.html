@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>When the ribosome slips — QMetrika Labs Blog</title>
+<meta name="description" content="mRNA vaccines replace uridine with N1-methylpseudouridine (m1Ψ). A Nature Communications study explains why that substitution promotes +1 frameshifting on certain sequences, and how a well-chosen synonymous change removes the effect in their experiments.">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="stylesheet" href="../qmetrika.css">
+<link rel="stylesheet" href="../blog.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+</head>
+<body>
+<div class="wrap">
+  <header class="nav nav--site">
+    <span class="nav-brand"><svg width="26" height="26" viewBox="6 6 46 46" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><circle cx="28" cy="28" r="18" stroke="#E9E7E0" stroke-width="4.5"/><circle cx="41" cy="41" r="9.6" fill="#1B1B18"/><circle cx="41" cy="41" r="7.4" fill="#E9E7E0"/><circle cx="41" cy="41" r="5.4" fill="#A6542E"/></svg>QMetrika Labs</span>
+    <a href="../en.html">home</a>
+    <a href="./en.html">blog</a>
+    <a href="../en.html#contact">contact</a>
+    <a class="lang" href="ribosoma-resbala.html">en/es</a>
+  </header>
+
+  <div class="article">
+    <a class="lang" href="./en.html">← blog</a>
+
+    <div class="article-head">
+      <div class="kicker kicker--accent">November 2026</div>
+      <h1 class="article-title">When the ribosome slips: what an mRNA modification teaches about vaccine design</h1>
+      <p class="article-lede">mRNA vaccines replace uridine with N1-methylpseudouridine (m1Ψ) so the RNA is more stable and triggers less inflammation. A peer-reviewed study, published in September in <em>Nature Communications</em>, explains why that substitution occasionally makes the ribosome skip a letter on certain sequences, and shows that a well-chosen synonymous change removes that effect in their experiments.</p>
+      <div class="meta-row">
+        <span class="tag tag-accent mono">bio-ai</span>
+        <span class="tag tag-accent mono">mRNA</span>
+        <span class="tag tag-accent mono">paper</span>
+      </div>
+    </div>
+
+    <hr class="hr" style="margin:40px 0;">
+
+    <article class="prose">
+      <h2>A quiet ingredient with outsized weight</h2>
+
+      <p>The mRNA in the COVID-19 vaccines from BioNTech/Pfizer (BNT162b2) and Moderna (mRNA-1273) does not use ordinary uridine: it carries m1Ψ, a chemically modified version. That choice, key to the success of this technology, dampens the immune response against the RNA itself and increases its stability. But changing a chemical letter in the message can have consequences for how it is read.</p>
+
+      <h2>A warning that arrived in 2023</h2>
+
+      <p>In December 2023, Mulroney and colleagues reported in <em>Nature</em> that m1Ψ promotes «+1 frameshifting»: the ribosome advances one extra position, reads the rest of the message out of frame and produces small amounts of peptides distinct from the intended protein. That work detected T-cell responses to peptides from that alternative frame in vaccinated people. Earlier, another group (Kim and colleagues, <em>Cell Reports</em>, 2022) had concluded that m1Ψ-containing mRNA is translated with fidelity. The mechanism was still missing.</p>
+
+      <h2>What they have done now</h2>
+
+      <p>Marina Rodnina’s team (Poulis and colleagues, <em>Nature Communications</em>, 2026) combined three approaches: dual fluorescent reporters in human HEK293T cells, a fully reconstituted in vitro translation system, and single-molecule FRET microscopy. They focused on the «slippery» UUUC and UUUU motifs present in the sequences of both vaccines.</p>
+
+      <p>According to their data, frameshift efficiency on BNT162b2 sequences ranged from 0.82&nbsp;% to 1.7&nbsp;% with unmodified mRNA, and from 1.0&nbsp;% to 2.7&nbsp;% with m1Ψ. The effect appeared in four of the six slippery motifs, not in all of them. The authors themselves note that their values are 3 to 7 times lower than those of the 2023 study and attribute this to the different sensitivity of each measurement method.</p>
+
+      <h2>The mechanism, in one sentence</h2>
+
+      <p>The slip does not occur while decoding the letter or while the ribosome advances, but when the ribosome is left «waiting» with the transfer RNA in the P site: m1Ψ weakens codon–anticodon pairing and pushes that transfer RNA toward a conformation that facilitates the jump. An important caveat: this mechanistic part was studied with bacterial ribosomes (from <em>E. coli</em>), and the authors acknowledge that it remains to be demonstrated in human translation.</p>
+
+      <h2>The practical part: choose synonyms carefully</h2>
+
+      <p>The genetic code is redundant: several codons encode the same amino acid. Replacing the UUUC motif with UUCC or UUUU, without changing the protein, eliminated the increase in frameshifting in their experiments. The authors also describe that the following codon matters: if it starts with C it favors the slip, and if it starts with U it restrains it. They conclude that codon optimization can mitigate this risk in the design of therapeutic mRNAs.</p>
+
+      <h2>A useful counterpoint</h2>
+
+      <p>Is swapping a codon for a synonym harmless? In another setting, a <em>Nucleic Acids Research</em> study (Rao and colleagues, 2026) used base editing to test 8,558 possible synonymous mutations in 128 essential genes of human cell lines, excluding positions near <em>splicing</em> sites. According to the authors, those mutations affected cell growth about 37.9 times less often than amino-acid-changing ones. It is not the same scenario as a therapeutic mRNA, but it is a reminder that «synonymous» does not automatically mean «neutral» and that it is worth measuring.</p>
+
+      <h2>What this paper does not say</h2>
+
+      <p>It does not study effects in patients or provide evidence of clinical harm. The cellular data come from a single line, HEK293T, and the detailed mechanism was obtained with bacterial ribosomes. The authors suggest that tissue- or cell-state-specific transfer RNA repertoires could modulate the phenomenon, and leave that as an open question.</p>
+
+      <h2>Why it matters to us</h2>
+
+      <p>At QMetrika we work at the intersection of sequence, chemistry and function. This study illustrates well an idea we share: designing mRNA is not only choosing which protein to encode, but also how to write it. Translation fidelity should be evaluated alongside expression and immunogenicity, as the authors themselves propose.</p>
+
+      <h2>Sources</h2>
+
+      <ul>
+        <li>Poulis et al., <em>Nature Communications</em> (2026), peer-reviewed, open access CC BY 4.0: <a href="https://doi.org/10.1038/s41467-026-77796-3" target="_blank" rel="noopener">https://doi.org/10.1038/s41467-026-77796-3</a></li>
+        <li>Mulroney et al., <em>Nature</em> (2023): <a href="https://doi.org/10.1038/s41586-023-06800-3" target="_blank" rel="noopener">https://doi.org/10.1038/s41586-023-06800-3</a></li>
+        <li>Kim et al., <em>Cell Reports</em> (2022): <a href="https://doi.org/10.1016/j.celrep.2022.111300" target="_blank" rel="noopener">https://doi.org/10.1016/j.celrep.2022.111300</a></li>
+        <li>Rao et al., <em>Nucleic Acids Research</em> (2026): <a href="https://doi.org/10.1093/nar/gkag733" target="_blank" rel="noopener">https://doi.org/10.1093/nar/gkag733</a></li>
+      </ul>
+    </article>
+
+    <div class="cta">
+      <div>
+        <h3>Read the Nature Communications paper</h3>
+        <p>Poulis et al. (2026), open access CC BY 4.0: mechanism of +1 frameshifting with m1Ψ and mitigation by synonymous changes.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-primary btn--mono" href="https://doi.org/10.1038/s41467-026-77796-3" target="_blank" rel="noopener">DOI · 10.1038/s41467-026-77796-3</a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer article-footer">
+    <a href="./en.html">← back to blog</a>
+    <a href="../en.html">qmetrika_labs</a>
+    <span class="push">2026</span>
+  </footer>
+</div>
+</body>
+</html>

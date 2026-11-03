@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cuando el ribosoma resbala — QMetrika Labs Blog</title>
+<meta name="description" content="Las vacunas de ARNm sustituyen la uridina por N1-metilpseudouridina (m1Ψ). Un estudio en Nature Communications explica por qué esa sustitución favorece el cambio de marco +1 en ciertas secuencias y cómo un sinónimo bien elegido lo elimina.">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="stylesheet" href="../qmetrika.css">
+<link rel="stylesheet" href="../blog.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+</head>
+<body>
+<div class="wrap">
+  <header class="nav nav--site">
+    <span class="nav-brand"><svg width="26" height="26" viewBox="6 6 46 46" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><circle cx="28" cy="28" r="18" stroke="#E9E7E0" stroke-width="4.5"/><circle cx="41" cy="41" r="9.6" fill="#1B1B18"/><circle cx="41" cy="41" r="7.4" fill="#E9E7E0"/><circle cx="41" cy="41" r="5.4" fill="#A6542E"/></svg>QMetrika Labs</span>
+    <a href="../index.html">home</a>
+    <a href="./index.html">blog</a>
+    <a href="../index.html#contacto">contacto</a>
+    <a class="lang" href="ribosome-slips-en.html">es/en</a>
+  </header>
+
+  <div class="article">
+    <a class="lang" href="./index.html">← blog</a>
+
+    <div class="article-head">
+      <div class="kicker kicker--accent">Noviembre 2026</div>
+      <h1 class="article-title">Cuando el ribosoma resbala: lo que una modificación del ARNm enseña sobre el diseño de vacunas</h1>
+      <p class="article-lede">Las vacunas de ARNm sustituyen la uridina por N1-metilpseudouridina (m1Ψ) para que el ARN sea más estable y despierte menos inflamación. Un estudio revisado por pares, publicado en septiembre en <em>Nature Communications</em>, explica por qué esa sustitución hace que el ribosoma se salte de vez en cuando una letra en ciertas secuencias, y muestra que un cambio sinónimo bien elegido elimina ese efecto en sus experimentos.</p>
+      <div class="meta-row">
+        <span class="tag tag-accent mono">bio-ia</span>
+        <span class="tag tag-accent mono">ARNm</span>
+        <span class="tag tag-accent mono">paper</span>
+      </div>
+    </div>
+
+    <hr class="hr" style="margin:40px 0;">
+
+    <article class="prose">
+      <h2>Un ingrediente discreto con mucho peso</h2>
+
+      <p>El ARNm de las vacunas contra la COVID-19 de BioNTech/Pfizer (BNT162b2) y Moderna (mRNA-1273) no usa uridina normal: lleva m1Ψ, una versión químicamente modificada. Esa elección, clave en el éxito de esta tecnología, reduce la respuesta inmunitaria contra el propio ARN y aumenta su estabilidad. Pero cambiar una letra química del mensaje puede tener consecuencias en cómo se lee.</p>
+
+      <h2>Un aviso que venía de 2023</h2>
+
+      <p>En diciembre de 2023, Mulroney y colaboradores publicaron en <em>Nature</em> que la m1Ψ favorece el «cambio de marco +1»: el ribosoma avanza una posición de más, lee el resto del mensaje desfasado y produce pequeñas cantidades de péptidos distintos de la proteína prevista. Ese trabajo detectó respuestas de linfocitos T frente a péptidos de ese marco alternativo en personas vacunadas. Antes, otro grupo (Kim y colaboradores, <em>Cell Reports</em>, 2022) había concluido que el ARNm con m1Ψ se traduce con fidelidad. Faltaba entender el mecanismo.</p>
+
+      <h2>Qué han hecho ahora</h2>
+
+      <p>El equipo de Marina Rodnina (Poulis y colaboradores, <em>Nature Communications</em>, 2026) combinó tres enfoques: reporteros fluorescentes dobles en células humanas HEK293T, un sistema de traducción reconstituido por completo in vitro y microscopía FRET de molécula única. Se fijaron en los motivos «resbaladizos» UUUC y UUUU presentes en las secuencias de las dos vacunas.</p>
+
+      <p>Según sus datos, la eficiencia del cambio de marco en las secuencias de BNT162b2 osciló entre el 0,82&nbsp;% y el 1,7&nbsp;% con ARNm sin modificar, y entre el 1,0&nbsp;% y el 2,7&nbsp;% con m1Ψ. El efecto apareció en cuatro de los seis motivos resbaladizos, no en todos. Los propios autores señalan que sus valores son de 3 a 7 veces más bajos que los del estudio de 2023 y lo atribuyen a la distinta sensibilidad de cada método de medida.</p>
+
+      <h2>El mecanismo, en una frase</h2>
+
+      <p>El desliz no ocurre al descodificar la letra ni al avanzar el ribosoma, sino cuando el ribosoma se queda «esperando» con el ARN de transferencia en el sitio P: la m1Ψ debilita el emparejamiento codón-anticodón y empuja ese ARN de transferencia hacia una conformación que facilita el salto. Un matiz importante: esta parte mecanística se estudió con ribosomas bacterianos (de <em>E. coli</em>), y los autores reconocen que falta demostrarla en la traducción humana.</p>
+
+      <h2>La parte práctica: elegir bien los sinónimos</h2>
+
+      <p>El código genético es redundante: varios codones codifican el mismo aminoácido. Sustituir el motivo UUUC por UUCC o UUUU, sin cambiar la proteína, eliminó el aumento del cambio de marco en sus experimentos. Los autores también describen que el codón siguiente influye: si empieza por C favorece el desliz, y si empieza por U lo frena. Concluyen que la optimización de codones puede mitigar este riesgo en el diseño de ARNm terapéuticos.</p>
+
+      <h2>Un contrapunto útil</h2>
+
+      <p>¿Es inocuo cambiar un codón por un sinónimo? En otro contexto, un estudio de <em>Nucleic Acids Research</em> (Rao y colaboradores, 2026) usó edición de bases para probar 8558 posibles mutaciones sinónimas en 128 genes esenciales de líneas celulares humanas, excluyendo las posiciones cercanas a sitios de <em>splicing</em>. Según los autores, esas mutaciones afectaron al crecimiento celular unas 37,9 veces menos a menudo que las de cambio de aminoácido. No es el mismo escenario que un ARNm terapéutico, pero recuerda que «sinónimo» no significa automáticamente «neutro» y que conviene medirlo.</p>
+
+      <h2>Qué no dice este trabajo</h2>
+
+      <p>No estudia efectos en pacientes ni aporta pruebas de daño clínico. Los datos celulares proceden de una sola línea, HEK293T, y el mecanismo detallado se obtuvo con ribosomas bacterianos. Los autores plantean que los repertorios de ARN de transferencia propios de cada tejido o estado celular podrían modular el fenómeno, y lo dejan como pregunta abierta.</p>
+
+      <h2>Por qué nos interesa</h2>
+
+      <p>En QMetrika trabajamos en la intersección entre secuencia, química y función. Este estudio ilustra bien una idea que compartimos: diseñar ARNm no es solo elegir qué proteína codificar, sino también cómo escribirla. La fidelidad de traducción debería evaluarse junto a la expresión y la inmunogenicidad, como proponen los propios autores.</p>
+
+      <h2>Fuentes</h2>
+
+      <ul>
+        <li>Poulis et al., <em>Nature Communications</em> (2026), revisado por pares, acceso abierto CC BY 4.0: <a href="https://doi.org/10.1038/s41467-026-77796-3" target="_blank" rel="noopener">https://doi.org/10.1038/s41467-026-77796-3</a></li>
+        <li>Mulroney et al., <em>Nature</em> (2023): <a href="https://doi.org/10.1038/s41586-023-06800-3" target="_blank" rel="noopener">https://doi.org/10.1038/s41586-023-06800-3</a></li>
+        <li>Kim et al., <em>Cell Reports</em> (2022): <a href="https://doi.org/10.1016/j.celrep.2022.111300" target="_blank" rel="noopener">https://doi.org/10.1016/j.celrep.2022.111300</a></li>
+        <li>Rao et al., <em>Nucleic Acids Research</em> (2026): <a href="https://doi.org/10.1093/nar/gkag733" target="_blank" rel="noopener">https://doi.org/10.1093/nar/gkag733</a></li>
+      </ul>
+    </article>
+
+    <div class="cta">
+      <div>
+        <h3>Lee el artículo en Nature Communications</h3>
+        <p>Poulis et al. (2026), acceso abierto CC BY 4.0: mecanismo del cambio de marco +1 con m1Ψ y mitigación por sinónimos.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-primary btn--mono" href="https://doi.org/10.1038/s41467-026-77796-3" target="_blank" rel="noopener">DOI · 10.1038/s41467-026-77796-3</a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer article-footer">
+    <a href="./index.html">← volver al blog</a>
+    <a href="../index.html">qmetrika_labs</a>
+    <span class="push">2026</span>
+  </footer>
+</div>
+</body>
+</html>
