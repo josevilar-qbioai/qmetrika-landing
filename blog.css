@@ -113,7 +113,7 @@ pre.code .comment { color: var(--muted); }
 .blob, .blob-glyph { display: none; }
 .notes-grid, .colateral-grid { display: block; margin-bottom: var(--space-5); }
 .post-card, .colateral-card { padding: var(--space-3) 0; border-bottom: var(--hairline) solid var(--rule); background: none; border-radius: 0; display: flex; flex-direction: column; gap: var(--space-1); }
-.post-card h3, .colateral-card h3 { font-size: 18px; line-height: 1.4; font-weight: 500; margin: 0; }
+.post-card h3, .colateral-card h3 { font-size: 18px; line-height: 1.4; font-weight: 500; margin: 0; max-width: 28em; }
 .post-card p, .colateral-card p { font-family: var(--font-mono); font-size: 13px; line-height: 1.7; color: var(--muted); max-width: 64ch; margin: 0; }
 .colateral-head { padding-bottom: var(--space-2); border-bottom: var(--hairline) solid var(--ink); }
 .colateral-head .kicker { margin: 0; }
